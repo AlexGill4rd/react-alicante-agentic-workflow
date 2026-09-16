@@ -15,14 +15,23 @@ function isActive(pathname: string, href: string) {
 
 const LANGUAGES: Language[] = ["en", "es"];
 
-export function SiteNav() {
+interface SiteNavProps {
+  /** Server-rendered auth status (AuthButton or EnvVarWarning), passed in
+   * from a Server Component parent since it needs session data. */
+  authSlot?: React.ReactNode;
+  /** Whether to show the Stats link — hidden for signed-out visitors since
+   * /stats requires sign-in and would just redirect them to login. */
+  showStats?: boolean;
+}
+
+export function SiteNav({ authSlot, showStats = false }: SiteNavProps) {
   const pathname = usePathname();
   const { language, setLanguage, t } = useLanguage();
   const [open, setOpen] = useState(false);
 
   const navLinks = [
     { href: "/sessions", label: t("nav.schedule") },
-    { href: "/stats", label: t("nav.stats") },
+    ...(showStats ? [{ href: "/stats", label: t("nav.stats") }] : []),
   ];
 
   const linkClassName = (href: string) =>
@@ -75,7 +84,10 @@ export function SiteNav() {
             ))}
           </div>
 
-          <div className="hidden md:flex">{languageToggle}</div>
+          <div className="hidden md:flex items-center gap-4">
+            {languageToggle}
+            {authSlot}
+          </div>
 
           <button
             type="button"
@@ -104,6 +116,7 @@ export function SiteNav() {
               ))}
             </div>
             {languageToggle}
+            {authSlot}
           </div>
         )}
       </div>
