@@ -1,7 +1,7 @@
 import { SiteNav } from "@/components/layout/site-nav";
 import { ThemeSwitcher } from "@/components/layout/theme-switcher";
 
-export default function SessionsLayout({
+export default function StatsLayout({
   children,
 }: {
   children: React.ReactNode;

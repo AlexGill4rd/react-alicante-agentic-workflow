@@ -1,13 +1,10 @@
-import { EnvVarWarning } from "@/app/_components/env-var-warning";
-import { AuthButton } from "@/components/forms/auth-button";
 import { Hero } from "@/app/_components/hero";
+import { SiteNav } from "@/components/layout/site-nav";
 import { ThemeSwitcher } from "@/components/layout/theme-switcher";
 import { Badge } from "@/components/primitives/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/primitives/card";
 import { sessions } from "@/data/sessions";
-import { hasEnvVars } from "@/lib/utils";
 import Link from "next/link";
-import { Suspense } from "react";
 
 const FEATURED_SESSION_COUNT = 3;
 
@@ -15,22 +12,8 @@ export default function Home() {
   return (
     <main className="min-h-screen flex flex-col items-center">
       <div className="flex-1 w-full flex flex-col gap-20 items-center">
-        <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
-          <div className="w-full max-w-5xl flex justify-between items-center p-3 px-5 text-sm">
-            <div className="flex gap-5 items-center font-semibold">
-              <Link href={"/"}>React Alicante Companion</Link>
-              <Link href={"/sessions"}>Schedule</Link>
-            </div>
-            {!hasEnvVars ? (
-              <EnvVarWarning />
-            ) : (
-              <Suspense>
-                <AuthButton />
-              </Suspense>
-            )}
-          </div>
-        </nav>
-        <div className="flex-1 flex flex-col gap-16 max-w-5xl p-5">
+        <SiteNav />
+        <div className="flex-1 w-full min-w-0 flex flex-col gap-16 max-w-5xl p-5">
           <Hero />
 
           <div className="flex flex-col gap-6">

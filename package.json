@@ -10,8 +10,6 @@
     "@chakra-ui/react": "^3.37.0",
     "@emotion/cache": "^11.14.0",
     "@emotion/react": "^11.14.0",
-    "@supabase/ssr": "latest",
-    "@supabase/supabase-js": "latest",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.511.0",
