@@ -1,13 +1,7 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/primitives/button";
+import { Menu, Portal } from "@chakra-ui/react";
 import { Laptop, Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
@@ -28,50 +22,47 @@ const ThemeSwitcher = () => {
   const ICON_SIZE = 16;
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
+    <Menu.Root positioning={{ placement: "bottom-start" }}>
+      <Menu.Trigger asChild>
         <Button variant="ghost" size={"sm"}>
           {theme === "light" ? (
-            <Sun
-              key="light"
-              size={ICON_SIZE}
-              className={"text-muted-foreground"}
-            />
+            <Sun key="light" size={ICON_SIZE} />
           ) : theme === "dark" ? (
-            <Moon
-              key="dark"
-              size={ICON_SIZE}
-              className={"text-muted-foreground"}
-            />
+            <Moon key="dark" size={ICON_SIZE} />
           ) : (
-            <Laptop
-              key="system"
-              size={ICON_SIZE}
-              className={"text-muted-foreground"}
-            />
+            <Laptop key="system" size={ICON_SIZE} />
           )}
         </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-content" align="start">
-        <DropdownMenuRadioGroup
-          value={theme}
-          onValueChange={(e) => setTheme(e)}
-        >
-          <DropdownMenuRadioItem className="flex gap-2" value="light">
-            <Sun size={ICON_SIZE} className="text-muted-foreground" />{" "}
-            <span>Light</span>
-          </DropdownMenuRadioItem>
-          <DropdownMenuRadioItem className="flex gap-2" value="dark">
-            <Moon size={ICON_SIZE} className="text-muted-foreground" />{" "}
-            <span>Dark</span>
-          </DropdownMenuRadioItem>
-          <DropdownMenuRadioItem className="flex gap-2" value="system">
-            <Laptop size={ICON_SIZE} className="text-muted-foreground" />{" "}
-            <span>System</span>
-          </DropdownMenuRadioItem>
-        </DropdownMenuRadioGroup>
-      </DropdownMenuContent>
-    </DropdownMenu>
+      </Menu.Trigger>
+      <Portal>
+        <Menu.Positioner>
+          <Menu.Content
+            css={{
+              background: "var(--surface-hex)",
+              borderColor: "var(--card-border-hex)",
+            }}
+          >
+            <Menu.RadioItemGroup
+              value={theme}
+              onValueChange={(e) => setTheme(e.value)}
+            >
+              <Menu.RadioItem value="light" display="flex" gap="2">
+                <Sun size={ICON_SIZE} /> <span>Light</span>
+                <Menu.ItemIndicator ml="auto" />
+              </Menu.RadioItem>
+              <Menu.RadioItem value="dark" display="flex" gap="2">
+                <Moon size={ICON_SIZE} /> <span>Dark</span>
+                <Menu.ItemIndicator ml="auto" />
+              </Menu.RadioItem>
+              <Menu.RadioItem value="system" display="flex" gap="2">
+                <Laptop size={ICON_SIZE} /> <span>System</span>
+                <Menu.ItemIndicator ml="auto" />
+              </Menu.RadioItem>
+            </Menu.RadioItemGroup>
+          </Menu.Content>
+        </Menu.Positioner>
+      </Portal>
+    </Menu.Root>
   );
 };
 

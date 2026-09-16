@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { Badge } from "@/components/ui/badge";
+import { Badge } from "@/components/primitives/badge";
 import { getSessionById, sessions } from "@/data/sessions";
 
 export function generateStaticParams() {

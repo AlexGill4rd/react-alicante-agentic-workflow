@@ -1,7 +1,7 @@
 import Link from "next/link";
 
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/primitives/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/primitives/card";
 import { sessions } from "@/data/sessions";
 
 export default function SessionsPage() {
