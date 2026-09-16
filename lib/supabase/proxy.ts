@@ -2,7 +2,7 @@ import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 import { hasEnvVars } from "@/utils/has-env-vars";
 
-const PROTECTED_PREFIXES = ["/stats", "/news"];
+const PROTECTED_PREFIXES = ["/stats", "/news", "/protected"];
 
 function isProtected(pathname: string) {
   return PROTECTED_PREFIXES.some(
