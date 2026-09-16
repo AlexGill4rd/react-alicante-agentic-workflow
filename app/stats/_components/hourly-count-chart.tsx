@@ -12,7 +12,7 @@ import {
 } from "recharts";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/primitives/card";
-import type { HourlySessionCount } from "@/lib/shared/session-stats";
+import type { HourlySessionCount } from "@/utils/session-stats";
 
 interface HourlyCountChartProps {
   data: HourlySessionCount[];

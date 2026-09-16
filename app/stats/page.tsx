@@ -4,7 +4,7 @@ import { sessions } from "@/data/sessions";
 import {
   getSessionCountByHour,
   getSessionCountByTrack,
-} from "@/lib/shared/session-stats";
+} from "@/utils/session-stats";
 
 export default function StatsPage() {
   const trackCounts = getSessionCountByTrack(sessions);

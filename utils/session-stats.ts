@@ -1,5 +1,5 @@
 import type { Session } from "@/data/sessions";
-import { timeToMinutes } from "@/lib/shared/schedule-time";
+import { timeToMinutes } from "@/utils/schedule-time";
 
 export interface TrackSessionCount {
   track: string;

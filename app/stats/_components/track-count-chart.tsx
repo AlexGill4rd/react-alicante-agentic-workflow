@@ -12,7 +12,7 @@ import {
 } from "recharts";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/primitives/card";
-import type { TrackSessionCount } from "@/lib/shared/session-stats";
+import type { TrackSessionCount } from "@/utils/session-stats";
 
 interface TrackCountChartProps {
   data: TrackSessionCount[];

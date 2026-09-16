@@ -1,12 +1,12 @@
 import Link from "next/link";
 
 import type { Session } from "@/data/sessions";
-import { minutesToTime, timeToMinutes } from "@/lib/shared/schedule-time";
+import { minutesToTime, timeToMinutes } from "@/utils/schedule-time";
 import {
   TIMELINE_ROOMS,
   getSessionsByRoom,
   getTimelineBounds,
-} from "@/lib/shared/session-timeline";
+} from "@/utils/session-timeline";
 
 const PX_PER_MINUTE = 1.6;
 const TIME_COLUMN_WIDTH = 56;
