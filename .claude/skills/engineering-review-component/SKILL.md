@@ -39,7 +39,7 @@ argument-hint: "[filepath]"
    9. **Tokens** — No hardcoded colors (`#`, `rgb`, `hsl`)? Uses semantic tokens (`--text-*`, `--accent-*`, `--heading-hex`, `--subtitle-hex`)?
    10. **i18n** — All user-facing strings using `useTranslations` — text content and `title`, `label`, `placeholder`, `alt` props? No hardcoded display text?
    11. **SRP** — Does the file do one thing? Should sub-components or helpers be extracted?
-   12. **Client directive** — `'use client'` present only if needed? Could the boundary be narrower? Note: Chakra UI components need it even with no hooks/handlers — its styling engine can't run in a pure Server Component (build-time crash, not caught by type-check/Jest). Don't flag/remove it just because the file has no hooks.
+   12. **Client directive** — `'use client'` present only if needed? Could the boundary be narrower?
    13. **Code quality** — No `console.log`? No unused variables? Internal order correct (hooks → handlers → render)?
    14. **Tests** — Co-located `.test.tsx`/`.test.ts` exists? Components have a snapshot + at least one behavioral test? Edge cases covered (empty state, error state, missing props)?
    15. **Guard clauses** — Deeply nested conditionals that early returns would flatten?

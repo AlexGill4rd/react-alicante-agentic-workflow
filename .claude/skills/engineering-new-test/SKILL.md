@@ -25,6 +25,7 @@ argument-hint: "[filepath]"
 - Confirm the source file exists at the given path.
 - Verify no `.test.tsx` or `.test.ts` already exists alongside the source.
 - Confirm `@testing-library/react` and `jest` are in `package.json`.
+- Import test utilities from `@/tests/utils/render` (wraps `ChakraProvider`); a direct `@testing-library/react` import crashes on any Chakra v3 component.
 
 ## Workflow
 1. **Determine scope:** If `$ARGUMENTS` provided, use that file. Otherwise run `git status --short | awk '{print $2}'`, filter to `.tsx`/`.ts` files under `src/` with no co-located test file.

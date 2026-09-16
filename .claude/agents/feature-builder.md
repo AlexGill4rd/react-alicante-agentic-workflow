@@ -151,11 +151,11 @@ cd apps/academy && pnpm build 2>&1 | tail -40
 ```
 If the build fails (e.g. `createContext is not a function`, "X cannot be used within a Server Component") → a Client/Server boundary is wrong in one of the new files. Fix before continuing.
 
-⚠️ **This step was skipped on #401, and CI caught what it would have caught** (`createContext is not a function` on `/[locale]/curriculum/paths/[slug]` — three new Chakra-rendering Server Components). Lint, type-check and 1116 tests were all green while the app did not build, and "all gates green" was reported to the user on that basis. `pnpm build` is deliberately **not** in the pre-commit hook (too slow for every commit) and CI does run it — so this local run exists to catch the break before the push/red-CI/fix/re-push cycle, and to keep any "it works" claim honest.
+⚠️ **This step was skipped on #401, and CI caught what it would have caught** (`createContext is not a function` on `/[locale]/curriculum/paths/[slug]` — three new Chakra v2-rendering Server Components). Lint, type-check and 1116 tests were all green while the app did not build, and "all gates green" was reported to the user on that basis. `pnpm build` is deliberately **not** in the pre-commit hook (too slow for every commit) and CI does run it — so this local run exists to catch the break before the push/red-CI/fix/re-push cycle, and to keep any "it works" claim honest.
 
 **When this build is REQUIRED — run it if the diff touches any of:**
 - a `'use client'` directive added, removed, or moved
-- a new component that renders Chakra UI (`Box`, `Flex`, `Text`, `Alert`, `Icon`, …) and is reachable from a server-rendered page
+- (Chakra v2 only, now fixed in v3) a new component that renders Chakra UI (`Box`, `Flex`, `Text`, `Alert`, `Icon`, …) and is reachable from a server-rendered page
 - a component switching between async Server Component and Client Component
 - `getTranslations` ↔ `useTranslations` swapped either way
 - a new page, layout, or route entering the server module graph

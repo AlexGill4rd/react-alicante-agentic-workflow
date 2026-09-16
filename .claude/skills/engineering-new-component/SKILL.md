@@ -35,7 +35,7 @@ argument-hint: "<ComponentName> <tier|route>"
    - Page-specific (`$2` is a route): `src/app/[locale]/<route>/_components/$1/`
    - If unsure: ask whether the component will be used on more than one page.
 2. **Create `$1.tsx`:**
-   - Add `'use client'` if the component needs hooks, events, or browser APIs — **or renders Chakra UI**, which needs client execution regardless (its styling engine can't run in a pure Server Component; the failure is a build-time crash, not something type-check or Jest catches).
+   - Add `'use client'` if the component needs hooks, events, or browser APIs. Rendering Chakra UI alone does not need it (v3 components are already client components).
    - Import `React, { FC }` from `react`.
    - Define a `$1Props` interface with all typed props — no `any`. For forms, props include `onSubmit`, `isLoading`, `genericError` — supplied by the caller, never owned by this component (see `/engineering-integrate-component`).
    - Use Chakra UI components for layout (`Flex`, `Box`, `Text`).
@@ -59,7 +59,7 @@ argument-hint: "<ComponentName> <tier|route>"
    - **If this component is a form:**
      - Use `react-hook-form`'s `useForm` for field registration and client-side validation — never per-field `useState`.
      - Validate field shape with a `zod` schema passed through a `validate` function on `register` (see `src/components/organisms/SignInForm.tsx` for the pattern) — this is shape/UX validation only. Authoritative validation happens server-side in the Server Action via `/engineering-integrate-component`.
-     - For each field, check `src/components/forms/` for an existing reusable field component before writing inline `FormControl`/`Input`/`FormErrorMessage` markup:
+     - For each field, check `src/components/forms/` for an existing reusable field component before writing inline `Field.Root`/`Input`/`Field.ErrorText` markup:
        - **Matching atom exists:** import it directly by file (`@/components/forms/EmailField`) — never the barrel `@/components/forms`.
        - **None exists and the field is generic enough to reuse** (email, name, message, etc.): extract a new field into `src/components/forms/<Field>Field.tsx` following the existing field shape, then import it here.
        - **Genuinely one-off field:** inline it, but still source every value from a verified token.

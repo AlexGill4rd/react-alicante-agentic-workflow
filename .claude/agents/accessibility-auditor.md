@@ -70,8 +70,8 @@ WCAG 2.1 AA accessibility reviewer for the Philomath Academy codebase — Next.j
 
 ### Forms
 - All inputs have associated labels (`<label>` or `aria-label`)
-- Error messages linked via `aria-describedby` or Chakra's `FormErrorMessage`
-- Required fields use Chakra's `isRequired`
+- Error messages linked via `aria-describedby` or Chakra's `Field.ErrorText` inside `Field.Root`
+- Required fields use `Field.Root required`
 - Validation errors announced to screen readers
 
 ### Color and Contrast
@@ -81,8 +81,8 @@ WCAG 2.1 AA accessibility reviewer for the Philomath Academy codebase — Next.j
 
 ### Dynamic Content
 - Loading states announced (`aria-busy`, `aria-live`)
-- Modal/dialog focus management verified (Chakra `Modal` handles this — check for overrides)
-- Toast notifications use Chakra `useToast` (accessible by default)
+- Modal/dialog focus management verified (Chakra `Dialog` handles this — check for overrides)
+- Toast notifications use `toaster.create` from `@/components/chakra/toaster` (accessible by default)
 
 ### Responsive and Zoom
 - Content readable at 200% zoom

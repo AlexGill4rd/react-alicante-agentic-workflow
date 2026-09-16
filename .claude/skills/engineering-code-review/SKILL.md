@@ -119,7 +119,7 @@ don't check (the other is User-Facing State Coverage, above) — see
 Evaluate — report findings or "None":
 
 - Unnecessary re-renders from missing `React.memo`, `useMemo`, or `useCallback`?
-- `'use client'` components that could be Server Components? Not if they render Chakra UI — Chakra's styling engine can't run in a pure Server Component (build-time crash, invisible to type-check/Jest), so a Chakra component needs `'use client'` even with no hooks/handlers of its own.
+- `'use client'` components that could be Server Components?
 - Client boundary too high — can it be pushed to a leaf?
 - Large imports missing tree-shaking or `next/dynamic`?
 - Images not using `next/image`, or missing `width`/`height`/`sizes`/`priority`?
