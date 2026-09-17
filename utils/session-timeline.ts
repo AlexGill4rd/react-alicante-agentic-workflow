@@ -1,4 +1,4 @@
-import type { Session } from "@/data/sessions";
+import type { Session } from "@/types/session";
 import { timeToMinutes } from "@/utils/schedule-time";
 
 /** Fixed room column order for the timeline view. */

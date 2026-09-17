@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import type { Session } from "@/data/sessions";
+import type { Session } from "@/types/session";
 import { minutesToTime, timeToMinutes } from "@/utils/schedule-time";
 import {
   TIMELINE_ROOMS,

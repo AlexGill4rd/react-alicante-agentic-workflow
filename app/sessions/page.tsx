@@ -1,7 +1,9 @@
 import { SessionTimeline } from "@/app/sessions/_components/session-timeline";
-import { sessions } from "@/data/sessions";
+import { fetchSessions } from "@/services/sessions";
 
-export default function SessionsPage() {
+export default async function SessionsPage() {
+  const sessions = await fetchSessions();
+
   return (
     <div className="flex-1 w-full min-w-0 flex flex-col gap-8">
       <div className="flex flex-col gap-2">

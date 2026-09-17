@@ -2,9 +2,10 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { Badge } from "@/components/primitives/badge";
-import { getSessionById, sessions } from "@/data/sessions";
+import { fetchSessionById, fetchSessions } from "@/services/sessions";
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const sessions = await fetchSessions();
   return sessions.map((session) => ({ id: session.id }));
 }
 
@@ -14,7 +15,7 @@ export default async function SessionDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const session = getSessionById(id);
+  const session = await fetchSessionById(id);
 
   if (!session) {
     notFound();

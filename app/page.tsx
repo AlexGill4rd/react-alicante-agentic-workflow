@@ -3,12 +3,14 @@ import { SiteNav } from "@/components/layout/site-nav";
 import { ThemeSwitcher } from "@/components/layout/theme-switcher";
 import { Badge } from "@/components/primitives/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/primitives/card";
-import { sessions } from "@/data/sessions";
+import { fetchSessions } from "@/services/sessions";
 import Link from "next/link";
 
 const FEATURED_SESSION_COUNT = 3;
 
-export default function Home() {
+export default async function Home() {
+  const sessions = await fetchSessions();
+
   return (
     <main className="min-h-screen flex flex-col items-center">
       <div className="flex-1 w-full flex flex-col gap-20 items-center">
