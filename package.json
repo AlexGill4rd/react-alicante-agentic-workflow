@@ -4,7 +4,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "workshop:tickets": "node scripts/create-workshop-tickets.mjs"
   },
   "dependencies": {
     "@chakra-ui/react": "^3.37.0",
