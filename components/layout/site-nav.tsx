@@ -1,8 +1,9 @@
 "use client";
 
 import { useLanguage } from "@/contexts/language-context";
-import type { Language } from "@/utils/translations";
 import { cn } from "@/utils/cn";
+import { isStatsEnabled } from "@/utils/feature-flags";
+import type { Language } from "@/utils/translations";
 import { Menu as MenuIcon, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -15,23 +16,15 @@ function isActive(pathname: string, href: string) {
 
 const LANGUAGES: Language[] = ["en", "es"];
 
-interface SiteNavProps {
-  /** Server-rendered auth status (AuthButton or EnvVarWarning), passed in
-   * from a Server Component parent since it needs session data. */
-  authSlot?: React.ReactNode;
-  /** Whether to show the Stats link — hidden for signed-out visitors since
-   * /stats requires sign-in and would just redirect them to login. */
-  showStats?: boolean;
-}
-
-export function SiteNav({ authSlot, showStats = false }: SiteNavProps) {
+export function SiteNav() {
   const pathname = usePathname();
   const { language, setLanguage, t } = useLanguage();
   const [open, setOpen] = useState(false);
 
   const navLinks = [
     { href: "/sessions", label: t("nav.schedule") },
-    ...(showStats ? [{ href: "/stats", label: t("nav.stats") }] : []),
+    ...(isStatsEnabled ? [{ href: "/stats", label: t("nav.stats") }] : []),
+    { href: "/news", label: t("nav.news") },
   ];
 
   const linkClassName = (href: string) =>
@@ -86,7 +79,6 @@ export function SiteNav({ authSlot, showStats = false }: SiteNavProps) {
 
           <div className="hidden md:flex items-center gap-4">
             {languageToggle}
-            {authSlot}
           </div>
 
           <button
@@ -116,7 +108,6 @@ export function SiteNav({ authSlot, showStats = false }: SiteNavProps) {
               ))}
             </div>
             {languageToggle}
-            {authSlot}
           </div>
         )}
       </div>

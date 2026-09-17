@@ -1,12 +1,10 @@
 import { Hero } from "@/app/_components/hero";
 import { SiteNav } from "@/components/layout/site-nav";
-import { SiteNavWithAuth } from "@/components/layout/site-nav-with-auth";
 import { ThemeSwitcher } from "@/components/layout/theme-switcher";
 import { Badge } from "@/components/primitives/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/primitives/card";
 import { sessions } from "@/data/sessions";
 import Link from "next/link";
-import { Suspense } from "react";
 
 const FEATURED_SESSION_COUNT = 3;
 
@@ -14,9 +12,7 @@ export default function Home() {
   return (
     <main className="min-h-screen flex flex-col items-center">
       <div className="flex-1 w-full flex flex-col gap-20 items-center">
-        <Suspense fallback={<SiteNav />}>
-          <SiteNavWithAuth />
-        </Suspense>
+        <SiteNav />
         <div className="flex-1 w-full min-w-0 flex flex-col gap-16 max-w-5xl p-5">
           <Hero />
 

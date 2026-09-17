@@ -1,9 +1,7 @@
 import { SiteNav } from "@/components/layout/site-nav";
-import { SiteNavWithAuth } from "@/components/layout/site-nav-with-auth";
 import { ThemeSwitcher } from "@/components/layout/theme-switcher";
-import { Suspense } from "react";
 
-export default function ProtectedLayout({
+export default function NewsLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -11,9 +9,7 @@ export default function ProtectedLayout({
   return (
     <main className="min-h-screen flex flex-col items-center">
       <div className="flex-1 w-full flex flex-col gap-20 items-center">
-        <Suspense fallback={<SiteNav />}>
-          <SiteNavWithAuth />
-        </Suspense>
+        <SiteNav />
         <div className="flex-1 w-full min-w-0 flex flex-col gap-20 max-w-5xl p-5">
           {children}
         </div>

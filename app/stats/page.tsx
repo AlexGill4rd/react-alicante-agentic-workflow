@@ -1,12 +1,18 @@
 import { HourlyCountChart } from "@/app/stats/_components/hourly-count-chart";
 import { TrackCountChart } from "@/app/stats/_components/track-count-chart";
 import { sessions } from "@/data/sessions";
+import { isStatsEnabled } from "@/utils/feature-flags";
 import {
   getSessionCountByHour,
   getSessionCountByTrack,
 } from "@/utils/session-stats";
+import { notFound } from "next/navigation";
 
 export default function StatsPage() {
+  if (!isStatsEnabled) {
+    notFound();
+  }
+
   const trackCounts = getSessionCountByTrack(sessions);
   const hourlyCounts = getSessionCountByHour(sessions);
 
