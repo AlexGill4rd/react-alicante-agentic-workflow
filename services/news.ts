@@ -39,7 +39,9 @@ export async function fetchFrontPageNews(): Promise<NewsStory[]> {
     throw new Error("NEWS_API_URL is not set");
   }
 
-  const response = await fetch(`${baseUrl}/search?tags=front_page&hitsPerPage=20`);
+  const response = await fetch(
+    `${baseUrl}/search?tags=front_page&hitsPerPage=20`,
+  );
   if (!response.ok) {
     throw new Error(`News request failed with status ${response.status}`);
   }

@@ -4,17 +4,14 @@ import {
 } from "@chakra-ui/react";
 
 export type ButtonVariant =
-  | "default"
-  | "destructive"
-  | "outline"
-  | "secondary"
-  | "ghost"
-  | "link";
+  "default" | "destructive" | "outline" | "secondary" | "ghost" | "link";
 
 export type ButtonSize = "default" | "sm" | "lg" | "icon";
 
-export interface ButtonProps
-  extends Omit<ChakraButtonProps, "variant" | "size"> {
+export interface ButtonProps extends Omit<
+  ChakraButtonProps,
+  "variant" | "size"
+> {
   variant?: ButtonVariant;
   size?: ButtonSize;
 }

@@ -31,7 +31,8 @@ export function SessionTimeline({ sessions }: SessionTimelineProps) {
       <div
         className="inline-flex min-w-full flex-col"
         style={{
-          minWidth: TIME_COLUMN_WIDTH + TIMELINE_ROOMS.length * ROOM_COLUMN_MIN_WIDTH,
+          minWidth:
+            TIME_COLUMN_WIDTH + TIMELINE_ROOMS.length * ROOM_COLUMN_MIN_WIDTH,
         }}
       >
         <div className="flex gap-2 mb-2">

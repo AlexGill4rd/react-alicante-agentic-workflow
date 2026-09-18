@@ -28,7 +28,7 @@ export function getTimelineBounds(sessions: Session[]): TimelineBounds {
 
   const starts = sessions.map((session) => timeToMinutes(session.startTime));
   const ends = sessions.map(
-    (session) => timeToMinutes(session.startTime) + session.durationMinutes
+    (session) => timeToMinutes(session.startTime) + session.durationMinutes,
   );
 
   return {
@@ -43,10 +43,10 @@ export function getTimelineBounds(sessions: Session[]): TimelineBounds {
  * rather than crashing the layout.
  */
 export function getSessionsByRoom(
-  sessions: Session[]
+  sessions: Session[],
 ): Record<TimelineRoom, Session[]> {
   const byRoom = Object.fromEntries(
-    TIMELINE_ROOMS.map((room) => [room, [] as Session[]])
+    TIMELINE_ROOMS.map((room) => [room, [] as Session[]]),
   ) as Record<TimelineRoom, Session[]>;
 
   for (const session of sessions) {

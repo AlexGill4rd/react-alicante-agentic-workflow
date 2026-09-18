@@ -11,7 +11,12 @@ import {
   YAxis,
 } from "recharts";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/primitives/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/primitives/card";
 import type { TrackSessionCount } from "@/utils/session-stats";
 
 interface TrackCountChartProps {
@@ -27,11 +32,11 @@ export function TrackCountChart({ data }: TrackCountChartProps) {
       <CardContent>
         <div style={{ width: "100%", height: 280 }}>
           <ResponsiveContainer>
-            <BarChart data={data} margin={{ top: 16, right: 8, left: 0, bottom: 0 }}>
-              <CartesianGrid
-                vertical={false}
-                stroke="var(--card-border-hex)"
-              />
+            <BarChart
+              data={data}
+              margin={{ top: 16, right: 8, left: 0, bottom: 0 }}
+            >
+              <CartesianGrid vertical={false} stroke="var(--card-border-hex)" />
               <XAxis
                 dataKey="track"
                 tick={{ fill: "var(--text-muted)", fontSize: 12 }}

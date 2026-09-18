@@ -23,10 +23,7 @@ export function CardTitle(props: ChakraCard.TitleProps) {
 
 export function CardDescription(props: ChakraCard.DescriptionProps) {
   return (
-    <ChakraCard.Description
-      css={{ color: "var(--text-muted)" }}
-      {...props}
-    />
+    <ChakraCard.Description css={{ color: "var(--text-muted)" }} {...props} />
   );
 }
 

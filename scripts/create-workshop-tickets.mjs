@@ -79,21 +79,30 @@ const { isFork, hasIssuesEnabled } = JSON.parse(
 
 // Guards the shared starter repo: tickets belong in each attendee's own fork.
 if (!isFork) {
-  fail(`${repo} is not a fork. Fork the starter repo, clone your fork, and run this there.`);
+  fail(
+    `${repo} is not a fork. Fork the starter repo, clone your fork, and run this there.`,
+  );
 }
 
 const tickets = readTickets();
-console.log(`\nRepo: ${repo}${dryRun ? "  (dry run: nothing will change)" : ""}\n`);
+console.log(
+  `\nRepo: ${repo}${dryRun ? "  (dry run: nothing will change)" : ""}\n`,
+);
 
 if (!dryRun) {
   // Without this, gh in a fork can resolve issue numbers against the upstream repo.
   gh(["repo", "set-default", repo]);
   gh(["repo", "edit", repo, "--enable-issues"]);
   gh([
-    "label", "create", LABEL,
-    "--repo", repo,
-    "--color", "0E8A16",
-    "--description", "New feature",
+    "label",
+    "create",
+    LABEL,
+    "--repo",
+    repo,
+    "--color",
+    "0E8A16",
+    "--description",
+    "New feature",
     "--force",
   ]);
 }
@@ -102,7 +111,18 @@ const existingTitles = new Set(
   dryRun && !hasIssuesEnabled
     ? []
     : JSON.parse(
-        gh(["issue", "list", "--repo", repo, "--state", "all", "--limit", "500", "--json", "title"]),
+        gh([
+          "issue",
+          "list",
+          "--repo",
+          repo,
+          "--state",
+          "all",
+          "--limit",
+          "500",
+          "--json",
+          "title",
+        ]),
       ).map((issue) => issue.title),
 );
 
@@ -116,12 +136,18 @@ for (const ticket of tickets) {
     continue;
   }
   const url = gh([
-    "issue", "create",
-    "--repo", repo,
-    "--title", ticket.title,
-    "--body", ticket.body,
-    "--label", LABEL,
-    "--assignee", "@me",
+    "issue",
+    "create",
+    "--repo",
+    repo,
+    "--title",
+    ticket.title,
+    "--body",
+    ticket.body,
+    "--label",
+    LABEL,
+    "--assignee",
+    "@me",
   ]);
   console.log(`• Created: ${ticket.title}\n  ${url}`);
 }

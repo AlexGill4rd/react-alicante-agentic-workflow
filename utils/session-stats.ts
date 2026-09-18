@@ -16,7 +16,7 @@ export interface HourlySessionCount {
  * `sessions` so the chart order stays stable across renders.
  */
 export function getSessionCountByTrack(
-  sessions: Session[]
+  sessions: Session[],
 ): TrackSessionCount[] {
   const counts = new Map<string, number>();
 
@@ -32,7 +32,7 @@ export function getSessionCountByTrack(
  * `timeToMinutes`) and counts sessions per bucket, sorted chronologically.
  */
 export function getSessionCountByHour(
-  sessions: Session[]
+  sessions: Session[],
 ): HourlySessionCount[] {
   const counts = new Map<number, number>();
 

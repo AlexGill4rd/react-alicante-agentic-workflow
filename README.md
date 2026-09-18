@@ -40,34 +40,34 @@ You need two Supabase projects, one for QA and one for Production. Local develop
 
 ## Environment variables
 
-| Variable | Where it's read | Purpose |
-|---|---|---|
-| `NEXT_PUBLIC_SUPABASE_URL` | Server (`services/supabase.ts`) | Project URL: QA locally, Production in production |
-| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Server (`services/supabase.ts`) | Publishable key; row level security keeps the data read-only |
-| `SUPABASE_PRODUCTION_PROJECT_REF` | Release skills | Ref of the Production project, used to relink before applying migrations there. Not a secret |
-| `NEWS_API_URL` | Server only (`services/news.ts`) | Base URL of the Hacker News API behind `/news` |
-| `NEXT_PUBLIC_ENABLE_STATS` | Server and browser | Set to `false` to hide the Stats page and its nav link |
+| Variable                               | Where it's read                  | Purpose                                                                                      |
+| -------------------------------------- | -------------------------------- | -------------------------------------------------------------------------------------------- |
+| `NEXT_PUBLIC_SUPABASE_URL`             | Server (`services/supabase.ts`)  | Project URL: QA locally, Production in production                                            |
+| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Server (`services/supabase.ts`)  | Publishable key; row level security keeps the data read-only                                 |
+| `SUPABASE_PRODUCTION_PROJECT_REF`      | Release skills                   | Ref of the Production project, used to relink before applying migrations there. Not a secret |
+| `NEWS_API_URL`                         | Server only (`services/news.ts`) | Base URL of the Hacker News API behind `/news`                                               |
+| `NEXT_PUBLIC_ENABLE_STATS`             | Server and browser               | Set to `false` to hide the Stats page and its nav link                                       |
 
 Variables without the `NEXT_PUBLIC_` prefix never reach the browser. `NEXT_PUBLIC_` variables are inlined into the client bundle **at build time**, so changing one means rebuilding or redeploying.
 
 In Vercel the same names hold different values per environment:
 
-| Variable | Preview | Production |
-|---|---|---|
-| `NEXT_PUBLIC_SUPABASE_URL` / key | QA project | Production project |
-| `NEWS_API_URL` | same in both | same in both |
-| `NEXT_PUBLIC_ENABLE_STATS` | `true` | `false` |
+| Variable                         | Preview      | Production         |
+| -------------------------------- | ------------ | ------------------ |
+| `NEXT_PUBLIC_SUPABASE_URL` / key | QA project   | Production project |
+| `NEWS_API_URL`                   | same in both | same in both       |
+| `NEXT_PUBLIC_ENABLE_STATS`       | `true`       | `false`            |
 
 ## Database
 
 Scripts:
 
-| Script | What it does |
-|---|---|
-| `pnpm db:link:status` | Lists your projects and shows which one the CLI is linked to |
-| `pnpm db:push:dry-run` | Shows which migrations would be applied |
-| `pnpm db:push` | Applies them to the linked project |
-| `pnpm db:types` | Regenerates `types/supabase.types.ts` from the linked project |
+| Script                 | What it does                                                  |
+| ---------------------- | ------------------------------------------------------------- |
+| `pnpm db:link:status`  | Lists your projects and shows which one the CLI is linked to  |
+| `pnpm db:push:dry-run` | Shows which migrations would be applied                       |
+| `pnpm db:push`         | Applies them to the linked project                            |
+| `pnpm db:types`        | Regenerates `types/supabase.types.ts` from the linked project |
 
 Schema changes live in `supabase/migrations/`. Add a new file for each change and never edit one that has already been applied.
 

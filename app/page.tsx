@@ -2,7 +2,12 @@ import { Hero } from "@/app/_components/hero";
 import { SiteNav } from "@/components/layout/site-nav";
 import { ThemeSwitcher } from "@/components/layout/theme-switcher";
 import { Badge } from "@/components/primitives/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/primitives/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/primitives/card";
 import { fetchSessions } from "@/services/sessions";
 import Link from "next/link";
 

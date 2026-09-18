@@ -38,7 +38,9 @@ describe("SiteNav", () => {
     await userEvent.click(screen.getByRole("button", { name: "es" }));
 
     expect(screen.getByRole("link", { name: "Horario" })).toBeInTheDocument();
-    expect(screen.queryByRole("link", { name: "Schedule" })).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("link", { name: "Schedule" }),
+    ).not.toBeInTheDocument();
   });
 
   it("hides the nav links behind the menu button on small screens", async () => {
@@ -48,7 +50,9 @@ describe("SiteNav", () => {
     const menuButton = screen.getByRole("button", { name: "Open menu" });
     await userEvent.click(menuButton);
 
-    expect(screen.getByRole("button", { name: "Close menu" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Close menu" }),
+    ).toBeInTheDocument();
     // Desktop row and open menu both render the links.
     expect(screen.getAllByRole("link", { name: "Schedule" })).toHaveLength(2);
   });

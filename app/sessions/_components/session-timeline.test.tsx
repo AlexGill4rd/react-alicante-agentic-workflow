@@ -31,14 +31,15 @@ describe("SessionTimeline", () => {
   it("links each session to its detail page", () => {
     render(
       <SessionTimeline
-        sessions={[session({ id: "opening-keynote", title: "Opening Keynote" })]}
+        sessions={[
+          session({ id: "opening-keynote", title: "Opening Keynote" }),
+        ]}
       />,
     );
 
-    expect(screen.getByRole("link", { name: /Opening Keynote/ })).toHaveAttribute(
-      "href",
-      "/sessions/opening-keynote",
-    );
+    expect(
+      screen.getByRole("link", { name: /Opening Keynote/ }),
+    ).toHaveAttribute("href", "/sessions/opening-keynote");
   });
 
   it("marks hours from the earliest start to the latest end", () => {

@@ -59,7 +59,12 @@ console.log(`\nRepo: ${repo}   Baseline: ${BASELINE}\n`);
 
 // 1. Migrations applied during the run — the database can't be reset from here.
 const migrations = git([
-  "diff", "--name-only", "--diff-filter=A", `${BASELINE}..HEAD`, "--", "supabase/migrations",
+  "diff",
+  "--name-only",
+  "--diff-filter=A",
+  `${BASELINE}..HEAD`,
+  "--",
+  "supabase/migrations",
 ])
   .split("\n")
   .filter(Boolean);
@@ -87,7 +92,18 @@ for (const tag of staleTags) {
 
 // 3. Issues: clear them so the tickets can be created fresh.
 const issues = JSON.parse(
-  gh(["issue", "list", "--repo", repo, "--state", "all", "--limit", "200", "--json", "number"]),
+  gh([
+    "issue",
+    "list",
+    "--repo",
+    repo,
+    "--state",
+    "all",
+    "--limit",
+    "200",
+    "--json",
+    "number",
+  ]),
 );
 for (const { number } of issues) {
   gh(["issue", "delete", String(number), "--repo", repo, "--yes"]);
@@ -99,7 +115,9 @@ console.log(`Deleted local tags: ${staleTags.join(", ") || "none"}\n`);
 console.log("Now finish by hand:\n");
 console.log("  1. Recreate the tickets:  pnpm workshop:tickets");
 console.log(`  2. Overwrite the remote:  git push --force origin dev`);
-console.log(`     Delete remote branches/tags left from the run in GitHub, or with`);
+console.log(
+  `     Delete remote branches/tags left from the run in GitHub, or with`,
+);
 console.log(`     git push origin --delete <name>`);
 
 if (migrations.length > 0) {

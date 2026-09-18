@@ -1,12 +1,15 @@
 # Show each session's level
 
 ## What
+
 Every session gets a level (beginner, intermediate or advanced), stored in the database and shown as a badge on the schedule and on the session page.
 
 ## Why
+
 Attendees pick sessions that match their experience. A beginner shouldn't walk into an advanced deep dive by accident.
 
 ## Acceptance Criteria
+
 - [ ] A new migration in `supabase/migrations/` creates a `session_level` enum (`beginner`, `intermediate`, `advanced`) and adds a not-null `level` column to `sessions` using it.
 - [ ] The same migration sets a level for all 8 existing sessions, so no row is left empty.
 - [ ] Existing migration files are not edited.
@@ -19,6 +22,7 @@ Attendees pick sessions that match their experience. A beginner shouldn't walk i
 - [ ] `/sessions` and `/sessions/[id]` show the levels.
 
 ## Notes
+
 - Follow `supabase/migrations/20260918100000_session_track_enum.sql`: `track` is an enum for exactly this reason, so the allowed values live in the schema and the types are generated from it.
 - You run `pnpm db:push` yourself. `.claude/settings.json` blocks Claude from running it, on purpose. Claude can run the dry run.
 - The table's read policy is per row, so the new column needs no RLS change.

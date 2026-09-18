@@ -1,4 +1,9 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/primitives/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/primitives/card";
 import { fetchFrontPageNews } from "@/services/news";
 import { formatDate } from "@/utils/format-date";
 
