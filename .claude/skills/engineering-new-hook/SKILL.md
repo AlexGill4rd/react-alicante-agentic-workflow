@@ -48,3 +48,7 @@ argument-hint: "<hookName>"
 ## Verification
 - [ ] `pnpm type-check` — zero new errors.
 - [ ] `pnpm test -- --testPathPattern=$ARGUMENTS` — all tests pass.
+
+---
+
+_Authored by Philomath Academy — Evangelia Mitsopoulou. Shared for the React Alicante workshop._

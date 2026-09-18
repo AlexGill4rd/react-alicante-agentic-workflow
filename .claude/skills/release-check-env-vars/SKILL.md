@@ -166,3 +166,7 @@ Report findings. **Critical and High are blockers** — the release should not g
 - [ ] `/audit-database-health` run — no RLS blockers outstanding
 - [ ] `/audit-test-coverage` run — new untested files flagged to user
 - [ ] `/audit-security --full` run — no Critical/High findings outstanding
+
+---
+
+_Authored by Philomath Academy — Evangelia Mitsopoulou. Shared for the React Alicante workshop._

@@ -123,3 +123,7 @@ Once all issues have been attempted, inform the user:
 - [ ] `git log --oneline` shows one commit per fixed issue
 - [ ] Each commit message references the issue number with `closes #N`
 - [ ] `pnpm test` passes after all commits
+
+---
+
+_Authored by Philomath Academy — Evangelia Mitsopoulou. Shared for the React Alicante workshop._

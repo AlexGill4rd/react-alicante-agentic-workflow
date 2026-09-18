@@ -45,3 +45,7 @@ argument-hint: "<dataName>"
 ## Verification
 - [ ] `pnpm type-check` — zero new errors.
 - [ ] The interface is exported and usable by components without casting.
+
+---
+
+_Authored by Philomath Academy — Evangelia Mitsopoulou. Shared for the React Alicante workshop._

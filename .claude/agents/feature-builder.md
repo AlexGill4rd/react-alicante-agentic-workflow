@@ -329,3 +329,7 @@ User merges the PR manually.
 - `/product-create-pr-description` — PR body generation
 - `/product-github-issue-manager close` — close issue after PR merges
 - `database-manager` agent — schema changes
+
+---
+
+_Authored by Philomath Academy — Evangelia Mitsopoulou. Shared for the React Alicante workshop._

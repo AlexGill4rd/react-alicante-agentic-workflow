@@ -51,3 +51,7 @@ argument-hint: "[path]"
 - [ ] All missing keys in `locales/en.json` are identified and categorised by namespace.
 - [ ] Every component in scope has an explicit Pass or Fail for the `'use client'` rule.
 - [ ] Orphaned keys in `locales/en.json` are listed separately.
+
+---
+
+_Authored by Philomath Academy — Evangelia Mitsopoulou. Shared for the React Alicante workshop._

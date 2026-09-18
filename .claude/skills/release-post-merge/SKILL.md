@@ -150,3 +150,7 @@ Print a release summary:
 - [ ] `git log dev --oneline -1` matches `git log main --oneline -1`
 - [ ] Production site verified by user
 - [ ] QA milestone state is `closed`
+
+---
+
+_Authored by Philomath Academy — Evangelia Mitsopoulou. Shared for the React Alicante workshop._

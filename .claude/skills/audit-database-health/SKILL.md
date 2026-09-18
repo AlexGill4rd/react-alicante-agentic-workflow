@@ -84,3 +84,7 @@ A report with three sections:
 - Do not apply any fixes automatically — report findings and propose the SQL, let the user decide.
 - Do not run `db:push` — this skill is read-only diagnostics only.
 - For index recommendations, generate the migration SQL but do not write the file unless asked.
+
+---
+
+_Authored by Philomath Academy — Evangelia Mitsopoulou. Shared for the React Alicante workshop._

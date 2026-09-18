@@ -48,3 +48,7 @@ argument-hint: "<version> e.g. 1.4.0"
 ## Verification
 - [ ] `cat package.json | grep '"version"'` returns the new version
 - [ ] `git log --oneline -1` shows the bump commit
+
+---
+
+_Authored by Philomath Academy — Evangelia Mitsopoulou. Shared for the React Alicante workshop._

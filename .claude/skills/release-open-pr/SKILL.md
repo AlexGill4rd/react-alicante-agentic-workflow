@@ -93,3 +93,7 @@ argument-hint: "<version> e.g. 1.4.0"
 - [ ] `gh pr view` shows base branch as `main`
 - [ ] QA milestone exists: `gh api repos/{owner}/{repo}/milestones`
 - [ ] PR URL returned to user
+
+---
+
+_Authored by Philomath Academy — Evangelia Mitsopoulou. Shared for the React Alicante workshop._

@@ -110,3 +110,7 @@ argument-hint: "<ComponentName> <tier|route>"
 - [ ] Every text element uses the matching semantic typography atom, except justified display typography.
 - [ ] No structural prop block (pill, icon+text row, stat block) duplicates an existing layout component; layout shells are decoupled from content.
 - [ ] Component renders without errors in the browser.
+
+---
+
+_Authored by Philomath Academy — Evangelia Mitsopoulou. Shared for the React Alicante workshop._

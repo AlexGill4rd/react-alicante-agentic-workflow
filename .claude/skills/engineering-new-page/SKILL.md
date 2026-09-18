@@ -79,3 +79,7 @@ argument-hint: "<page-name>"
 - [ ] **Actually load the route in a real `next dev` session and check the browser console for errors** — `pnpm build` and Jest do not exercise Turbopack's dev compiler. Confirmed bug class: `react-hook-form`'s `react-server` export condition hangs/OOMs Turbopack dev (not production build) on any route rendering a component that imports it — invisible to every other check in this list. Start the dev server, request the route (`curl` or a real browser), and watch the dev server log for hangs/crashes, not just type-check/build/test passing.
 - [ ] Translation namespace exists in `locales/en.json`.
 - [ ] Every visual detail (chrome vs. minimal layout, color split, spacing, alignment, line breaks, per-breakpoint layout) traces to the Figma reference — or, if no reference was available, the user explicitly signed off on the specific assumptions made. No detail was silently guessed.
+
+---
+
+_Authored by Philomath Academy — Evangelia Mitsopoulou. Shared for the React Alicante workshop._

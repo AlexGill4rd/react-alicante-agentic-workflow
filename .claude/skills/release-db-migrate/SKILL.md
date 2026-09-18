@@ -142,3 +142,7 @@ git commit -m "chore(db): regenerate Supabase types after v$ARGUMENTS migrations
 - [ ] User ran `pnpm db:push` and it completed without errors
 - [ ] User has verified schema changes in dashboard
 - [ ] User ran `pnpm db:types`, and the updated `supabase.types.ts` is committed to the release branch
+
+---
+
+_Authored by Philomath Academy — Evangelia Mitsopoulou. Shared for the React Alicante workshop._

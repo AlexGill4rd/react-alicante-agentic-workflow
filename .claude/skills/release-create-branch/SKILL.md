@@ -48,3 +48,7 @@ argument-hint: "<version> e.g. 1.4.0"
 ## Verification
 - [ ] `git branch --show-current` returns `release-<x-x-x>`
 - [ ] Branch HEAD matches latest `dev` HEAD
+
+---
+
+_Authored by Philomath Academy — Evangelia Mitsopoulou. Shared for the React Alicante workshop._

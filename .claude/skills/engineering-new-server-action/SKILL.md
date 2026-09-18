@@ -157,3 +157,7 @@ describe("$ARGUMENTS", () => {
 - [ ] `pnpm type-check` — zero new errors.
 - [ ] `pnpm test -- --testPathPattern=$ARGUMENTS` — all tests pass.
 - [ ] `pnpm lint` — no unused imports or variables.
+
+---
+
+_Authored by Philomath Academy — Evangelia Mitsopoulou. Shared for the React Alicante workshop._

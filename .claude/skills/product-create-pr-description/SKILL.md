@@ -127,3 +127,7 @@ metadata:
 - [ ] PR's milestone and project match the linked issue(s)' milestone and project (or are omitted if none has either).
 - [ ] An existing PR was updated in place rather than duplicated, if one was already open.
 - [ ] PR was successfully created or updated and URL returned.
+
+---
+
+_Authored by Philomath Academy — Evangelia Mitsopoulou. Shared for the React Alicante workshop._

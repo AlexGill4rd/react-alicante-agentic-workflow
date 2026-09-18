@@ -99,3 +99,7 @@ Then ask:
 - [ ] No merge conflicts with main
 - [ ] DB migrations applied and verified in Production
 - [ ] User has been directed to merge the PR
+
+---
+
+_Authored by Philomath Academy — Evangelia Mitsopoulou. Shared for the React Alicante workshop._

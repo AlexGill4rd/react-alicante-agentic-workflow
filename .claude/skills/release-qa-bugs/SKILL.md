@@ -225,3 +225,7 @@ Wait for the user to confirm all PRs (theirs and Claude's) are open, then say:
 - [ ] Every PR targets the release branch
 - [ ] All issue numbers referenced with `Fixes #N` in PR body
 - [ ] Security bugs explicitly flagged in PR body
+
+---
+
+_Authored by Philomath Academy — Evangelia Mitsopoulou. Shared for the React Alicante workshop._

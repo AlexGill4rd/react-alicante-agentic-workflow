@@ -64,3 +64,7 @@ argument-hint: "[filepath]"
 - [ ] `pnpm test -- --testPathPattern=<test-file>` — all tests pass, no failures or skips.
 - [ ] Each test covers a distinct behavior or state.
 - [ ] Any snapshot has a clear reason and is not duplicating semantic assertions.
+
+---
+
+_Authored by Philomath Academy — Evangelia Mitsopoulou. Shared for the React Alicante workshop._

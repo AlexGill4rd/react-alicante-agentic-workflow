@@ -201,3 +201,7 @@ If **'skip re-review'** → done.
 
 - [ ] Findings posted to PR as a comment
 - [ ] Re-review comment posted with ✅ / ❌ per finding (if re-review requested)
+
+---
+
+_Authored by Philomath Academy — Evangelia Mitsopoulou. Shared for the React Alicante workshop._

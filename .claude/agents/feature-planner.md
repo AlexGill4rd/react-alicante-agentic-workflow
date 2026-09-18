@@ -110,3 +110,7 @@ This agent **plans and scopes** — it does not execute any skill itself, and do
 - Do NOT create the GitHub issue until the user approves the draft.
 - Do NOT plan beyond the current feature — flag related features as followups, not steps.
 - Do NOT produce an execution plan — see Constraints above.
+
+---
+
+_Authored by Philomath Academy — Evangelia Mitsopoulou. Shared for the React Alicante workshop._

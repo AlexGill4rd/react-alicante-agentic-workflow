@@ -61,3 +61,7 @@ argument-hint: "[path]"
 - [ ] Every untested file is listed with a priority.
 - [ ] Every under-tested file lists exactly what test type is missing.
 - [ ] Coverage percentages are reported from `pnpm test:coverage`.
+
+---
+
+_Authored by Philomath Academy — Evangelia Mitsopoulou. Shared for the React Alicante workshop._

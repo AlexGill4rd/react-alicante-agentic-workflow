@@ -106,3 +106,7 @@ Mode: diff | full | path — [N files in scope]
 - [ ] Every surface the scope touches was checked; untouched surfaces skipped.
 - [ ] Every finding has file:line, risk, and a fix.
 - [ ] No files modified.
+
+---
+
+_Authored by Philomath Academy — Evangelia Mitsopoulou. Shared for the React Alicante workshop._

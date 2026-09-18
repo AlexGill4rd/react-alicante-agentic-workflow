@@ -150,3 +150,7 @@ If not merged → warn, do NOT close.
 
 - Issue URL printed after creation
 - Confirmation message after closing
+
+---
+
+_Authored by Philomath Academy — Evangelia Mitsopoulou. Shared for the React Alicante workshop._

@@ -134,3 +134,7 @@ WCAG 2.1 AA accessibility reviewer for the Philomath Academy codebase — Next.j
 - Do NOT fix files — report only; let the user or `/engineering-refactorer` apply changes.
 - Do NOT audit third-party components inside `node_modules`.
 - Do NOT flag issues outside the WCAG 2.1 AA scope unless they are project-convention violations caught by `/engineering-review-component`.
+
+---
+
+_Authored by Philomath Academy — Evangelia Mitsopoulou. Shared for the React Alicante workshop._

@@ -187,3 +187,7 @@ CI: <url>
 EOF
 )"
 ```
+
+---
+
+_Authored by Philomath Academy — Evangelia Mitsopoulou. Shared for the React Alicante workshop._

@@ -61,3 +61,7 @@ argument-hint: "[filepath]"
 - [ ] Every checklist item has an explicit Pass, Fail, or N/A — no item skipped.
 - [ ] Every Fail includes a line reference and an actionable suggestion.
 - [ ] Overall verdict is stated.
+
+---
+
+_Authored by Philomath Academy — Evangelia Mitsopoulou. Shared for the React Alicante workshop._
