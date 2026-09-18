@@ -6,27 +6,29 @@ Built with Next.js (App Router), Chakra UI v3, Tailwind CSS, Recharts and Supaba
 
 ## Run locally
 
+You need two Supabase projects, one for QA and one for Production. Local development uses the QA one; Production has its own credentials and gets migrations at release time.
+
 1. Install dependencies
 
    ```bash
    pnpm install
    ```
 
-2. Copy the example env file and fill in your Supabase project URL and publishable key
+2. Copy the example env file and fill in the values from your **QA** project, plus the ref of your Production project
 
    ```bash
    cp .env.example .env.local
    ```
 
-3. Create the database tables in your Supabase project
+3. Create the database tables in the QA project
 
    ```bash
    pnpm supabase login
-   pnpm supabase link --project-ref <project-ref>
-   pnpm supabase db push
+   pnpm supabase link --project-ref <qa-ref>
+   pnpm db:push
    ```
 
-   `<project-ref>` is the id in your project URL: `https://<project-ref>.supabase.co`. If `db push` can't connect, use the **Session pooler** connection string from the dashboard's **Connect** button: `pnpm supabase db push --db-url "<connection-string>"`.
+   `<qa-ref>` is the id in that project's URL: `https://<qa-ref>.supabase.co`. If the push can't connect, use the **Session pooler** connection string from the dashboard's **Connect** button: `pnpm db:push --db-url "<connection-string>"`.
 
 4. Start the dev server
 
@@ -40,23 +42,43 @@ Built with Next.js (App Router), Chakra UI v3, Tailwind CSS, Recharts and Supaba
 
 | Variable | Where it's read | Purpose |
 |---|---|---|
-| `NEXT_PUBLIC_SUPABASE_URL` | Server (`services/supabase.ts`) | Your Supabase project URL |
+| `NEXT_PUBLIC_SUPABASE_URL` | Server (`services/supabase.ts`) | Project URL: QA locally, Production in production |
 | `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Server (`services/supabase.ts`) | Publishable key; row level security keeps the data read-only |
+| `SUPABASE_PRODUCTION_PROJECT_REF` | Release skills | Ref of the Production project, used to relink before applying migrations there. Not a secret |
 | `NEWS_API_URL` | Server only (`services/news.ts`) | Base URL of the Hacker News API behind `/news` |
 | `NEXT_PUBLIC_ENABLE_STATS` | Server and browser | Set to `false` to hide the Stats page and its nav link |
 
 Variables without the `NEXT_PUBLIC_` prefix never reach the browser. `NEXT_PUBLIC_` variables are inlined into the client bundle **at build time**, so changing one means rebuilding or redeploying.
 
-## Database migrations
+In Vercel the same names hold different values per environment:
 
-Schema changes live in `supabase/migrations/`. Add a new file for each change, never edit one that has already been applied, then run `pnpm supabase db push`.
+| Variable | Preview | Production |
+|---|---|---|
+| `NEXT_PUBLIC_SUPABASE_URL` / key | QA project | Production project |
+| `NEWS_API_URL` | same in both | same in both |
+| `NEXT_PUBLIC_ENABLE_STATS` | `true` | `false` |
+
+## Database
+
+Scripts:
+
+| Script | What it does |
+|---|---|
+| `pnpm db:link:status` | Lists your projects and shows which one the CLI is linked to |
+| `pnpm db:push:dry-run` | Shows which migrations would be applied |
+| `pnpm db:push` | Applies them to the linked project |
+| `pnpm db:types` | Regenerates `types/supabase.types.ts` from the linked project |
+
+Schema changes live in `supabase/migrations/`. Add a new file for each change and never edit one that has already been applied.
 
 ## Claude Code security settings
 
-`.claude/settings.json` stops Claude from reading `.env` files and from running `supabase db push` or force-pushing. You run those yourself. It also asks before every `git push`.
+`.claude/settings.json` stops Claude from reading `.env` files, from applying migrations (`db:push`) and from force-pushing, and asks before every `git push`. You run the blocked commands yourself.
+
+Claude can still run `pnpm db:push:dry-run`, so the usual flow is: Claude shows you the dry run, you apply the migration.
 
 ## Deploy to Vercel
 
 1. Import the repo in Vercel.
-2. Add the four variables above under **Settings → Environment Variables**.
+2. Add the variables under **Settings → Environment Variables**, using the per-environment table above.
 3. Deploy.
