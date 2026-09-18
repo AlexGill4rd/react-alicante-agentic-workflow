@@ -1,12 +1,19 @@
-export type Track = "React" | "Agentic AI" | "Performance" | "Architecture";
+import type { Database } from "./supabase.types";
 
-export interface Session {
-  id: string;
-  title: string;
-  speaker: string;
-  track: Track;
-  room: string;
-  startTime: string;
-  durationMinutes: number;
-  description: string;
-}
+/** Generated from the database by `pnpm db:types`. */
+export type SessionRow = Database["public"]["Tables"]["sessions"]["Row"];
+
+/** The `session_track` enum, straight from the schema. */
+export type Track = Database["public"]["Enums"]["session_track"];
+
+/**
+ * What the app works with. Every field's type comes from the database; the
+ * only changes are the two columns renamed to camelCase.
+ */
+export type Session = Pick<
+  SessionRow,
+  "id" | "title" | "speaker" | "track" | "room" | "description"
+> & {
+  startTime: SessionRow["start_time"];
+  durationMinutes: SessionRow["duration_minutes"];
+};

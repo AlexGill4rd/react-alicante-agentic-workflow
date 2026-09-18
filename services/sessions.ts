@@ -1,24 +1,26 @@
 import { cacheLife } from "next/cache";
 
-import type { Session, Track } from "@/types/session";
+import type { Session, SessionRow } from "@/types/session";
 
 import { createSupabaseClient } from "./supabase";
 
-interface SessionRow {
-  id: string;
-  title: string;
-  speaker: string;
-  track: Track;
-  room: string;
-  start_time: string;
-  duration_minutes: number;
-  description: string;
-}
+/** Only the columns SESSION_COLUMNS asks for, taken from the generated row. */
+type SelectedSessionRow = Pick<
+  SessionRow,
+  | "id"
+  | "title"
+  | "speaker"
+  | "track"
+  | "room"
+  | "start_time"
+  | "duration_minutes"
+  | "description"
+>;
 
 const SESSION_COLUMNS =
   "id, title, speaker, track, room, start_time, duration_minutes, description";
 
-function toSession(row: SessionRow): Session {
+function toSession(row: SelectedSessionRow): Session {
   return {
     id: row.id,
     title: row.title,
@@ -45,7 +47,7 @@ export async function fetchSessions(): Promise<Session[]> {
     throw new Error(`Failed to load sessions: ${error.message}`);
   }
 
-  return (data as SessionRow[]).map(toSession);
+  return (data as SelectedSessionRow[]).map(toSession);
 }
 
 export async function fetchSessionById(id: string): Promise<Session | null> {
@@ -62,5 +64,5 @@ export async function fetchSessionById(id: string): Promise<Session | null> {
     throw new Error(`Failed to load session ${id}: ${error.message}`);
   }
 
-  return data ? toSession(data as SessionRow) : null;
+  return data ? toSession(data as SelectedSessionRow) : null;
 }
