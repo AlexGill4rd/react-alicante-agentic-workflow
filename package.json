@@ -12,7 +12,8 @@
     "db:push:dry-run": "supabase db push --dry-run",
     "db:types": "supabase gen types --lang=typescript --linked > types/supabase.types.ts",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "workshop:reset": "node scripts/workshop-reset.mjs"
   },
   "dependencies": {
     "@chakra-ui/react": "^3.37.0",
