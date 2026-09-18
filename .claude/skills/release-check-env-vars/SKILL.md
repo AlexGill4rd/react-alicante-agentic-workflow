@@ -47,7 +47,7 @@ grep -rhoE "process\.env\.[A-Z_]+" app components contexts services utils \
 
 Plain `-E` and `sed`, not `grep -P`: macOS's built-in grep has no Perl mode.
 
-Ignore platform-provided variables in the output (`VERCEL_URL`, `VERCEL_ENV`, `NODE_ENV`): nobody sets those by hand, so they don't belong in `.env.example`.
+Ignore platform-provided variables in the output (`VERCEL_URL`, `VERCEL_ENV`, `NODE_ENV`, `NEXT_RUNTIME`): nobody sets those by hand, so they don't belong in `.env.example`.
 
 Then read the current `.env.example` keys:
 
@@ -71,7 +71,7 @@ Present two sections:
 
 **Mismatches (used in code but missing from .env.example):**
 > ⚠️ The following variables are referenced in code but not documented in `.env.example`:
-> - `SOME_VAR` — found in `src/app/api/foo/route.ts:29`
+> - `SOME_VAR` — found in `services/news.ts:35`
 >
 > These must be added to `.env.example` AND set in Vercel before QA.
 
@@ -152,7 +152,6 @@ Report findings. **Critical and High are blockers** — the release should not g
 ## Output
 
 - All new and mismatched env vars identified and documented in `.env.example`.
-- Redis connectivity verified (or confirmed not configured, falling back to in-memory).
 - User confirmed all variables are set in Vercel (Preview + Production).
 - Database health: migration drift, RLS gaps, and index issues reported.
 - Test coverage: untested new files from this release flagged.
@@ -163,7 +162,6 @@ Report findings. **Critical and High are blockers** — the release should not g
 - [ ] `git diff` checked for new `.env.example` lines since last tag
 - [ ] `process.env.*` references in code cross-checked against `.env.example`
 - [ ] Any mismatches added to `.env.example` and committed
-- [ ] Redis connectivity confirmed (PING) if `UPSTASH_REDIS_REST_URL` is configured
 - [ ] User confirmed all vars set in Vercel (Preview + Production)
 - [ ] `/audit-database-health` run — no RLS blockers outstanding
 - [ ] `/audit-test-coverage` run — new untested files flagged to user
