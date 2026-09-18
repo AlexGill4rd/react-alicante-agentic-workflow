@@ -89,10 +89,10 @@ Print each issue URL as it is created.
 ### ⏸️ BREAKPOINT 2 — Bug Triage (Optional)
 
 After issues are created, ask:
-> "Do you want me to investigate any of these bugs before fixing? If yes, give me the issue number and any stack trace or Sentry link."
+> "Do you want me to investigate any of these bugs before fixing? If yes, give me the issue number and any stack trace."
 
 If yes for any bug — delegate to the `bug-triager` agent:
-> "Investigate bug #<issue-number>: <title>. App is in `apps/academy/`. Found on release branch Vercel preview for v<version>. <stack trace or description>"
+> "Investigate bug #<issue-number>: <title>. Found on release branch Vercel preview for v<version>. <stack trace or description>"
 
 Update the GitHub issue with the root cause and proposed fix before proceeding.
 

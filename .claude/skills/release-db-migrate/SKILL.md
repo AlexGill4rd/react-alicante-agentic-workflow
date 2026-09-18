@@ -26,8 +26,8 @@ Local dev and QA both point to the same Supabase project (QA). Migrations applie
 - `$ARGUMENTS` (required): version string, e.g. `1.4.0`.
 
 ## Prerequisites
-- **Supabase CLI available:** ask the user to run `supabase --version` (or `cd apps/academy && pnpm supabase --version` if the global CLI is missing) and confirm it's installed.
-- **Logged in:** ask the user to run `cd apps/academy && pnpm db:link:status` and share the output. If it contains "not logged in" or fails → stop, tell user to run `supabase login` then retry.
+- **Supabase CLI available:** ask the user to run `pnpm supabase --version` and confirm it's installed.
+- **Logged in:** ask the user to run `pnpm db:link:status` and share the output. If it contains "not logged in" or fails → stop, tell user to run `supabase login` then retry.
 - **On correct branch:** Must be on `release-<x-x-x>` (after QA passed, before merging).
 - **`SUPABASE_PRODUCTION_PROJECT_REF` set in `.env.local`** — this is the Production project ref. If missing → stop, tell the user to add it (see `.env.example`).
 
@@ -40,17 +40,17 @@ Local dev and QA both point to the same Supabase project (QA). Migrations applie
 Ask the user to relink to the Production project themselves, using the ref from `.env.local`:
 
 ```bash
-cd apps/academy && pnpm supabase link --project-ref $SUPABASE_PRODUCTION_PROJECT_REF
+pnpm supabase link --project-ref $SUPABASE_PRODUCTION_PROJECT_REF
 ```
 
 Then ask them to verify and share the output:
 
 ```bash
-cd apps/academy && pnpm db:link:status
+pnpm db:link:status
 ```
 
 Once they paste it, confirm:
-> "The linked project shown above should be **evangelia-tech-website**. Please confirm this is correct before we proceed."
+> "The linked project shown above should be your **Production** project, not QA. Please confirm this is correct before we proceed."
 
 **Wait for explicit confirmation. This is irreversible.**
 
@@ -61,7 +61,7 @@ Once they paste it, confirm:
 Ask the user to run and share the full output:
 
 ```bash
-cd apps/academy && pnpm db:push:dry-run
+pnpm db:push:dry-run
 ```
 
 If no pending migrations → inform user:
@@ -84,7 +84,7 @@ Ask:
 Ask the user to run and share the output:
 
 ```bash
-cd apps/academy && pnpm db:push
+pnpm db:push
 ```
 
 Note: `pnpm db:push` has a built-in confirmation prompt — the user types `y` in their own terminal. If the output shows any errors → stop immediately, do NOT suggest retrying, show the error and ask the user how to proceed.
@@ -107,13 +107,13 @@ Spot-check the live app immediately after the code deploy.
 After migrations are confirmed applied, ask the user to regenerate TypeScript types from the live schema themselves:
 
 ```bash
-cd apps/academy && pnpm db:types
+pnpm db:types
 ```
 
 Once they confirm it's done, stage and commit the updated file yourself (this is a local git operation, not a remote-DB command):
 
 ```bash
-git add apps/academy/src/types/supabase.types.ts
+git add types/supabase.types.ts
 git commit -m "chore(db): regenerate Supabase types after v$ARGUMENTS migrations"
 ```
 

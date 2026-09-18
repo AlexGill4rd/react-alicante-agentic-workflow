@@ -19,7 +19,7 @@ argument-hint: "<version> e.g. 1.4.0"
 - Manually, any time you need a changelog entry for a version (see [Manual Use](#manual-use) below).
 
 ## Inputs
-- `$ARGUMENTS` (required): semver version string. If omitted, read from `apps/academy/package.json`.
+- `$ARGUMENTS` (required): semver version string. If omitted, read from `package.json`.
 
 ## Prerequisites
 - **On release branch:** Run `git branch --show-current`. Must start with `release-`. If not → stop and warn.

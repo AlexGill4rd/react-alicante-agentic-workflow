@@ -18,7 +18,7 @@ argument-hint: "<version> e.g. 1.4.0"
 - After the changelog has been committed on the release branch and the release is ready for QA.
 
 ## Inputs
-- `$ARGUMENTS` (required): semver version string. If omitted, read from `apps/academy/package.json`.
+- `$ARGUMENTS` (required): semver version string. If omitted, read from `package.json`.
 
 ## Prerequisites
 - **On release branch:** Run `git branch --show-current`. Must start with `release-`. If not → stop and warn.
@@ -66,7 +66,7 @@ argument-hint: "<version> e.g. 1.4.0"
    - [ ] QA passed on Vercel preview
    - [ ] All QA milestone issues closed
    - [ ] New env variables added to Vercel (QA + Production)
-   - [ ] DB migrations applied to production (see apps/academy/docs/database-migrations.md)
+   - [ ] DB migrations applied to production (see the Database section of README.md)
    - [ ] Paid product release gate completed if this release touches checkout, subscriptions, billing, Stripe, or paid access
    - [ ] No merge conflicts with main
 

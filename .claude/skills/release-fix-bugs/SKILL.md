@@ -48,7 +48,7 @@ Show the issue title and description, then ask:
 If the issue already has a root cause from `bug-triager` (check issue body) — use it.
 
 Otherwise delegate to `bug-triager`:
-> "Investigate bug #<number>: <title>. App is in `apps/academy/`. <paste issue description>"
+> "Investigate bug #<number>: <title>. <paste issue description>"
 
 Read the diagnosis before writing any code.
 
@@ -65,8 +65,10 @@ Read the diagnosis before writing any code.
 ### 3. Run Tests
 
 ```bash
-cd apps/academy && pnpm test --no-coverage 2>&1
+pnpm test 2>&1
 ```
+
+If the project has no `test` script, say so on its own line ("no test suite in this project, skipped") and move on — never silently omit this step.
 
 If tests fail → stop, show the failure, ask the user how to proceed. Do NOT commit broken code.
 

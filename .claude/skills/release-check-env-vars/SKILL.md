@@ -31,7 +31,7 @@ argument-hint: "<version> — e.g. 4.0.0"
 ### 1. Find New Variables in .env.example
 
 ```bash
-git diff <last-tag>..HEAD -- apps/academy/.env.example
+git diff <last-tag>..HEAD -- .env.example
 ```
 
 Extract added lines (starting with `+`, excluding `+++`) — these are candidates for Vercel.
@@ -41,14 +41,18 @@ Extract added lines (starting with `+`, excluding `+++`) — these are candidate
 ### 2. Audit All process.env References in Code
 
 ```bash
-grep -rn "process\.env\." apps/academy/src --include="*.ts" --include="*.tsx" | \
-  grep -oP 'process\.env\.\K[A-Z_]+' | sort -u
+grep -rhoE "process\.env\.[A-Z_]+" app components contexts services utils \
+  --include="*.ts" --include="*.tsx" | sed 's/^process\.env\.//' | sort -u
 ```
+
+Plain `-E` and `sed`, not `grep -P`: macOS's built-in grep has no Perl mode.
+
+Ignore platform-provided variables in the output (`VERCEL_URL`, `VERCEL_ENV`, `NODE_ENV`): nobody sets those by hand, so they don't belong in `.env.example`.
 
 Then read the current `.env.example` keys:
 
 ```bash
-grep -oP '^[A-Z_]+' apps/academy/.env.example | sort -u
+grep -oE '^[A-Z_]+' .env.example | sort -u
 ```
 
 **Cross-check:** Find any `process.env.X` references in code where `X` is NOT in `.env.example`. These are missing or misnamed variables — report them as **errors**.
@@ -76,7 +80,7 @@ If no new vars and no mismatches → inform user:
 Then stop.
 
 Notes to include:
-- `SENTRY_ENVIRONMENT` / `NEXT_PUBLIC_SENTRY_ENV` → set to `preview` for Preview, `production` for Production
+- Variables that differ per environment (Supabase project URL and key, feature flags) → set the QA value for Preview and the Production value for Production
 - `NEXT_PUBLIC_*` variables are exposed to the browser — double-check values before saving
 - `NEXT_PUBLIC_*` variables require a Vercel redeployment to take effect if the preview was already deployed
 
@@ -89,55 +93,12 @@ Notes to include:
 
 ### 3. Fix Mismatches in .env.example
 
-For each mismatch identified in step 2 — add the missing variable to `apps/academy/.env.example` with a placeholder value, then commit:
+For each mismatch identified in step 2 — add the missing variable to `.env.example` with a placeholder value, then commit:
 
 ```bash
-git add apps/academy/.env.example
+git add .env.example
 git commit -m "chore: add missing env vars to .env.example"
 ```
-
----
-
----
-
-### 3b. Rate Limit Store Connectivity Check
-
-`UPSTASH_REDIS_REST_URL` / `UPSTASH_REDIS_REST_TOKEN` are optional — `src/lib/utils/rateLimit.ts` falls back to an in-memory store when they're unset, so a missing/wrong value doesn't fail the build or error visibly. It just silently loses cross-instance rate limiting. Being present in Vercel isn't enough to trust — verify the credential actually authenticates, using the same values that should be going into Vercel:
-
-```bash
-cd apps/academy && node -e "
-require('dotenv').config({ path: '.env.local' });
-if (!process.env.UPSTASH_REDIS_REST_URL) {
-  console.log('UPSTASH not configured - rate limiting will use the in-memory fallback.');
-  process.exit(0);
-}
-const { Redis } = require('@upstash/redis');
-Redis.fromEnv().ping()
-  .then((res) => console.log('Redis reachable:', res))
-  .catch((err) => { console.error('Redis PING failed:', err.message); process.exit(1); });
-"
-```
-
-If this fails, the most common cause is a stray quote character around the pasted value in `.env.local` (Node's `dotenv` strips one layer of surrounding quotes, but paste errors can leave mismatched or doubled ones) — check the raw line, not just whether it looks non-empty.
-
-If `UPSTASH_REDIS_REST_URL` is a **new** variable this release (per step 1), remind the user:
-> "Redis connectivity confirmed locally. Use this same Upstash database's REST URL/token in Vercel for both Preview and Production — no need to provision a second one unless you want isolated rate-limit counts per environment."
-
----
-
-### 3c. Supabase Auth Dashboard Config Check
-
-Invoke `database-manager`:
-
-> "Validate Supabase Auth dashboard config for both QA and Production ahead of v<version>"
-
-The agent runs its own project-identity breakpoint (confirms QA vs Production by name before checking anything) and reports Site URL, redirect URLs, and email template findings for both environments.
-
-#### ⏸️ BREAKPOINT — Confirm Auth Config
-
-> "Auth dashboard config checked for both QA and Production — see findings above. Reply 'done' once any flagged items are fixed."
-
-**Wait for explicit confirmation before marking complete.**
 
 ---
 
