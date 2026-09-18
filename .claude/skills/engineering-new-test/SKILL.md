@@ -36,8 +36,12 @@ argument-hint: "[filepath]"
    - Set up `beforeEach`: `(useTranslations as jest.Mock).mockReturnValue((key: string) => key)`
 4. **Write semantic rendering tests:** assert key user-visible elements, accessible names, labels, and critical conditional UI.
 5. **Write behavioral tests:** simulate user interactions where the component owns behavior.
-   - Use `fireEvent` for simple clicks.
-   - Use `userEvent` only when typing, tab order, keyboard behavior, or realistic interaction timing matters.
+   - Default to `userEvent`, the Testing Library recommendation: it fires the
+     full sequence a real user triggers (pointer, focus, keyboard), so it
+     catches bugs a bare `click` walks past — a disabled button, an overlay
+     swallowing the click, focus never landing. It's async, so `await` every call.
+   - Use `fireEvent` only for events `userEvent` doesn't model, such as
+     `scroll`, `resize`, or a synthetic `change` on a hidden input.
 6. **Write edge case tests:** empty data, missing optional props, error states, loading states.
 7. **Use snapshots sparingly:** add a snapshot only when it protects stable, intentionally reviewed output better than semantic assertions.
 8. **Run tests** to confirm they pass.

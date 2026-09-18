@@ -22,5 +22,5 @@ export function render(ui: ReactElement) {
   return testingLibraryRender(ui, { wrapper: Providers });
 }
 
-export { screen, waitFor, within } from "@testing-library/react";
+export { fireEvent, screen, waitFor, within } from "@testing-library/react";
 export { default as userEvent } from "@testing-library/user-event";
