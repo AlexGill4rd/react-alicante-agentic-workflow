@@ -44,6 +44,7 @@ You need two Supabase projects, one for QA and one for Production. Local develop
 |---|---|---|
 | `NEXT_PUBLIC_SUPABASE_URL` | Server (`services/supabase.ts`) | Project URL: QA locally, Production in production |
 | `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Server (`services/supabase.ts`) | Publishable key; row level security keeps the data read-only |
+| `SUPABASE_PRODUCTION_PROJECT_REF` | Release skills | Ref of the Production project, used to relink before applying migrations there. Not a secret |
 | `NEWS_API_URL` | Server only (`services/news.ts`) | Base URL of the Hacker News API behind `/news` |
 | `NEXT_PUBLIC_ENABLE_STATS` | Server and browser | Set to `false` to hide the Stats page and its nav link |
 
