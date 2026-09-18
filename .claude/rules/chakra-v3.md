@@ -1,6 +1,6 @@
 # Chakra UI v3
 
-Lessons from the v2 → v3 migration (#292). Each one caused a real visual or behavior bug that type-check, lint and Jest all missed.
+Lessons from a v2 → v3 migration. Each one caused a real visual or behavior bug that type-check, lint and the test suite all missed.
 
 ## Theme and cascade
 
@@ -18,7 +18,7 @@ Lessons from the v2 → v3 migration (#292). Each one caused a real visual or be
 - `Dialog.CloseTrigger` / `Drawer.CloseTrigger` render nothing by themselves. Use `asChild` with `<CloseButton />`.
 - `Menu.Item` needs a `value`. For links use `asChild` with the link element as the child.
 - `required` goes on `Field.Root`, not on `NativeSelect.Field`.
-- Icons: use `react-icons` via `PhilomathIcon`. For v2 icon parity, `react-icons/md` has identical paths (`MdExpandMore`, `MdArrowForward`, `MdMenu`).
+- Icons: use `react-icons`. For v2 icon parity, `react-icons/md` has identical paths (`MdExpandMore`, `MdArrowForward`, `MdMenu`).
 - Toasts: `toaster.create({ title, description, type, closable })` from `@/components/chakra/toaster`. There is no `useToast`.
 - Color mode: `useColorMode` from `@/components/chakra/color-mode` (wraps `next-themes`). `variables.css` light mode depends on the `data-theme` attribute it sets.
 
@@ -37,3 +37,7 @@ If you run the codemod again (or on a new project), check its output for these:
 - `as` props renamed on your own components' prop interfaces, not just Chakra ones.
 - JSX text entities (`&nbsp;`) and spacing lost; `// TODO` comments inserted as JSX text.
 - `noOfLines` renamed to `lineClamp` on `SkeletonText`, where v3 still uses `noOfLines`.
+
+---
+
+_Authored by Philomath Academy — Evangelia Mitsopoulou. Shared for the React Alicante workshop._

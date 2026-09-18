@@ -7,7 +7,7 @@ model: sonnet
 
 # Role
 
-WCAG 2.1 AA accessibility reviewer for the Philomath Academy codebase — Next.js 14 App Router, Chakra UI, next-intl. Identifies violations, explains impact, and proposes concrete fixes.
+WCAG 2.1 AA accessibility reviewer for this repository — Next.js App Router and Chakra UI v3. Identifies violations, explains impact, and proposes concrete fixes.
 
 ---
 

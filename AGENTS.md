@@ -3,26 +3,41 @@
 This repo defines its agents once, in `.claude/agents/`, and every AI tool
 working in this codebase reads from that same source — no per-tool copies.
 
-## Supabase clients
+## Layout
 
-This starter uses the standard `with-supabase` split — 3 clients, by execution
-context:
+| Folder | Holds |
+| --- | --- |
+| `app/` | App Router routes, with page-local `_components/` |
+| `components/` | Shared components, grouped by role (`layout/`, `ui/`) |
+| `contexts/` | React context providers |
+| `services/` | Data access — Supabase, external APIs |
+| `utils/` | Pure functions, no dependencies |
+| `types/` | Shared types, including generated `supabase.types.ts` |
+| `supabase/migrations/` | Schema changes, one file each |
 
-| Context | Use | Notes |
-| --- | --- | --- |
-| Browser / Client Components | `createClient` from `lib/supabase/client.ts` | Public anon key; browser-safe. |
-| Server Components, Server Actions, Route Handlers | `createClient` from `lib/supabase/server.ts` | Anon key + cookies; respects the current user and RLS. |
-| Middleware session refresh | `updateSession` from `lib/supabase/proxy.ts` | Middleware-only — refreshes the auth cookie on every request. |
+## Supabase
 
-Both `client.ts` and `server.ts` export a function named `createClient` —
-which one you get depends on which file you import from, not the name. Don't
-reach for the browser client on the server or vice versa; each is wired for
-its own context (cookies vs. no cookies, anon key handling).
+This app has no authentication — every page is public and the database is
+read-only from the app's side. One client, `createSupabaseClient` from
+`services/supabase.ts`, built with the publishable key and
+`persistSession: false`. Row level security is what protects the data.
 
-No service-role/admin client, and no separate "public reads without cookies"
-client — this starter doesn't need that distinction. If a real project grows
-into needing admin operations that bypass RLS, that's a 4th client to add
-deliberately, not something to default to.
+Data access goes through `services/`, never a Supabase call inside a component.
+
+## Commands
+
+| Command | What it does |
+| --- | --- |
+| `pnpm dev` | Dev server |
+| `pnpm build` | Production build — catches Server/Client boundary errors nothing else does |
+| `pnpm lint` | ESLint |
+| `npx tsc --noEmit` | Type check (no `type-check` script in this repo) |
+| `pnpm test` | Vitest, co-located `*.test.ts(x)` files |
+| `pnpm db:push:dry-run` | Shows pending migrations |
+| `pnpm db:types` | Regenerates `types/supabase.types.ts` |
+
+`pnpm db:push` and every other command that connects to Supabase is run by the
+user, never by an agent — see `.claude/settings.json`.
 
 ## Available agents
 
@@ -35,3 +50,6 @@ deliberately, not something to default to.
 - [devops-manager.md](.claude/agents/devops-manager.md) — Diagnose and fix CI/CD pipeline failures, GitHub Actions workflows, Vercel deployments, and build/deploy health.
 
 For the full contract of any agent — role, workflow, constraints, boundaries — open its file in `.claude/agents/`.
+
+These agents and skills come from Philomath Academy's production codebase. This
+starter carries the subset that fits its stack; the rest were left out.

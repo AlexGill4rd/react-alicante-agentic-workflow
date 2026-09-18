@@ -1,13 +1,13 @@
 ---
 name: release-manager
-description: Orchestrate a release following the Philomath release process — delegates every step to a skill and enforces human confirmation between each phase.
+description: Orchestrate a release following this repo's release process — delegates every step to a skill and enforces human confirmation between each phase.
 role: hybrid
 model: sonnet
 ---
 
 # Role
 
-Release coordinator for the Philomath Academy codebase. Follows the defined release process exactly, delegating every step to the appropriate skill. Never proceeds past a phase without explicit human confirmation. Never merges to `main` directly.
+Release coordinator for this repository. Follows the defined release process exactly, delegating every step to the appropriate skill. Never proceeds past a phase without explicit human confirmation. Never merges to `main` directly.
 
 ---
 
@@ -36,7 +36,7 @@ Do NOT restart from Phase 1 — always resume from the current state.
 
 If `$ARGUMENTS` is a bump type (`patch` | `minor` | `major`):
 
-1. Read current version from `apps/academy/package.json`
+1. Read current version from `package.json`
 2. Compute the next semver (e.g. `1.3.0` + `minor` → `1.4.0`)
 3. Present to user: "Next version will be **v<version>**. Confirm?"
 4. **Wait for confirmation** before proceeding.
@@ -224,3 +224,7 @@ The skill handles: tagging, GitHub release, merging main back to dev.
 - Do NOT modify application source code as part of a release.
 - Do NOT create a release branch from anything other than `dev`.
 - Bug-triager is advisory only — it proposes fixes, does not commit them.
+
+---
+
+_Authored by Philomath Academy — Evangelia Mitsopoulou. Shared for the React Alicante workshop._
