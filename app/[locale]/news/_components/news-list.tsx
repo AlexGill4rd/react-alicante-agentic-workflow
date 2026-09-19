@@ -6,6 +6,7 @@ import {
 } from "@/components/primitives/card";
 import { fetchFrontPageNews } from "@/services/news";
 import { formatDate } from "@/utils/format-date";
+import { Flex, Link, Text } from "@chakra-ui/react";
 
 export async function NewsList() {
   let stories;
@@ -13,38 +14,39 @@ export async function NewsList() {
     stories = await fetchFrontPageNews();
   } catch {
     return (
-      <p className="text-[color:var(--error-hex)]">
+      <Text color="var(--error-hex)">
         Couldn&apos;t load news right now. Check that NEWS_API_URL is set.
-      </p>
+      </Text>
     );
   }
 
   return (
-    <ul className="flex flex-col gap-4">
+    <Flex as="ul" direction="column" gap="4" listStyleType="none">
       {stories.map((story) => (
         <li key={story.id}>
           <Card>
             <CardHeader>
-              <CardTitle className="text-base">
-                <a
+              <CardTitle fontSize="md">
+                <Link
                   href={story.url}
                   target="_blank"
                   rel="noreferrer"
-                  className="hover:text-[color:var(--accent-hex)]"
+                  color="var(--text-primary)"
+                  _hover={{ color: "var(--accent-hex)" }}
                 >
                   {story.title}
-                </a>
+                </Link>
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-sm text-[color:var(--text-muted)]">
+              <Text fontSize="sm" color="var(--text-muted)">
                 {story.points} points · {story.commentCount} comments ·{" "}
                 {story.author} · {formatDate(story.createdAt)}
-              </p>
+              </Text>
             </CardContent>
           </Card>
         </li>
       ))}
-    </ul>
+    </Flex>
   );
 }

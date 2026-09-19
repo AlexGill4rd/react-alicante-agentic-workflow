@@ -6,6 +6,8 @@ import {
   getSessionCountByHour,
   getSessionCountByTrack,
 } from "@/utils/session-stats";
+import { PageHeading } from "@/components/layout/page-heading";
+import { Flex, Grid } from "@chakra-ui/react";
 import { notFound } from "next/navigation";
 
 export default async function StatsPage() {
@@ -19,19 +21,16 @@ export default async function StatsPage() {
   const hourlyCounts = getSessionCountByHour(sessions);
 
   return (
-    <div className="flex-1 w-full flex flex-col gap-8">
-      <div className="flex flex-col gap-2">
-        <h1 className="font-bold text-3xl">Stats</h1>
-        <p className="text-[color:var(--text-muted)]">
-          A quick visual read of the day: what tracks show up most, and which
-          hours are busiest.
-        </p>
-      </div>
+    <Flex direction="column" gap="8" flex="1" width="full">
+      <PageHeading title="Stats">
+        A quick visual read of the day: what tracks show up most, and which
+        hours are busiest.
+      </PageHeading>
 
-      <div className="grid gap-6">
+      <Grid gap="6">
         <TrackCountChart data={trackCounts} />
         <HourlyCountChart data={hourlyCounts} />
-      </div>
-    </div>
+      </Grid>
+    </Flex>
   );
 }

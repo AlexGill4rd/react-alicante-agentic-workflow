@@ -39,7 +39,8 @@ describe("SessionTimeline", () => {
 
     expect(
       screen.getByRole("link", { name: /Opening Keynote/ }),
-    ).toHaveAttribute("href", "/sessions/opening-keynote");
+      // Locale-aware Link: the prefix is part of the href.
+    ).toHaveAttribute("href", "/en/sessions/opening-keynote");
   });
 
   it("marks hours from the earliest start to the latest end", () => {

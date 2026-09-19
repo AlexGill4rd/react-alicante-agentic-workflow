@@ -1,8 +1,8 @@
-import Link from "next/link";
-import { notFound } from "next/navigation";
-
 import { Badge } from "@/components/primitives/badge";
+import { Link } from "@/i18n/navigation";
 import { fetchSessionById, fetchSessions } from "@/services/sessions";
+import { Flex, Heading, Text } from "@chakra-ui/react";
+import { notFound } from "next/navigation";
 
 export async function generateStaticParams() {
   const sessions = await fetchSessions();
@@ -22,28 +22,34 @@ export default async function SessionDetailPage({
   }
 
   return (
-    <div className="flex-1 w-full flex flex-col gap-6">
-      <Link
-        href="/sessions"
-        className="text-sm text-muted-foreground hover:underline w-fit"
-      >
-        ← Back to schedule
+    <Flex direction="column" gap="6" flex="1" width="full">
+      <Link href="/sessions">
+        <Text
+          fontSize="sm"
+          width="fit-content"
+          color="var(--text-muted)"
+          _hover={{ textDecoration: "underline" }}
+        >
+          ← Back to schedule
+        </Text>
       </Link>
 
-      <div className="flex flex-col gap-3">
-        <div className="flex items-center gap-3">
-          <Badge variant="secondary">{session.track}</Badge>
-          <span className="text-sm text-muted-foreground">
+      <Flex direction="column" gap="3">
+        <Flex align="center" gap="3">
+          <Badge>{session.track}</Badge>
+          <Text fontSize="sm" color="var(--text-muted)">
             {session.startTime} · {session.durationMinutes} min · {session.room}
-          </span>
-        </div>
-        <h1 className="font-bold text-3xl">{session.title}</h1>
-        <p className="text-muted-foreground">{session.speaker}</p>
-      </div>
+          </Text>
+        </Flex>
+        <Heading as="h1" fontSize="3xl" fontWeight="bold">
+          {session.title}
+        </Heading>
+        <Text color="var(--text-muted)">{session.speaker}</Text>
+      </Flex>
 
-      <p className="text-base leading-relaxed max-w-2xl">
+      <Text fontSize="md" lineHeight="relaxed" maxWidth="2xl">
         {session.description}
-      </p>
-    </div>
+      </Text>
+    </Flex>
   );
 }

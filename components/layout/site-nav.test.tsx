@@ -1,5 +1,9 @@
 import { describe, expect, it, vi } from "vitest";
 
+// jsdom applies base styles only, never a media query, so the desktop row
+// counts as hidden here. `hidden: true` keeps these assertions about markup
+// rather than about which breakpoint jsdom thinks it is at.
+
 import { render, screen, userEvent } from "@/tests/utils/render";
 
 import { SiteNav } from "./site-nav";
@@ -30,7 +34,10 @@ describe("SiteNav", () => {
 
     render(<SiteNav />);
 
-    const schedule = screen.getByRole("link", { name: "Schedule" });
+    const schedule = screen.getByRole("link", {
+      name: "Schedule",
+      hidden: true,
+    });
     expect(schedule).toHaveAttribute("href", "/en/sessions");
     expect(schedule).toHaveAttribute("aria-current", "page");
   });
@@ -40,16 +47,18 @@ describe("SiteNav", () => {
 
     render(<SiteNav />);
 
-    expect(screen.getByRole("link", { name: "Schedule" })).not.toHaveAttribute(
-      "aria-current",
-    );
+    expect(
+      screen.getByRole("link", { name: "Schedule", hidden: true }),
+    ).not.toHaveAttribute("aria-current");
   });
 
   it("switches locale by navigating to the same route", async () => {
     usePathname.mockReturnValue("/sessions");
 
     render(<SiteNav />);
-    await userEvent.click(screen.getByRole("button", { name: "es" }));
+    await userEvent.click(
+      screen.getAllByRole("button", { name: "es", hidden: true })[0],
+    );
 
     // next-intl resolves the locale into the href before it navigates.
     expect(replace).toHaveBeenCalledWith("/es/sessions");
@@ -59,13 +68,18 @@ describe("SiteNav", () => {
     usePathname.mockReturnValue("/");
 
     render(<SiteNav />);
-    const menuButton = screen.getByRole("button", { name: "Open menu" });
+    const menuButton = screen.getByRole("button", {
+      name: "Open menu",
+      hidden: true,
+    });
     await userEvent.click(menuButton);
 
     expect(
-      screen.getByRole("button", { name: "Close menu" }),
+      screen.getByRole("button", { name: "Close menu", hidden: true }),
     ).toBeInTheDocument();
     // Desktop row and open menu both render the links.
-    expect(screen.getAllByRole("link", { name: "Schedule" })).toHaveLength(2);
+    expect(
+      screen.getAllByRole("link", { name: "Schedule", hidden: true }),
+    ).toHaveLength(2);
   });
 });

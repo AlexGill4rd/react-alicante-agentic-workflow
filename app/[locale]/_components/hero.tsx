@@ -1,16 +1,36 @@
+import { Box, Flex, Heading, Text } from "@chakra-ui/react";
 import { useTranslations } from "next-intl";
 
 export function Hero() {
   const t = useTranslations("Hero");
 
   return (
-    <div className="flex flex-col gap-16 items-center">
-      <h1 className="sr-only">{t("heading")}</h1>
-      <p className="text-3xl lg:text-4xl !leading-tight mx-auto max-w-xl text-center">
-        {t("line1")} <span className="font-bold">React Alicante</span>,{" "}
-        {t("line2")}
-      </p>
-      <div className="w-full p-[1px] bg-gradient-to-r from-transparent via-foreground/10 to-transparent my-8" />
-    </div>
+    <Flex direction="column" align="center" gap="16">
+      <Heading as="h1" srOnly>
+        {t("heading")}
+      </Heading>
+
+      <Text
+        fontSize={{ base: "3xl", lg: "4xl" }}
+        lineHeight="tight"
+        maxWidth="xl"
+        marginX="auto"
+        textAlign="center"
+      >
+        {t("line1")}{" "}
+        <Text as="span" fontWeight="bold">
+          React Alicante
+        </Text>
+        , {t("line2")}
+      </Text>
+
+      {/* Hairline divider that fades out at both ends. */}
+      <Box
+        width="full"
+        height="1px"
+        marginY="8"
+        backgroundImage="linear-gradient(to right, transparent, var(--card-border-hex), transparent)"
+      />
+    </Flex>
   );
 }

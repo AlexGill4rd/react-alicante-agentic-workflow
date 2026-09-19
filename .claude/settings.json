@@ -1,5 +1,9 @@
 {
   "permissions": {
+    "allow": [
+      "Bash(gh pr *)",
+      "mcp__playwright__browser_take_screenshot"
+    ],
     "deny": [
       "Read(**/.env)",
       "Read(**/.env.local)",

@@ -1,5 +1,4 @@
-import Link from "next/link";
-
+import { SessionBlock } from "@/app/[locale]/sessions/_components/session-block";
 import type { Session } from "@/types/session";
 import { minutesToTime, timeToMinutes } from "@/utils/schedule-time";
 import {
@@ -7,6 +6,7 @@ import {
   getSessionsByRoom,
   getTimelineBounds,
 } from "@/utils/session-timeline";
+import { Box, Flex, Text } from "@chakra-ui/react";
 
 const PX_PER_MINUTE = 1.6;
 const TIME_COLUMN_WIDTH = 56;
@@ -26,84 +26,88 @@ export function SessionTimeline({ sessions }: SessionTimelineProps) {
     hourMarks.push(minute);
   }
 
+  const offsetOf = (minute: number) => (minute - startMinutes) * PX_PER_MINUTE;
+
   return (
-    <div className="w-full min-w-0 overflow-x-auto">
-      <div
-        className="inline-flex min-w-full flex-col"
-        style={{
-          minWidth:
-            TIME_COLUMN_WIDTH + TIMELINE_ROOMS.length * ROOM_COLUMN_MIN_WIDTH,
-        }}
+    // The inner grid is wider than a phone, so it scrolls here rather than
+    // pushing the whole page sideways.
+    <Box width="full" minWidth="0" overflowX="auto">
+      <Flex
+        direction="column"
+        display="inline-flex"
+        minWidth={`${TIME_COLUMN_WIDTH + TIMELINE_ROOMS.length * ROOM_COLUMN_MIN_WIDTH}px`}
       >
-        <div className="flex gap-2 mb-2">
-          <div style={{ width: TIME_COLUMN_WIDTH }} className="shrink-0" />
+        <Flex gap="2" marginBottom="2">
+          <Box width={`${TIME_COLUMN_WIDTH}px`} flexShrink="0" />
           {TIMELINE_ROOMS.map((room) => (
-            <div
+            <Text
               key={room}
-              className="flex-1 text-center text-sm font-semibold"
-              style={{ minWidth: ROOM_COLUMN_MIN_WIDTH }}
+              flex="1"
+              minWidth={`${ROOM_COLUMN_MIN_WIDTH}px`}
+              textAlign="center"
+              fontSize="sm"
+              fontWeight="semibold"
             >
               {room}
-            </div>
+            </Text>
           ))}
-        </div>
+        </Flex>
 
-        <div className="flex gap-2" style={{ height: timelineHeight }}>
-          <div
-            className="relative shrink-0 text-xs text-[color:var(--text-muted)]"
-            style={{ width: TIME_COLUMN_WIDTH }}
+        <Flex gap="2" height={`${timelineHeight}px`}>
+          <Box
+            position="relative"
+            flexShrink="0"
+            width={`${TIME_COLUMN_WIDTH}px`}
+            fontSize="xs"
+            color="var(--text-muted)"
           >
             {hourMarks.map((minute) => (
-              <span
+              <Text
                 key={minute}
-                className="absolute right-2 -translate-y-1/2"
-                style={{ top: (minute - startMinutes) * PX_PER_MINUTE }}
+                as="span"
+                position="absolute"
+                right="2"
+                top={`${offsetOf(minute)}px`}
+                transform="translateY(-50%)"
               >
                 {minutesToTime(minute)}
-              </span>
+              </Text>
             ))}
-          </div>
+          </Box>
 
           {TIMELINE_ROOMS.map((room) => (
-            <div
+            <Box
               key={room}
-              className="relative flex-1 border-l border-[color:var(--card-border-hex)]"
-              style={{ minWidth: ROOM_COLUMN_MIN_WIDTH }}
+              position="relative"
+              flex="1"
+              minWidth={`${ROOM_COLUMN_MIN_WIDTH}px`}
+              borderLeftWidth="1px"
+              borderColor="var(--card-border-hex)"
             >
               {hourMarks.map((minute) => (
-                <div
+                <Box
                   key={minute}
-                  className="absolute left-0 right-0 border-t border-[color:var(--card-border-hex)]"
-                  style={{ top: (minute - startMinutes) * PX_PER_MINUTE }}
+                  position="absolute"
+                  left="0"
+                  right="0"
+                  top={`${offsetOf(minute)}px`}
+                  borderTopWidth="1px"
+                  borderColor="var(--card-border-hex)"
                 />
               ))}
 
-              {sessionsByRoom[room].map((session) => {
-                const top =
-                  (timeToMinutes(session.startTime) - startMinutes) *
-                  PX_PER_MINUTE;
-                const height = session.durationMinutes * PX_PER_MINUTE;
-
-                return (
-                  <Link
-                    key={session.id}
-                    href={`/sessions/${session.id}`}
-                    className="absolute left-1 right-1 overflow-hidden rounded-md border border-[color:var(--card-border-hex)] bg-[color:var(--card-bg)] p-1.5 text-xs leading-tight transition-colors hover:border-[color:var(--card-border-hover-hex)]"
-                    style={{ top, height }}
-                  >
-                    <p className="font-medium text-[color:var(--text-primary)] truncate">
-                      {session.title}
-                    </p>
-                    <p className="text-[color:var(--text-muted)] truncate">
-                      {session.startTime} · {session.speaker}
-                    </p>
-                  </Link>
-                );
-              })}
-            </div>
+              {sessionsByRoom[room].map((session) => (
+                <SessionBlock
+                  key={session.id}
+                  session={session}
+                  top={offsetOf(timeToMinutes(session.startTime))}
+                  height={session.durationMinutes * PX_PER_MINUTE}
+                />
+              ))}
+            </Box>
           ))}
-        </div>
-      </div>
-    </div>
+        </Flex>
+      </Flex>
+    </Box>
   );
 }

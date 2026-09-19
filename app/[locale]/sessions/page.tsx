@@ -1,19 +1,18 @@
 import { SessionTimeline } from "@/app/[locale]/sessions/_components/session-timeline";
+import { PageHeading } from "@/components/layout/page-heading";
 import { fetchSessions } from "@/services/sessions";
+import { Flex } from "@chakra-ui/react";
 
 export default async function SessionsPage() {
   const sessions = await fetchSessions();
 
   return (
-    <div className="flex-1 w-full min-w-0 flex flex-col gap-8">
-      <div className="flex flex-col gap-2">
-        <h1 className="font-bold text-3xl">Schedule</h1>
-        <p className="text-[color:var(--text-muted)]">
-          All sessions, by room and time. Times are local (CET).
-        </p>
-      </div>
+    <Flex direction="column" gap="8" flex="1" width="full" minWidth="0">
+      <PageHeading title="Schedule">
+        All sessions, by room and time. Times are local (CET).
+      </PageHeading>
 
       <SessionTimeline sessions={sessions} />
-    </div>
+    </Flex>
   );
 }
