@@ -29,8 +29,6 @@ export function SessionTimeline({ sessions }: SessionTimelineProps) {
   const offsetOf = (minute: number) => (minute - startMinutes) * PX_PER_MINUTE;
 
   return (
-    // The inner grid is wider than a phone, so it scrolls here rather than
-    // pushing the whole page sideways.
     <Box width="full" minWidth="0" overflowX="auto">
       <Flex
         direction="column"

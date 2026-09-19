@@ -8,7 +8,6 @@ import { useTheme } from "next-themes";
 
 const ThemeSwitcher = () => {
   const { theme, setTheme } = useTheme();
-  // The icon depends on the stored theme, which the server cannot know.
   const isClient = useIsClient();
 
   if (!isClient) {

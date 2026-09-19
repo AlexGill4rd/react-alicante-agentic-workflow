@@ -10,7 +10,6 @@ import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 export function SiteNav() {
-  // Locale-aware: the pathname comes back without the /en or /es prefix.
   const pathname = usePathname();
   const t = useTranslations("Nav");
   const [open, setOpen] = useState(false);

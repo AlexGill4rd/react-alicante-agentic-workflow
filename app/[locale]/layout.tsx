@@ -24,7 +24,6 @@ const geistSans = Geist({
   subsets: ["latin"],
 });
 
-/** Prerender both locales instead of resolving them per request. */
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
@@ -42,7 +41,7 @@ export default async function LocaleLayout({
     notFound();
   }
 
-  // Without this the pages below opt into dynamic rendering.
+  // Keeps the pages below static.
   setRequestLocale(locale);
 
   return (

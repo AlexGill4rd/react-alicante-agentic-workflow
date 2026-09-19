@@ -1,7 +1,6 @@
 import { Flex, Heading, Text } from "@chakra-ui/react";
 import type { ReactNode } from "react";
 
-/** The title-and-subtitle block every page opens with. */
 export function PageHeading({
   title,
   children,

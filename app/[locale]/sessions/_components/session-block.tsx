@@ -4,7 +4,6 @@ import { Box, Text } from "@chakra-ui/react";
 
 interface SessionBlockProps {
   session: Session;
-  /** Distance from the top of the room column, in pixels. */
   top: number;
   height: number;
 }

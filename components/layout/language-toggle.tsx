@@ -28,7 +28,6 @@ export function LanguageToggle() {
             aria-current={current ? "true" : undefined}
             color={current ? "var(--accent-hex)" : "var(--text-muted)"}
             _hover={{ color: "var(--accent-hex)" }}
-            // Same route, different locale — the URL is the source of truth.
             onClick={() => router.replace(pathname, { locale: code })}
           >
             {code}
