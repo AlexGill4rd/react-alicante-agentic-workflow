@@ -1,12 +1,11 @@
 "use client";
 
-import { useLanguage } from "@/contexts/language-context";
+import { Link, usePathname, useRouter } from "@/i18n/navigation";
+import { routing, type Locale } from "@/i18n/routing";
 import { cn } from "@/utils/cn";
 import { isStatsEnabled } from "@/utils/feature-flags";
-import type { Language } from "@/utils/translations";
 import { Menu as MenuIcon, X } from "lucide-react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
 
 function isActive(pathname: string, href: string) {
@@ -14,17 +13,18 @@ function isActive(pathname: string, href: string) {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
-const LANGUAGES: Language[] = ["en", "es"];
-
 export function SiteNav() {
+  // Locale-aware: the pathname comes back without the /en or /es prefix.
   const pathname = usePathname();
-  const { language, setLanguage, t } = useLanguage();
+  const router = useRouter();
+  const locale = useLocale();
+  const t = useTranslations("Nav");
   const [open, setOpen] = useState(false);
 
   const navLinks = [
-    { href: "/sessions", label: t("nav.schedule") },
-    ...(isStatsEnabled ? [{ href: "/stats", label: t("nav.stats") }] : []),
-    { href: "/news", label: t("nav.news") },
+    { href: "/sessions", label: t("schedule") },
+    ...(isStatsEnabled ? [{ href: "/stats", label: t("stats") }] : []),
+    { href: "/news", label: t("news") },
   ];
 
   const linkClassName = (href: string) =>
@@ -37,20 +37,21 @@ export function SiteNav() {
 
   const languageToggle = (
     <div className="flex shrink-0 gap-2">
-      {LANGUAGES.map((lang) => (
+      {routing.locales.map((code: Locale) => (
         <button
-          key={lang}
+          key={code}
           type="button"
-          onClick={() => setLanguage(lang)}
-          aria-current={language === lang ? "true" : undefined}
+          // Same route, different locale — the URL is the source of truth.
+          onClick={() => router.replace(pathname, { locale: code })}
+          aria-current={locale === code ? "true" : undefined}
           className={cn(
             "uppercase text-xs font-semibold transition-colors",
-            language === lang
+            locale === code
               ? "text-[color:var(--accent-hex)]"
               : "text-[color:var(--text-muted)] hover:text-[color:var(--accent-hex)]",
           )}
         >
-          {lang}
+          {code}
         </button>
       ))}
     </div>
@@ -61,7 +62,7 @@ export function SiteNav() {
       <div className="w-full max-w-5xl px-5 py-3 text-sm">
         <div className="flex items-center justify-between gap-4">
           <Link href="/" className="font-semibold shrink-0">
-            React Alicante Companion
+            {t("home")}
           </Link>
 
           <div className="hidden md:flex items-center gap-5 font-semibold">
@@ -84,7 +85,7 @@ export function SiteNav() {
           <button
             type="button"
             className="md:hidden text-[color:var(--text-primary)]"
-            aria-label={open ? "Close menu" : "Open menu"}
+            aria-label={open ? t("closeMenu") : t("openMenu")}
             aria-expanded={open}
             onClick={() => setOpen((prev) => !prev)}
           >

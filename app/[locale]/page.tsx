@@ -1,4 +1,4 @@
-import { Hero } from "@/app/_components/hero";
+import { Hero } from "@/app/[locale]/_components/hero";
 import { SiteNav } from "@/components/layout/site-nav";
 import { ThemeSwitcher } from "@/components/layout/theme-switcher";
 import { Badge } from "@/components/primitives/badge";

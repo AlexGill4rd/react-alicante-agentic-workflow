@@ -1,4 +1,4 @@
-import { SessionTimeline } from "@/app/sessions/_components/session-timeline";
+import { SessionTimeline } from "@/app/[locale]/sessions/_components/session-timeline";
 import { fetchSessions } from "@/services/sessions";
 
 export default async function SessionsPage() {

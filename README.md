@@ -38,7 +38,7 @@ You need two Supabase projects, one for QA and one for Production. Local develop
    pnpm dev
    ```
 
-   Open [localhost:3000/sessions](http://localhost:3000/sessions). If the schedule shows, Supabase is connected.
+   Open [localhost:3000/en/sessions](http://localhost:3000/en/sessions). If the schedule shows, Supabase is connected. Routes are locale-prefixed (`/en`, `/es`); `/` redirects to the default locale.
 
 ## Environment variables
 

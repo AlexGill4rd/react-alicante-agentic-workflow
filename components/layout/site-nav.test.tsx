@@ -4,11 +4,25 @@ import { render, screen, userEvent } from "@/tests/utils/render";
 
 import { SiteNav } from "./site-nav";
 
-const { usePathname } = vi.hoisted(() => ({
+const { usePathname, replace } = vi.hoisted(() => ({
   usePathname: vi.fn(() => "/"),
+  replace: vi.fn(),
 }));
 
-vi.mock("next/navigation", () => ({ usePathname }));
+// next-intl's navigation helpers wrap these, so the real module has to keep
+// its other exports (redirect, permanentRedirect) or importing them throws.
+vi.mock("next/navigation", async (importOriginal) => ({
+  ...(await importOriginal<typeof import("next/navigation")>()),
+  usePathname,
+  useRouter: () => ({
+    replace,
+    push: vi.fn(),
+    prefetch: vi.fn(),
+    back: vi.fn(),
+    forward: vi.fn(),
+    refresh: vi.fn(),
+  }),
+}));
 
 describe("SiteNav", () => {
   it("links to the schedule and marks it active on a session page", () => {
@@ -17,7 +31,7 @@ describe("SiteNav", () => {
     render(<SiteNav />);
 
     const schedule = screen.getByRole("link", { name: "Schedule" });
-    expect(schedule).toHaveAttribute("href", "/sessions");
+    expect(schedule).toHaveAttribute("href", "/en/sessions");
     expect(schedule).toHaveAttribute("aria-current", "page");
   });
 
@@ -31,16 +45,14 @@ describe("SiteNav", () => {
     );
   });
 
-  it("translates the links when the language changes", async () => {
-    usePathname.mockReturnValue("/");
+  it("switches locale by navigating to the same route", async () => {
+    usePathname.mockReturnValue("/sessions");
 
     render(<SiteNav />);
     await userEvent.click(screen.getByRole("button", { name: "es" }));
 
-    expect(screen.getByRole("link", { name: "Horario" })).toBeInTheDocument();
-    expect(
-      screen.queryByRole("link", { name: "Schedule" }),
-    ).not.toBeInTheDocument();
+    // next-intl resolves the locale into the href before it navigates.
+    expect(replace).toHaveBeenCalledWith("/es/sessions");
   });
 
   it("hides the nav links behind the menu button on small screens", async () => {

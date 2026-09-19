@@ -40,7 +40,7 @@ argument-hint: "<page-name>"
    - **Decide here whether this page needs full site chrome (header, footer, floating CTA) via the site-chrome template, or should be a standalone, minimal-chrome screen.** Default to wrapping children in the site-chrome template for ordinary content pages. Skip it for auth screens, error/unauthorized pages, or anything explicitly designed as a focused flow with its own back-navigation and no marketing chrome — matching the existing precedent (`ArticlesUnauthorizedPage`, `/login`). If unsure which category a new page falls into, check the Figma reference for visible header/footer chrome, or ask.
    - This decision lives in exactly one place. Don't let a later edit add the site-chrome template back into `layout.tsx` or duplicate the wrapping in both files — that's how `/login` briefly regained the sitewide floating CTA after the layout had deliberately excluded it.
    - Import page-level components from `./_components/`.
-   - `page.tsx` is a Server Component — read data and translations on the server, never with a client hook here.
+   - `page.tsx` is a Server Component — use `getTranslations` from `next-intl/server` (async), never the `useTranslations` client hook here.
    - Default export the page component.
    - **Wrap the page's content in `PageContent`** (`@/components/templates/PageContent`) — inside the main `_components` page component, not `page.tsx` itself. It owns the page max-width, responsive horizontal page padding, and the top padding that clears the fixed navbar (plus `verticalSpacing`, `noPaddingTop`, and `variant="article"` options). Don't hand-roll a `Box` with `paddingX`/`paddingY`/`maxWidth` to replicate this — that drift is how `/login` first shipped without the standard page padding. The full chrome chain is: `page.tsx` → the site-chrome template (site chrome) → your `_components` page component → `PageContent` (content shell). Full-bleed multi-section marketing pages use `SectionsWrapper` per section instead (see Step 5).
 4. **Add translation namespace** to `locales/en.json` matching the page name (e.g., `"AboutPage": {}`).
@@ -61,7 +61,7 @@ argument-hint: "<page-name>"
 - **Responsiveness is part of the design, not an afterthought — check every breakpoint the design specifies, not just `base` and the largest size.** A layout that switches `direction`/`align`/`justify` at a breakpoint needs each state checked against the design at that size, since correct styling at the extremes doesn't guarantee correct styling at the sizes in between. If the Figma file only shows mobile and desktop frames, ask what the in-between behavior should be rather than guessing it inherits from one end.
 
 ## Constraints
-- No hardcoded strings — visible text goes through the app's translation helper, resolved on the server where possible.
+- No hardcoded strings — all visible text comes from `messages/<locale>.json` (`getTranslations` in Server Components, `useTranslations` only in Client Components that already need `'use client'`).
 - No hardcoded colors — use CSS variables or Chakra theme tokens.
 - No skipping `layout.tsx` — every page needs a layout file, even if it only exports `metadata` and renders nothing else.
 - No importing the site-chrome template in `layout.tsx` — that decision belongs in `page.tsx` only (see Step 3).

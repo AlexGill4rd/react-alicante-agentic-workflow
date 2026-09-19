@@ -5,15 +5,31 @@ working in this codebase reads from that same source — no per-tool copies.
 
 ## Layout
 
-| Folder | Holds |
-| --- | --- |
-| `app/` | App Router routes, with page-local `_components/` |
-| `components/` | Shared components, grouped by role (`layout/`, `ui/`) |
-| `contexts/` | React context providers |
-| `services/` | Data access — Supabase, external APIs |
-| `utils/` | Pure functions, no dependencies |
-| `types/` | Shared types, including generated `supabase.types.ts` |
-| `supabase/migrations/` | Schema changes, one file each |
+| Folder                 | Holds                                                    |
+| ---------------------- | -------------------------------------------------------- |
+| `app/[locale]/`        | App Router routes, with page-local `_components/`        |
+| `components/`          | Shared components, grouped by role (`layout/`, `ui/`)    |
+| `services/`            | Data access — Supabase, external APIs                    |
+| `utils/`               | Pure functions, no dependencies                          |
+| `types/`               | Shared types, including generated `supabase.types.ts`    |
+| `i18n/`                | next-intl routing, navigation helpers and request config |
+| `messages/`            | `en.json`, `es.json` — every user-facing string          |
+| `supabase/migrations/` | Schema changes, one file each                            |
+
+## Internationalisation
+
+Every route lives under `app/[locale]/`, so URLs are `/en/sessions`,
+`/es/sessions`, and `/` redirects to the default locale. `middleware.ts` does
+that redirect.
+
+- Server Components: `getTranslations` from `next-intl/server`, or
+  `useTranslations` when the component is not async.
+- Client Components: `useTranslations` from `next-intl`.
+- Links and navigation: `Link`, `useRouter`, `usePathname` from
+  `@/i18n/navigation` — never `next/link` or `next/navigation` directly, or the
+  locale prefix is lost.
+- A new page needs `setRequestLocale(locale)` if it should stay static.
+- New strings go in both `messages/en.json` and `messages/es.json`.
 
 ## Supabase
 
@@ -26,15 +42,15 @@ Data access goes through `services/`, never a Supabase call inside a component.
 
 ## Commands
 
-| Command | What it does |
-| --- | --- |
-| `pnpm dev` | Dev server |
-| `pnpm build` | Production build — catches Server/Client boundary errors nothing else does |
-| `pnpm lint` | ESLint |
-| `npx tsc --noEmit` | Type check (no `type-check` script in this repo) |
-| `pnpm test` | Vitest, co-located `*.test.ts(x)` files |
-| `pnpm db:push:dry-run` | Shows pending migrations |
-| `pnpm db:types` | Regenerates `types/supabase.types.ts` |
+| Command                | What it does                                                               |
+| ---------------------- | -------------------------------------------------------------------------- |
+| `pnpm dev`             | Dev server                                                                 |
+| `pnpm build`           | Production build — catches Server/Client boundary errors nothing else does |
+| `pnpm lint`            | ESLint                                                                     |
+| `npx tsc --noEmit`     | Type check (no `type-check` script in this repo)                           |
+| `pnpm test`            | Vitest, co-located `*.test.ts(x)` files                                    |
+| `pnpm db:push:dry-run` | Shows pending migrations                                                   |
+| `pnpm db:types`        | Regenerates `types/supabase.types.ts`                                      |
 
 `pnpm db:push` and every other command that connects to Supabase is run by the
 user, never by an agent — see `.claude/settings.json`.
@@ -53,3 +69,13 @@ For the full contract of any agent — role, workflow, constraints, boundaries �
 
 These agents and skills come from Philomath Academy's production codebase. This
 starter carries the subset that fits its stack; the rest were left out.
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->

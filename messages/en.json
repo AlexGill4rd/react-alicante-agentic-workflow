@@ -1,0 +1,15 @@
+{
+  "Nav": {
+    "home": "React Alicante Companion",
+    "schedule": "Schedule",
+    "stats": "Stats",
+    "news": "News",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
+  },
+  "Hero": {
+    "heading": "React Alicante Conference Companion",
+    "line1": "Your schedule, your sessions —",
+    "line2": "one place"
+  }
+}

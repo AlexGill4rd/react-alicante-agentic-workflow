@@ -13,7 +13,7 @@ Attendees often look for a person, not a time slot. Today the only way to find a
 - [ ] `/speakers` renders with the same nav, layout and footer as the other pages.
 - [ ] A "Speakers" nav link (EN: "Speakers", ES: "Ponentes") appears in the desktop nav and the mobile menu, and is highlighted when active.
 - [ ] One card per speaker, sorted by name, showing their name and each of their sessions (title and start time).
-- [ ] Each session in a card links to `/sessions/[id]`.
+- [ ] Each session in a card links to `/sessions/[id]` (use the locale-aware `Link` from `@/i18n/navigation`, which adds the prefix).
 - [ ] The closing panel's "Full speaker lineup" is not listed as a speaker.
 - [ ] Data comes from `fetchSessions()` in `services/sessions.ts`. Grouping sessions by speaker is a pure function in `utils/`.
 - [ ] The speaker card is its own component, built on the existing `Card` primitive.

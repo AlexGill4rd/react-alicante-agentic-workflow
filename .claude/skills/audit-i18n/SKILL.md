@@ -22,11 +22,10 @@ argument-hint: "[path]"
 - If omitted: auto-detect from `git status` — `.tsx`/`.ts` files under the source folders. Fallback: `app` and `components`.
 
 ## Prerequisites
-- Confirm the project has a translation setup at all — a library in `package.json`
-  or a translations module. If it has none, say so and stop: hardcoded strings
-  are not findings in an app that was never translated.
-- Confirm the message catalogue (e.g. `locales/en.json`, or this app's
-  `utils/translations.ts`) exists and is readable.
+- Confirm the project translates strings at all — here that is `next-intl` in
+  `package.json`. If a project has no translation setup, say so and stop:
+  hardcoded strings are not findings in an app that was never translated.
+- Confirm the message catalogue (`messages/en.json`) exists and is readable.
 - If `$ARGUMENTS` is provided, confirm the path exists before scanning.
 
 ## Workflow

@@ -155,8 +155,9 @@ Session pooler instead, which works everywhere:
 pnpm dev
 ```
 
-Visit `localhost:3000/sessions`. If the schedule shows up, Supabase is
-connected.
+Visit `localhost:3000` — it redirects to `/en`. Open `/en/sessions`, and if
+the schedule shows up, Supabase is connected. `/es/sessions` is the same page
+in Spanish.
 
 ## 10. Deploy to Vercel
 
@@ -191,7 +192,7 @@ The first deployment of a new Vercel project is always a Production one, from
 whatever the repo is at right now — so your site is live before you have
 released anything. After that, only merges into `main` update Production.
 
-Production has no tables yet, so `/sessions` there stays empty until the
+Production has no tables yet, so `/en/sessions` there stays empty until the
 release step applies the migrations to `ra-prod`. Preview, which points at QA,
 works straight away.
 

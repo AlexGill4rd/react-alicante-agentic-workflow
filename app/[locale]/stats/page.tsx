@@ -1,5 +1,5 @@
-import { HourlyCountChart } from "@/app/stats/_components/hourly-count-chart";
-import { TrackCountChart } from "@/app/stats/_components/track-count-chart";
+import { HourlyCountChart } from "@/app/[locale]/stats/_components/hourly-count-chart";
+import { TrackCountChart } from "@/app/[locale]/stats/_components/track-count-chart";
 import { fetchSessions } from "@/services/sessions";
 import { isStatsEnabled } from "@/utils/feature-flags";
 import {

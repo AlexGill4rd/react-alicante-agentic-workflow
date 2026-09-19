@@ -1,4 +1,4 @@
-import { NewsList } from "@/app/news/_components/news-list";
+import { NewsList } from "@/app/[locale]/news/_components/news-list";
 import { Suspense } from "react";
 
 export default function NewsPage() {
