@@ -25,7 +25,7 @@ CREATE POLICY "Service role has full access"
 ## Secrets in API calls
 
 - **Never put secrets, tokens, or API keys in URL query params.**
-  - Query strings appear in Vercel logs, browser history, Referer headers, CDN/proxy access logs, and Sentry breadcrumbs. Tokens leak passively.
+  - Query strings appear in Vercel logs, browser history, Referer headers, CDN/proxy access logs, and error-monitoring breadcrumbs. Tokens leak passively.
   - Always pass secrets in request headers.
 
 ```ts
@@ -68,9 +68,9 @@ log and report it — not return quietly. A silent rejection hides the worst cla
 of bug: your assumption about an external system being wrong, which no mocked
 test can catch (they assert the same wrong assumption).
 
-Real case (#573): `/auth/confirm` silently rejected OTP type `signup`, so every
+Real case: an auth callback silently rejected one valid token type, so every
 brand-new customer's first sign-in failed for months. All tests passed
-throughout. One `logger.warn` would have caught it on day one.
+throughout. One warning log would have caught it on day one.
 
 ```ts
 // ❌ Silent
@@ -78,8 +78,7 @@ if (!isSupportedOtpType(type)) return redirect(ERROR_PATH);
 
 // ✅ Loud
 if (!isSupportedOtpType(type)) {
-  logger.warn({ type }, "[auth/confirm] Rejected - unsupported type:");
-  captureSentryError(new Error(`Rejected confirmation link: ${type}`), { type });
+  console.warn("[auth/confirm] rejected unsupported type:", type);
   return redirect(ERROR_PATH);
 }
 ```
@@ -87,7 +86,7 @@ if (!isSupportedOtpType(type)) {
 Applies anywhere you enumerate "values we know about" for a system you don't
 control — event types, provider names, status strings, enum allow-lists. Prefer
 accepting the vendor's full documented set over the subset you happen to have
-seen. See `docs/backend-best-practices.md` §28.
+seen.
 
 ---
 

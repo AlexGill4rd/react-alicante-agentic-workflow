@@ -68,7 +68,7 @@ Before reviewing individual files, enumerate the real state space this diff touc
 For each state:
 - Is there a distinct, correct UI representation — or does it silently fall through to the same UI as an unrelated state?
 - Is there a test asserting *that specific state*, not just that a sub-component renders with some props passed to it?
-- Does a `page.tsx` (or any orchestration layer) that branches on this data have its own test covering the branch — sub-component tests don't cover a page's own branching logic. See `engineering-new-test`'s "page.tsx that branches" criterion (added after #420: a page rendered the wrong UI state for a failed payment, uncaught because only its sub-components had tests, never the page's own status-branching).
+- Does a `page.tsx` (or any orchestration layer) that branches on this data have its own test covering the branch — sub-component tests don't cover a page's own branching logic. See `engineering-new-test`'s "page.tsx that branches" criterion (added after a page rendered the wrong UI state for a failed payment, uncaught because only its sub-components had tests, never the page's own status-branching).
 
 Flag states that exist in the data model but have zero UI or test coverage. This is the one category of finding that requires knowing the *domain* (what every value of `SubscriptionStatus` actually means to a user), not just reading the diff — ultra won't catch it, and neither will a per-file pass through Convention Compliance below.
 
@@ -78,7 +78,7 @@ Report findings or "None".
 
 ### 3. Convention Compliance
 
-Run `/engineering-review-component` on each changed `.ts`/`.tsx` file under `src/` (components, hooks, utilities). Do NOT reimplement its checklist — summarise its Pass/Fail output in the report.
+Run `/engineering-review-component` on each changed `.ts`/`.tsx` file under the source folders (components, hooks, utilities). Do NOT reimplement its checklist — summarise its Pass/Fail output in the report.
 
 ---
 

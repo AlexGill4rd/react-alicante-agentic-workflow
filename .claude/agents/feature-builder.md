@@ -138,7 +138,7 @@ If type errors → stop, show the error, fix before continuing.
 
 **2b. Backend** — two independent kinds of work, not always both needed:
 - Component needs a mutation or data fetch → create the Server Action first (standalone → `/engineering-new-server-action`; otherwise this is the first half of `/engineering-integrate-component`, see 2c). No UI wiring yet.
-- Ticket needs to gate a route based on auth/session state (not "wired to a component" at all — it intercepts the request before any page or Server Action runs) → add a handler in `src/lib/middleware/`, wire it into the chain in `src/proxy.ts`. No existing skill covers this — implement it directly, following the shape of the existing handlers (e.g. `unauthenticatedAccountRedirect.ts`).
+- Ticket needs to gate a route based on auth/session state (not "wired to a component" at all — it intercepts the request before any page or Server Action runs) → add a handler in `utils/middleware/`, wire it into the chain in `proxy.ts`. No existing skill covers this — implement it directly, following the shape of the existing handlers (e.g. `unauthenticatedAccountRedirect.ts`).
 
 ⏸️ **BREAKPOINT 4 — Backend pieces created. Show the Server Actions/hooks, wait for confirmation before wiring them into the UI.**
 
@@ -167,7 +167,7 @@ If the build fails (e.g. `createContext is not a function`, "X cannot be used wi
 
 If skipped, say so and say why, the same as any other skipped phase — don't silently omit it, and don't report the feature as working on the strength of type-check and tests alone.
 
-Then actually load the new route(s) in a real `next dev` session — `pnpm build` and Jest never execute Turbopack's dev compiler, and some bugs only manifest there. Confirmed case: `react-hook-form`'s `react-server` export condition hangs/OOMs `next dev` (not `next build`) on any route rendering a component that imports it, with zero signal from type-check/build/test. Start the dev server, request each new route, and confirm it actually responds (not just that the process started) before declaring the scaffold done.
+Then actually load the new route(s) in a real `next dev` session — `pnpm build` and the test suite never execute Turbopack's dev compiler, and some bugs only manifest there. Confirmed case: a library whose `react-server` export condition hangs or OOMs `next dev` (not `next build`) on any route rendering a component that imports it, with zero signal from type-check, build or tests. Start the dev server, request each new route, and confirm it actually responds (not just that the process started) before declaring the scaffold done.
 
 If the feature is interactive (a form, a button that triggers a mutation, any user flow), don't stop at "the page loads" — use the Playwright browser tools to actually walk through the golden path (the main thing the ticket says it should do) and at least one edge case (empty/invalid input, error state), clicking and typing as a real user would. Type-check and unit tests verify code correctness, not feature correctness. If some part genuinely can't be tested this way (e.g. needs a real third-party callback), say so explicitly instead of claiming it was verified.
 

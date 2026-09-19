@@ -1,6 +1,6 @@
 ---
 name: engineering-new-server-action
-description: Scaffold a new Next.js Server Action in src/app/actions/ with Zod validation, typed response helpers, Sentry error capture, and a co-located test.
+description: Scaffold a new Next.js Server Action in app/actions/ with Zod validation, typed response helpers and a co-located test.
 
 metadata:
   domain: engineering
@@ -21,36 +21,25 @@ argument-hint: "<actionName>"
 
 ## Prerequisites
 - Confirm `$ARGUMENTS` is camelCase and describes the mutation (not a query — reads belong in Server Components or `lib/server/`).
-- Grep `src/app/actions/` to confirm an action with this name does not already exist.
+- Grep `app/actions/` to confirm an action with this name does not already exist.
 - Confirm which Supabase table or external service (Resend, Stripe, etc.) the action touches — needed for the Zod schema.
 
 ## Workflow
 
-### 1. Create `src/app/actions/$ARGUMENTS.ts`
+### 1. Create `app/actions/$ARGUMENTS.ts`
 
-Follow the pattern of `src/app/actions/waitlist.ts` — it is the source of truth; re-read it if this template looks out of date.
+Follow the pattern of the existing actions in `app/actions/`, if there are any — they are the source of truth; re-read one if this template looks out of date.
 
-Choose the Supabase client by privilege before writing the action:
-
-| Need | Client |
-| --- | --- |
-| Logged-in user mutation that should respect RLS | `createSupabaseAuthServerClient` from `@/lib/server/supabaseAuth` |
-| Public/anonymous mutation allowed by RLS | `createSupabaseClient` from `@/lib/server/supabaseClient` |
-| Admin mutation that must bypass RLS | `createSupabaseServerClient` from `@/lib/server/supabaseServer` |
-
-Use the service-role client only when the feature explicitly needs admin
-privileges; it bypasses RLS.
+This app has one Supabase client, `createSupabaseClient` from
+`@/services/supabase`, built with the publishable key — so every action runs
+under RLS. If a feature ever needs to bypass RLS, that is a second client with
+a service-role key, added deliberately and never imported into client code.
 
 ```ts
 "use server";
 
-import { createSupabaseClient } from "@/lib/server/supabaseClient"; // choose auth/anon/admin intentionally
-import { checkPublicActionRateLimit } from "@/lib/server/publicActionRateLimit"; // public mutations only
-import { RATE_LIMITS } from "@/config/rateLimits";
-import { ErrorCodes } from "@/constants/errors";
-import { actionError, actionSuccess, type ActionResult } from "@/utils/helpers";
-import { captureSentryError } from "@/utils/monitoring";
-import { logger } from "@/utils/logger";
+import { createSupabaseClient } from "@/services/supabase";
+import { actionError, actionSuccess, type ActionResult } from "@/utils/action-result";
 import { z } from "zod";
 
 const schema = z.object({
@@ -63,79 +52,67 @@ export async function $ARGUMENTS(data: Input): Promise<ActionResult> {
   try {
     const validated = schema.parse(data);
 
-    const limit = await checkPublicActionRateLimit({
-      key: "$ARGUMENTS",
-      policy: RATE_LIMITS.publicFormMutation,
-    });
-    if (!limit.allowed) {
-      return actionError("Too many requests. Please try again later.", ErrorCodes.RATE_LIMITED);
-    }
+    // A public mutation with nothing in front of it can be called in a loop.
+    // If the project has a rate limiter, call it here. If it doesn't, say so
+    // at the breakpoint instead of shipping an unprotected endpoint quietly.
 
-    // Business logic — keep it thin; complex logic goes in src/lib/server/
+    // Business logic — keep it thin; complex logic goes in services/
     const supabase = createSupabaseClient();
     const { error } = await supabase.from("table").insert({ /* validated fields */ });
 
     if (error) {
       if (error.code === "23505") {
-        return actionError("<user-friendly duplicate message>", ErrorCodes.EMAIL_ALREADY_EXISTS);
+        return actionError("<user-friendly duplicate message>");
       }
-      logger.error({ err: error }, "[$ARGUMENTS] Insert failed:");
-      return actionError("Something went wrong. Please try again.", ErrorCodes.INTERNAL_SERVER_ERROR);
+      console.error("[$ARGUMENTS] insert failed:", error);
+      return actionError("Something went wrong. Please try again.");
     }
 
     return actionSuccess("<success message>");
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return actionError(error.errors[0].message, ErrorCodes.VALIDATION_ERROR);
+      return actionError(error.errors[0].message);
     }
-    logger.error({ err: error }, "[$ARGUMENTS] Unexpected error:");
-    captureSentryError(error);
-    return actionError("An unexpected error occurred. Please try again.", ErrorCodes.INTERNAL_SERVER_ERROR);
+    console.error("[$ARGUMENTS] unexpected error:", error);
+    return actionError("An unexpected error occurred. Please try again.");
   }
 }
 ```
 
 Rules:
 - `"use server"` at the top; named export only.
-- Zod schema at module level — validate before any logic runs. Catch `z.ZodError` separately with `ErrorCodes.VALIDATION_ERROR`.
-- Return `actionSuccess` / `actionError` (`ActionResult`) — never raw objects. (`createSuccessResponse` / `createErrorResponse` / `apiErrorResponse` are for API routes, not actions.)
-- Public (unauthenticated) mutations: `checkPublicActionRateLimit` with a policy from `RATE_LIMITS`.
-- Error codes from `ErrorCodes` in `@/constants/errors` — no string literals.
-- `logger.error({ err }, "message")` (pino style); `captureSentryError` for unexpected errors only, not validation errors.
+- Zod schema at module level — validate before any logic runs, and catch `z.ZodError` separately from unexpected errors.
+- Return `actionSuccess` / `actionError` (`ActionResult`) — never raw objects. API routes have their own response helpers; don't mix them.
+- Public (unauthenticated) mutations: rate limit them, or say at the breakpoint that the project has no limiter.
+- log unexpected errors, not validation errors — a rejected input is an expected outcome.
 - Duplicate key (`error.code === "23505"`) → user-friendly `actionError`.
 - Rejected input is logged, not silently dropped (see `.claude/rules/backend-security.md`).
 
-### 2. Create `src/app/actions/$ARGUMENTS.test.ts`
+### 2. Create `app/actions/$ARGUMENTS.test.ts`
 
-Follow `src/app/actions/waitlist.test.ts`:
+Shape of the test:
 
 ```ts
 /**
- * @jest-environment node
+ * @vitest-environment node
  */
 import { $ARGUMENTS } from "./$ARGUMENTS";
 import { createSupabaseMock } from "@/tests/mocks/supabase";
 
 const { mockFrom, mockInsert } = createSupabaseMock();
-const mockCheckPublicActionRateLimit = jest.fn();
 
-jest.mock("@/lib/server/supabaseClient", () => ({
+vi.mock("@/services/supabase", () => ({
   createSupabaseClient: () => ({ from: mockFrom }),
 }));
-jest.mock("@/lib/server/publicActionRateLimit", () => ({
-  checkPublicActionRateLimit: (...args: unknown[]) => mockCheckPublicActionRateLimit(...args),
-}));
-jest.mock("@/utils/monitoring", () => ({ captureSentryError: jest.fn() }));
 
 describe("$ARGUMENTS", () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     mockCheckPublicActionRateLimit.mockResolvedValue({ allowed: true });
   });
 
   it("returns success for valid input", async () => { /* mockInsert resolves { error: null } */ });
-  it("returns a validation error for invalid input", async () => { /* expect ErrorCodes.VALIDATION_ERROR */ });
-  it("returns rate limited when the limit is hit", async () => { /* allowed: false */ });
+  it("returns a validation error for invalid input", async () => { /* schema rejects */ });
   it("handles a duplicate entry", async () => { /* error.code "23505" */ });
   it("handles unexpected errors", async () => { /* mockInsert rejects */ });
 });
@@ -144,14 +121,14 @@ describe("$ARGUMENTS", () => {
 ## Constraints
 - No `"use client"` — server-only file.
 - No raw `return { error: "..." }` — always `actionSuccess` / `actionError`.
-- No business logic that belongs in `src/lib/server/` — actions are thin orchestration layers.
-- No SELECT-only queries — reads belong in Server Components or `lib/server/`; actions are mutations.
-- No default service-role usage — use `createSupabaseServerClient` only for explicit admin/RLS-bypass work.
+- No business logic that belongs in `services/` — actions are thin orchestration layers.
+- No SELECT-only queries — reads belong in Server Components or `services/`; actions are mutations.
+- No service-role key in an action — this app's client uses the publishable key and stays under RLS.
 - No hardcoded user-facing strings in components — messages returned from actions are shown as-is, keep them short and user-friendly.
 
 ## Output
-- `src/app/actions/$ARGUMENTS.ts` — typed server action with Zod validation and response helpers.
-- `src/app/actions/$ARGUMENTS.test.ts` — test covering happy path, validation error, and unexpected error.
+- `app/actions/$ARGUMENTS.ts` — typed server action with Zod validation and response helpers.
+- `app/actions/$ARGUMENTS.test.ts` — test covering happy path, validation error, and unexpected error.
 
 ## Verification
 - [ ] `pnpm type-check` — zero new errors.

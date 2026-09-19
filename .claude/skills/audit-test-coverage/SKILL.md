@@ -19,17 +19,17 @@ argument-hint: "[path]"
 ## Inputs
 - `$ARGUMENTS` (optional): path to directory to audit.
 - If omitted: scan all of the following directories:
-  - `src/components/primitives/`
-  - `src/components/ui/`
-  - `src/components/brand/`
-  - `src/components/forms/`
-  - `src/components/molecules/`
-  - `src/components/organisms/`
-  - `src/components/templates/`
-  - `src/hooks/`
-  - `src/utils/`
-  - `src/app/[locale]/**/_components/`
-  - `src/domains/`
+  - `components/primitives/`
+  - `components/ui/`
+  - `components/brand/`
+  - `components/forms/`
+  - `components/molecules/`
+  - `components/organisms/`
+  - `components/templates/`
+  - `hooks/`
+  - `utils/`
+  - `app/**/_components/`
+  - `services/`
 
 ## Prerequisites
 - If `$ARGUMENTS` is provided, confirm the path exists before scanning.
@@ -42,7 +42,7 @@ argument-hint: "[path]"
    - Has rendering tests (key elements asserted via `screen`)
    - Has behavioral tests (user interactions via `fireEvent` or `userEvent`)
    - Has edge case tests (empty data, missing props, error states)
-   - Mocks are correct: `next-intl` via `jest.mock`, `IntersectionObserver` via `@/tests/mocks/intersectionObserver`
+   - Mocks are correct, and there are no more of them than the test needs
    - Uses `@testing-library/react` — no direct DOM manipulation
 4. **Run coverage:** Run `pnpm test:coverage` to get statement/branch/function/line percentages.
 

@@ -24,27 +24,27 @@ argument-hint: "<ComponentName>"
 
 ## Prerequisites
 - Confirm `$1` component exists and is presentational — read it; if it already calls `fetch` or owns submission state directly, stop and flag it to be split first.
-- Confirm backend logic exists — Server Action at `src/app/actions/<actionName>.ts`, API route at `src/app/api/<route>/route.ts`, or utility at `src/lib/server/<name>.ts`
-- Grep `src/hooks/` for an existing handler hook (e.g. `use<Feature>Handler`) — reuse it if found instead of creating a new one
+- Confirm backend logic exists — Server Action at `app/actions/<actionName>.ts`, API route at `app/api/<route>/route.ts`, or utility at `services/<name>.ts`
+- Grep `hooks/` for an existing handler hook (e.g. `use<Feature>Handler`) — reuse it if found instead of creating a new one
 - Understand what backend the component needs to call — the action name, the API endpoint, or the utility function
 
 ## Workflow
 
 ### 1. Identify the backend
 - Confirm the backend (Server Action, API route, utility, etc.) already exists
-- Get its path: `src/app/actions/<name>`, `src/app/api/<route>`, `src/lib/server/<name>`, etc.
+- Get its path: `app/actions/<name>`, `app/api/<route>`, `services/<name>`, etc.
 
 ### 2. Create Handler Hook (if needed)
 
 Check if a handler hook already exists (e.g., `useContactFormHandler.ts`).
 
-If not, create one at `src/hooks/use<Feature>Handler.ts` following the pattern in `useContactFormHandler.ts`:
+If not, create one at `hooks/use<Feature>Handler.ts` following the pattern in `useContactFormHandler.ts`:
 - Named export, typed params and return — no `any`
 - Owns state: `isLoading`, `error`, `success` (or equivalent)
 - Exposes a single `handleSubmit` / `handleAction` callback that:
   - Calls the Server Action (or makes API call)
   - Maps error codes to translated messages
-  - Calls `captureSentryError` on unexpected failures
+  - Logs unexpected failures — a swallowed error is a silent bug
   - Invokes `onSuccess` / `onError` callbacks passed via options
 - One hook, one concern — if component needs unrelated state (sidebar toggle), that's a separate hook
 
@@ -61,25 +61,25 @@ Create or update a route-specific container (e.g., `<Feature>Area.tsx` in `_comp
 - NO business logic or fetch calls — only state plumbing
 - **Tokens** — any color the container renders directly (loading/error/success copy, a title) must be a CSS variable from `variables.css`, verified in both `:root` and `[data-theme="light"]`. Never a hardcoded hex/rgba or a stock Chakra scale (`red.500`, `green.300`, etc.) — map to the nearest semantic token (`--error-hex`, `--success`, `--text-*`).
 - **Typography** — any text the container renders directly (a heading, a success/error message) uses the matching semantic atom (`SectionTitle`, `CardTitle`, `BodyText`, `LabelText`) instead of a raw `<Text fontSize={...}>` prop combination assembled inline.
-- **Icons** — any icon the container renders directly (a spinner, a success checkmark, an inline error icon) goes through `<PhilomathIcon icon={IconComponent} />` — never a raw `<Icon as={...}>` or a hardcoded `width`/`height`/`size`.
+- **Icons** — any icon the container renders directly (a spinner, a success checkmark, an inline error icon) goes through the shared icon wrapper — never a raw `<Icon as={...}>` or a hardcoded `width`/`height`/`size`.
 
 ### 5. Tests
-- Hook: `src/hooks/use<Feature>Handler.test.ts` using `renderHook` — covers success, validation error, and unexpected error paths.
-- Action: `src/actions/<actionName>.test.ts` — covers happy path, validation error (400), and unexpected error (500), mocking Supabase/external clients.
+- Hook: `hooks/use<Feature>Handler.test.ts` using `renderHook` — covers success, validation error, and unexpected error paths.
+- Action: `app/actions/<actionName>.test.ts` — covers happy path, validation error (400), and unexpected error (500), mocking Supabase/external clients.
 - Container: extend or add `<Feature>Area.test.tsx` asserting the hook's `handleSubmit` is called on form submit and that loading/error props reach the presentational component (mock the hook).
 
 ## Constraints
 - **Backend must exist first** — don't create backend code in this skill; use `/engineering-create-backend` first
 - Never edit the presentational component's JSX/markup — only its prop usage at the call site changes
-- Never duplicate an existing hook — search `src/hooks/` first; reuse if it covers the domain
+- Never duplicate an existing hook — search `hooks/` first; reuse if it covers the domain
 - Never call Supabase, Resend, or external SDKs directly from container or hook — they should only be called from the backend (action, route, or utility)
 - Never put the service-role Supabase key or other secrets in a Client Component or hook
 - Never add business logic to the container — it's only state plumbing
 - Container is `'use client'`, presentational component may be sync or async (if async, container handles that)
 
 ## Output
-- `src/actions/<actionName>.ts` (+ test) — if a new Server Action was needed.
-- `src/hooks/use<Feature>Handler.ts` (+ test) — if a new hook was needed.
+- `app/actions/<actionName>.ts` (+ test) — if a new Server Action was needed.
+- `hooks/use<Feature>Handler.ts` (+ test) — if a new hook was needed.
 - Updated or new container component wiring `$1` to real state — no changes to `$1` itself.
 
 ## Verification
@@ -87,7 +87,7 @@ Create or update a route-specific container (e.g., `<Feature>Area.tsx` in `_comp
 - [ ] `pnpm test -- --testPathPattern="<actionName>|use<Feature>Handler|<Feature>Area"` — all pass.
 - [ ] `$1`'s own file is unchanged (or only its prop *types* changed, not its rendering logic).
 - [ ] Server Action validates with Zod and never trusts client input.
-- [ ] Any color, icon, or text element the container renders directly uses a verified token, `PhilomathIcon`, and the matching semantic typography atom — no hardcoded values, no stock Chakra color scales.
+- [ ] Any color, icon, or text element the container renders directly uses a verified token, the shared icon wrapper, and the matching semantic typography atom — no hardcoded values, no stock Chakra color scales.
 
 ---
 

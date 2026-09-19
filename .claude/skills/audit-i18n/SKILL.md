@@ -19,15 +19,18 @@ argument-hint: "[path]"
 
 ## Inputs
 - `$ARGUMENTS` (optional): path to directory or file to audit.
-- If omitted: auto-detect from `git status` — `.tsx`/`.ts` files under `src/`. Fallback: `src/app` and `src/components`.
+- If omitted: auto-detect from `git status` — `.tsx`/`.ts` files under the source folders. Fallback: `app` and `components`.
 
 ## Prerequisites
-- Verify `next-intl` is listed in `package.json`.
-- Confirm `locales/en.json` exists and is readable.
+- Confirm the project has a translation setup at all — a library in `package.json`
+  or a translations module. If it has none, say so and stop: hardcoded strings
+  are not findings in an app that was never translated.
+- Confirm the message catalogue (e.g. `locales/en.json`, or this app's
+  `utils/translations.ts`) exists and is readable.
 - If `$ARGUMENTS` is provided, confirm the path exists before scanning.
 
 ## Workflow
-1. **Determine scope:** If `$ARGUMENTS` provided, use that path. Otherwise run `git status --short | awk '{print $2}'`, filter to `.tsx`/`.ts` files under `src/`. Fallback to `src/app` and `src/components`.
+1. **Determine scope:** If `$ARGUMENTS` provided, use that path. Otherwise run `git status --short | awk '{print $2}'`, filter to `.tsx`/`.ts` files under the source folders. Fallback to `app` and `components`.
 2. **Scan for hardcoded strings:** Identify raw strings in JSX — text content, `title`, `label`, `placeholder`, `alt` props. Exclude numbers, route paths, CSS class names, `data-*` attributes, and logger messages.
 3. **Map namespace:** Identify the nearest translation namespace from the folder name (e.g., `about/_components/` → `AboutPage`).
 4. **Cross-reference keys:** For each string found, grep `locales/en.json` to check if the key exists. Do NOT assume it exists.

@@ -46,7 +46,7 @@ Ask: **"Can an external system call this without JavaScript?"**
 | YES — GitHub, Stripe, Resend webhook | **API Route** | `/app/api/<route>/route.ts` |
 | YES — Email link that redirects | **Route Handler** | `/app/<route>/route.ts` or `/app/api/<route>/route.ts` depending on whether it is a user-facing auth redirect or an API endpoint |
 | YES — Cron job or internal service | **API Route** | `/app/api/<route>/route.ts` |
-| NO — Browser form/button only | **Server Action** | `src/app/actions/<name>.ts` |
+| NO — Browser form/button only | **Server Action** | `app/actions/<name>.ts` |
 | Cross-cutting concern (auth, headers) | **Middleware** | `/middleware.ts` |
 | Pure business logic/queries | **Utility** | `/lib/server/<name>.ts` |
 
@@ -76,24 +76,19 @@ Example Supabase Magic Link template:
 
 ### Supabase Client Selection
 
-In `apps/academy/`, choose the Supabase client by context and privilege:
+This app has one Supabase client: `createSupabaseClient` from
+`@/services/supabase`, built with the publishable key, so everything it does
+goes through RLS. There is no auth, no cookies and no service-role client.
 
-| Context | Client |
-| --- | --- |
-| Browser UI / Client Components | `createSupabaseBrowserClient` from `@/lib/client/supabaseBrowserClient` |
-| Server code for the logged-in user | `createSupabaseAuthServerClient` from `@/lib/server/supabaseAuth` |
-| Server public reads without user cookies | `createSupabaseClient` from `@/lib/server/supabaseClient` |
-| Server admin/RLS-bypass work | `createSupabaseServerClient` from `@/lib/server/supabaseServer` |
-| Middleware auth/session refresh | `createMiddlewareSupabaseClient` / `getSessionRefresh` from `@/lib/middleware/sessionRefresh` |
-
-`createSupabaseServerClient` uses the service-role key and bypasses RLS. Use it
-only when the feature explicitly requires admin privileges.
+A feature that genuinely needs to bypass RLS means adding a second client with
+a service-role key — server-only, never imported from a Client Component, and
+worth raising at a breakpoint before writing it.
 
 ---
 
 ### 2. Create Server Action
 
-**If type = `server-action`:** use `/engineering-new-server-action <actionName>` — it holds the one Server Action template (Zod, rate limiting, `actionSuccess`/`actionError`, `ErrorCodes`, tests), based on `src/app/actions/waitlist.ts`. Don't duplicate it here.
+**If type = `server-action`:** use `/engineering-new-server-action <actionName>` — it holds the one Server Action template (Zod, `actionSuccess`/`actionError`, tests). Don't duplicate it here.
 
 ---
 
@@ -108,7 +103,7 @@ Create `/app/api/<route>/route.ts` with:
 - ✅ Secrets in `Authorization` header, never query params
 - ✅ Typed errors and error responses
 - ✅ Rate limiting by IP
-- ✅ Logging and Sentry capture
+- ✅ Logging on the failure paths
 - ✅ Response helpers (`apiSuccess`, `apiErrorResponse`)
 - ✅ Comment explaining why this needs to be HTTP (webhook, email link, cron, etc.)
 
@@ -119,14 +114,13 @@ Create `/app/api/<route>/route.ts` with:
 
 import { NextRequest } from 'next/server';
 import { apiErrorResponse, apiSuccess } from '@/utils/helpers';
-import { WebhookUnauthorizedError } from '@/lib/shared/errors/WebhookUnauthorizedError';
+import { WebhookUnauthorizedError } from '@/utils/errors';
 import { logger } from '@/utils/logger';
-import { getClientIp, rateLimit } from '@/lib/utils/rateLimit';
-import { RATE_LIMITS } from '@/config/rateLimits';
+import { getClientIp, rateLimit } from '@/utils/rate-limit';
 
 export async function POST(req: NextRequest) {
   const ip = getClientIp(req);
-  const limit = rateLimit(`webhook:${ip}`, RATE_LIMITS.publicFormMutation);
+  const limit = rateLimit(`webhook:${ip}`, { windowMs: 60_000, max: 30 });
   
   if (!limit.allowed) {
     return apiErrorResponse(new RateLimitError());
@@ -147,7 +141,7 @@ export async function POST(req: NextRequest) {
     
     return apiSuccess('Processed successfully');
   } catch (error) {
-    logger.error({ err: error }, 'Webhook error');
+    console.error('Webhook error', error);
     return apiErrorResponse(error);
   }
 }
@@ -214,7 +208,7 @@ Create `/lib/server/<utilityName>.ts` with:
 ```ts
 // Database query utility
 import { createSupabaseAuthServerClient } from './supabaseAuth';
-import { AppError } from '@/lib/shared/errors/AppError';
+import { AppError } from '@/utils/errors';
 
 export interface UserProfile {
   id: string;
@@ -251,15 +245,15 @@ export async function getUserProfile(userId: string): Promise<UserProfile> {
 - **Never trust client input** — validate everything server-side
 - **Secrets in headers, never query params** — `Authorization` header only
 - **Signature/token verification first** — for API routes, verify before any processing
-- **Typed errors** — use `AppError` subclasses, never raw `throw new Error()`
-- **Rate limiting for public mutations** — `checkPublicActionRateLimit` for public endpoints
+- **Typed errors** — define an error class per failure kind, never raw `throw new Error()`
+- **Rate limiting for public mutations** — a rate limit check for public endpoints
 - **Single Responsibility** — one file = one concern
 - **No circular dependencies** — utilities can import from lib, not vice versa
-- **Logging and monitoring** — use `@/utils/logger` and `captureSentryError`
+- **Logging and monitoring** — log every failure path, and report unexpected errors to whatever monitoring the project has
 
 ## Output
 
-- `src/app/actions/<name>.ts` (Server Action) with test file
+- `app/actions/<name>.ts` (Server Action) with test file
 - OR `/app/api/<route>/route.ts` (API Route) with test file
 - OR `/middleware.ts` (Middleware)
 - OR `/lib/server/<name>.ts` (Server utility)
@@ -272,7 +266,7 @@ All with proper error handling, validation, and security patterns baked in.
 - [ ] Proper validation (Zod for actions, manual for routes)
 - [ ] Typed errors (no raw Error throws)
 - [ ] Rate limiting applied (if public mutation)
-- [ ] Logging and Sentry capture in place
+- [ ] Logging in place on the failure paths
 - [ ] Signature/token verification first (if API route)
 - [ ] No secrets in query params
 - [ ] Single Responsibility maintained

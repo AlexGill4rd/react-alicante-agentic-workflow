@@ -4,7 +4,7 @@ Lessons from a v2 → v3 migration. Each one caused a real visual or behavior bu
 
 ## Theme and cascade
 
-- The system is created with `createSystem(defaultConfig, config, { disableLayers: true })` in `src/styles/settings/theme.ts`. Don't remove `disableLayers`: layered Chakra CSS loses to every unlayered rule, so Tailwind preflight (`border-width: 0`) erases input borders and the global `:focus-visible` ring outlines menus.
+- The system is created with `createSystem(defaultConfig, config, { disableLayers: true })` in `styles/settings/theme.ts`. Don't remove `disableLayers`: layered Chakra CSS loses to every unlayered rule, so Tailwind preflight (`border-width: 0`) erases input borders and the global `:focus-visible` ring outlines menus.
 - Put recipe overrides in the **variant** Chakra applies by default (e.g. `variants.variant.plain`, `variants.size.md`), not in `base`. Variant styles override base, so a base-only override silently does nothing.
 - Custom variant names (e.g. `variant="dropdown"`) don't type-check without `npx @chakra-ui/cli typegen`. Prefer overriding the default variant.
 - `globalCss` must not set a background on `html` or `body`: it overrides `body.css`'s page gradient.

@@ -54,7 +54,7 @@ Work from the error outward:
    ```
 2. If it's a UI bug — identify the component from the route (`app/[locale]/*/page.tsx` → `_components/`).
 3. If it's a data bug — trace from the component to the hook → lib → Supabase query.
-4. If it's a Server Action error — read `src/actions/` and check Zod schema, response shape, and error handling.
+4. If it's a Server Action error — read `app/actions/` and check Zod schema, response shape, and error handling.
 5. If it's an i18n bug — grep the translation key in `locales/en.json` and check the `useTranslations` namespace.
 
 Read each file in the call chain — do not guess from filenames alone.
@@ -121,7 +121,7 @@ Point to the relevant test file or suggest a new test case that would have caugh
 
 - Reproduction steps are too vague → ask the five questions in step 1 before proceeding.
 - Error only occurs in production → ask the user for the Vercel deployment logs of that request.
-- Call chain goes into `node_modules` → look one frame up for the caller in `src/`.
+- Call chain goes into `node_modules` → look one frame up for the caller in the source folders.
 - RLS suspected → hand off to `database-manager` for policy inspection.
 
 ---

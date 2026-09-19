@@ -6,10 +6,10 @@ The Supabase SQL editor does not reliably record applied SQL in `schema_migratio
 
 **The only correct workflow:**
 
-1. Write a `.sql` file in `apps/academy/supabase/migrations/` with a timestamp filename
+1. Write a `.sql` file in `supabase/migrations/` with a timestamp filename
 2. Commit it to git
-3. Run `pnpm db:push` from `apps/academy/` to apply it to QA
-4. Run `pnpm db:types` to regenerate `src/types/supabase.types.ts` from the live QA schema
+3. Run `pnpm db:push` from the repo root to apply it to QA
+4. Run `pnpm db:types` to regenerate `types/supabase.types.ts` from the live QA schema
 5. Commit the updated types file
 6. At release, the release process applies it to production via the same mechanism
 
@@ -48,9 +48,9 @@ pnpm db:migrations:list
 
 Any command that connects to a linked Supabase project (`supabase link`, `migration list`, `db:push`, `db:push:dry-run`, `db:types`, `migration repair`, `migration down`, etc.) authenticates against the account and touches a live database — that's sensitive regardless of whether the specific command is destructive. Claude should write/edit the `.sql` migration file itself, then give the user the exact command to run and wait for them to run it and report the result. This applies to read-only commands too (a dry run, a migration list) — not just ones with an interactive confirmation prompt.
 
-## Run all `supabase`/`db:*` commands from `apps/academy/`
+## Run all `supabase`/`db:*` commands from the repo root
 
-`supabase link` and the `pnpm db:*` scripts write local state (`.temp/`, config) to whatever directory they're run from. Running `supabase link` from the repo root instead of `apps/academy/` silently creates a stray `supabase/` folder at the root — it doesn't error, so it's easy to miss. Always `cd apps/academy` (or confirm you're already there) before any `supabase`/`db:*` command, and if a stray root-level `supabase/.temp/` ever shows up in `git status`, it's CLI cache, not code — safe to delete.
+`supabase link` and the `pnpm db:*` scripts write local state (`.temp/`, config) to whatever directory they're run from. Running `supabase link` from the repo root instead of the repo root silently creates a stray `supabase/` folder at the root — it doesn't error, so it's easy to miss. Always `cd the app` (or confirm you're already there) before any `supabase`/`db:*` command, and if a stray root-level `supabase/.temp/` ever shows up in `git status`, it's CLI cache, not code — safe to delete.
 
 ## What the SQL editor is for
 

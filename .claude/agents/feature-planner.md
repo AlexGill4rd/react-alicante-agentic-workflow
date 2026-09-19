@@ -50,7 +50,7 @@ Identify the affected layers:
 - **Components** — new Atom / Molecule / Organism, or extension of existing?
 - **Hook** — new UI-only stateful logic needed (toggle, scroll position, modal)? Use `/engineering-new-hook` for these.
 - **Backend integration** — does any new component need real state lifecycle (loading/error/success), data fetching, or a backend mutation wired in? Flag it for `/engineering-integrate-component` rather than building that logic into the component itself.
-- **Data file** — new static data in `src/data/`?
+- **Data file** — new static data in `data/`?
 - **Server Action / API** — new mutation or server-side operation? (Usually created by `/engineering-integrate-component`, not as a standalone step.)
 - **Supabase** — new table, column, RLS policy, or migration?
 - **i18n** — new translation keys in `messages/`?

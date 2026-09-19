@@ -21,16 +21,16 @@ argument-hint: "<hookName>"
 
 ## Prerequisites
 - Confirm `$ARGUMENTS` starts with `use` — if not, prefix it and confirm with the user.
-- Grep `src/hooks/` to confirm a hook with this name does not already exist.
-- Confirm the logic is reusable state/effect logic — if it is a one-time utility function, it belongs in `src/utils/`, not `src/hooks/`.
+- Grep `hooks/` to confirm a hook with this name does not already exist.
+- Confirm the logic is reusable state/effect logic — if it is a one-time utility function, it belongs in `utils/`, not `hooks/`.
 
 ## Workflow
-1. **Create `src/hooks/$ARGUMENTS.ts`** (use `.tsx` only if the hook returns JSX):
+1. **Create `hooks/$ARGUMENTS.ts`** (use `.tsx` only if the hook returns JSX):
    - Named export only — no default export.
    - Define typed parameters and return type explicitly — no `any`.
-   - Follow the pattern of existing hooks in `src/hooks/`.
+   - Follow the pattern of existing hooks in `hooks/`.
    - Internal order: state declarations → effects → handlers → return.
-2. **Create `src/hooks/$ARGUMENTS.test.ts`** alongside:
+2. **Create `hooks/$ARGUMENTS.test.ts`** alongside:
    - Use `renderHook` from `@testing-library/react`.
    - Test return values, state changes, and cleanup.
    - Mock any external dependencies.
@@ -38,12 +38,12 @@ argument-hint: "<hookName>"
 ## Constraints
 - No default export — hooks use named exports, unlike components.
 - No `'use client'` on the hook file — the directive belongs in the component that imports the hook.
-- No business logic that belongs in `lib/` — hooks manage state and side effects; domain logic belongs in `src/lib/` or `src/utils/`.
+- No business logic that belongs in `lib/` — hooks manage state and side effects; domain logic belongs in `utils/` or `utils/`.
 - No `any` types — define typed parameters and return types explicitly.
 
 ## Output
-- `src/hooks/$ARGUMENTS.ts` — typed hook with named export.
-- `src/hooks/$ARGUMENTS.test.ts` — test file with `renderHook` tests.
+- `hooks/$ARGUMENTS.ts` — typed hook with named export.
+- `hooks/$ARGUMENTS.test.ts` — test file with `renderHook` tests.
 
 ## Verification
 - [ ] `pnpm type-check` — zero new errors.

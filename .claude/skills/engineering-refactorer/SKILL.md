@@ -17,7 +17,7 @@ argument-hint: "<filepath>"
 
 ## Inputs
 - `$ARGUMENTS` (required): path to the file or directory to refactor.
-- If omitted: auto-detect from `git status` — `.tsx`/`.ts` files under `src/`.
+- If omitted: auto-detect from `git status` — `.tsx`/`.ts` files under the source folders.
 
 ## Prerequisites
 - Confirm `$ARGUMENTS` path exists before operating.
@@ -28,7 +28,7 @@ argument-hint: "<filepath>"
 ## Workflow
 
 ### Pass 1: Analyze & Plan
-1. **Determine scope:** If `$ARGUMENTS` provided, use that file or directory. Otherwise run `git status --short | awk '{print $2}'`, filter to `.tsx`/`.ts` files under `src/`.
+1. **Determine scope:** If `$ARGUMENTS` provided, use that file or directory. Otherwise run `git status --short | awk '{print $2}'`, filter to `.tsx`/`.ts` files under the source folders.
 2. **Check Server/Client boundaries (components only):** 
    - Does the component use `getTranslations`, `getLocale`, server-side Supabase, or other server-only imports?
    - Is it marked `'use client'`? → **ERROR** — remove the directive and make it async
@@ -45,15 +45,15 @@ argument-hint: "<filepath>"
    - Keep the main component as the orchestrator with a default export.
    - Move shared types to `types.ts` within the directory.
 6. **Execute — Logic Extraction** (if component contains business logic):
-   - Reusable logic → `src/hooks/`
-   - Domain logic → `src/domains/<domain>/`
-   - Pure utilities → `src/utils/`
-   - Server-side logic → `src/lib/server/` or `src/app/actions/`
+   - Reusable logic → `hooks/`
+   - Domain logic → `services/` or `utils/`
+   - Pure utilities → `utils/`
+   - Server-side logic → `services/` or `app/actions/`
 7. **Execute — Styling Consolidation** (if styling is inconsistent):
    - Pick one approach per component: Chakra props → CSS custom properties → Tailwind → SCSS Module.
    - Use `skinConfigs` from `@/constants/theme` for theme tokens.
    - Convert inline styles to the chosen approach.
-   - Replace raw icon rendering (`<Icon as={IconComponent} boxSize={...}>`, `boxSize={4}`, `size={20}`, hardcoded svg/react-icons `width`/`height`) with `<PhilomathIcon icon={IconComponent} />` from `@/components/primitives/PhilomathIcon` — there is one default inline-icon size (20px) for the whole app, not a per-component choice, and the wrapper also defaults `flexShrink={0}` and `aria-hidden={true}` (drop explicit `flexShrink={0}`/`aria-hidden` props once migrated — they're redundant). Route raw `<svg>` and react-icons components through it too, never pass `width`/`height`/`size` to them directly. A component rendering at a different size than its neighbors is drift to fix, not a "tier" to preserve — don't invent a category to justify a number that just happened to be copy-pasted from somewhere. Only keep a size deviation if it traces to a confirmed Figma spec, and only keep `aria-hidden={false}` if the icon conveys something the adjacent text doesn't.
+   - Replace raw icon rendering (`<Icon as={IconComponent} boxSize={...}>`, `boxSize={4}`, `size={20}`, hardcoded svg/react-icons `width`/`height`) with the app's shared icon wrapper — there is one default inline-icon size (20px) for the whole app, not a per-component choice, and the wrapper also defaults `flexShrink={0}` and `aria-hidden={true}` (drop explicit `flexShrink={0}`/`aria-hidden` props once migrated — they're redundant). Route raw `<svg>` and react-icons components through it too, never pass `width`/`height`/`size` to them directly. A component rendering at a different size than its neighbors is drift to fix, not a "tier" to preserve — don't invent a category to justify a number that just happened to be copy-pasted from somewhere. Only keep a size deviation if it traces to a confirmed Figma spec, and only keep `aria-hidden={false}` if the icon conveys something the adjacent text doesn't.
 8. **Execute — Typography Composition** (components only):
    - Classify text by role before changing it: section title, section subtitle, card title, body copy, label/eyebrow, supporting metadata, or display typography.
    - Reuse `SectionTitle`, `SectionSubTitle`, `CardTitle`, `BodyText`, `LabelText`, and `CardMetaText` for their matching roles.
@@ -62,7 +62,7 @@ argument-hint: "<filepath>"
    - Do not turn `BodyText` into an all-purpose component with many unrelated variants. Prefer narrow semantic primitives.
 9. **Execute — Layout Composition** (components only):
    - Classify each wrapper element by structural role before changing it: card shell, pill/badge, icon+text row, stat block, divider, or genuine one-off layout.
-   - Before extracting anything new, grep `src/components/primitives/`, `src/components/ui/`, and `src/components/molecules/` for an existing layout shell with the same recipe (e.g. border + radius + padding pill, icon + gap + text row). Reuse it instead of re-declaring the prop block.
+   - Before extracting anything new, grep `components/primitives/`, `components/ui/`, and `components/molecules/` for an existing layout shell with the same recipe (e.g. border + radius + padding pill, icon + gap + text row). Reuse it instead of re-declaring the prop block.
    - If the same structural prop block (border/radius/padding/gap combination) appears more than once — including across unrelated files, not just within the file being refactored — extract it into a small layout component that accepts content as `children`/props and owns only positioning, spacing, and borders.
    - **Also flag complexity even with zero duplication.** A block that's unique to this file can still need extraction if it nests 3+ levels of `Box`/`Flex` for one concern, or a single element carries 5+ style props (a heading with an embedded accent span, a multi-layer absolute-positioned overlay). The duplication check above isn't the only trigger — don't wave through a deeply-nested unique block just because nothing else in the codebase looks like it yet.
    - Keep layout components decoupled from content: a layout shell must not import page-specific data, hardcode copy, or pick its own typography role — the caller supplies content (text atoms, icons) as children/props. Conversely, a content/text atom (e.g. `CardMetaText`, `LabelText`) must not own border, padding, or absolute positioning — that belongs to the layout shell wrapping it.
@@ -117,10 +117,10 @@ Components that are **NOT leaf nodes** (should be further decomposed):
 - No redundant repetition — collapse duplicated values/expressions (responsive breakpoint objects, repeated literals, copy-pasted prop blocks) to the minimal code that produces the same output.
 - No duplicated typography recipes — repeated text roles must use the matching shared typography atom.
 - No duplicated layout shells — a repeated bordered/padded wrapper, pill, or icon+text row recipe must be extracted into (or reuse) a shared layout component instead of being re-declared inline.
-- No hardcoded icon sizes, no raw `<Icon as={...}>` — every icon (Chakra, raw svg, or react-icons) renders via `<PhilomathIcon icon={IconComponent} />`, never `width`/`height`/`size` props directly on the icon component. Don't preserve an inherited size difference as if it were an intentional tier — collapse it to the default unless a Figma spec says otherwise. Drop redundant explicit `flexShrink={0}`/`aria-hidden` once migrated — the wrapper defaults both.
+- No hardcoded icon sizes, no raw `<Icon as={...}>` — every icon (Chakra, raw svg, or react-icons) renders via the shared icon wrapper, never `width`/`height`/`size` props directly on the icon component. Don't preserve an inherited size difference as if it were an intentional tier — collapse it to the default unless a Figma spec says otherwise. Drop redundant explicit `flexShrink={0}`/`aria-hidden` once migrated — the wrapper defaults both.
 - No wider client boundaries — preserve existing `'use client'` boundaries or make them narrower, never wider. Removing a `'use client'` entirely counts as narrowing too — keep it only if the component uses hooks, event handlers, or browser APIs (Chakra UI v3 alone doesn't need it).
 - **Server-only imports require Server Components** — if a component uses `getTranslations` or server-side DB calls, it must NOT have `'use client'`. Fix as part of refactoring.
-- No `console.log` — use `pino` logger from `@/utils/logger` if logging is needed.
+- No stray `console.log` left behind — log deliberately, on failure paths.
 - No hallucination — do NOT assume a file, key, or function exists — verify with grep or a file read first.
 - No skipping the plan step — **always show the plan before executing each pass**
 
@@ -135,7 +135,7 @@ Components that are **NOT leaf nodes** (should be further decomposed):
 - [ ] No inline styles, no relative cross-directory imports, no unused imports remain.
 - [ ] Body, heading, label, and metadata typography uses semantic text primitives; remaining raw `Text` is justified display typography.
 - [ ] No structural prop block (border + radius + padding, icon + gap + text, etc.) is duplicated verbatim across this file and existing components; repeats are extracted into a shared layout component decoupled from content.
-- [ ] No raw `<Icon as={...}>` or icon-size numbers remain — every icon renders via `<PhilomathIcon icon={IconComponent} />`, with no unconfirmed size deviation kept around as a "tier," and no redundant explicit `flexShrink={0}`/`aria-hidden` left in place.
+- [ ] No raw `<Icon as={...}>` or icon-size numbers remain — every icon renders via the shared icon wrapper, with no unconfirmed size deviation kept around as a "tier," and no redundant explicit `flexShrink={0}`/`aria-hidden` left in place.
 
 ---
 
