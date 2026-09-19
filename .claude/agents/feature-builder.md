@@ -169,6 +169,8 @@ If skipped, say so and say why, the same as any other skipped phase — don't si
 
 Then actually load the new route(s) in a real `next dev` session — `pnpm build` and the test suite never execute Turbopack's dev compiler, and some bugs only manifest there. Confirmed case: a library whose `react-server` export condition hangs or OOMs `next dev` (not `next build`) on any route rendering a component that imports it, with zero signal from type-check, build or tests. Start the dev server, request each new route, and confirm it actually responds (not just that the process started) before declaring the scaffold done.
 
+**Then stop the server you started, and only that one.** Read the URL from its own startup output rather than assuming a port — Next moves to the next free one when the usual port is taken, so a hardcoded number checks the wrong server. If a dev server is already running, reuse it and leave it running; the user may be looking at it. A server you started and abandoned holds its port, and the next `pnpm dev` fails with an error that reads like a broken machine.
+
 If the feature is interactive (a form, a button that triggers a mutation, any user flow), don't stop at "the page loads" — use the Playwright browser tools to actually walk through the golden path (the main thing the ticket says it should do) and at least one edge case (empty/invalid input, error state), clicking and typing as a real user would. Type-check and unit tests verify code correctness, not feature correctness. If some part genuinely can't be tested this way (e.g. needs a real third-party callback), say so explicitly instead of claiming it was verified.
 
 → Update state file: Phase 2 ✅, list created files.
