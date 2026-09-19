@@ -41,6 +41,21 @@ read-only from the app's side. One client, `createSupabaseClient` from
 
 Data access goes through `services/`, never a Supabase call inside a component.
 
+## Styling
+
+Two systems, on purpose, each owning what it is good at:
+
+- **Chakra UI v3** for components with behaviour and state — everything in
+  `components/primitives/`. Its rules are in `.claude/rules/chakra-v3.md`.
+- **Tailwind classes** for layout and page chrome — the nav, the page shells,
+  spacing between sections.
+- **CSS variables** in `app/globals.css` are the only source of colour, in both
+  the dark block and the `[data-theme="light"]` override. Neither system gets
+  to hardcode a hex.
+
+One component uses one of them, never both. A Chakra component whose look comes
+from a Tailwind class needs `unstyled`, or v3's base styles win.
+
 ## Branches
 
 `dev` is the default branch and the base for everything: feature branches cut
