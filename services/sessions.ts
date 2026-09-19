@@ -20,6 +20,14 @@ type SelectedSessionRow = Pick<
 const SESSION_COLUMNS =
   "id, title, speaker, track, room, start_time, duration_minutes, description";
 
+/**
+ * Postgres "undefined_table". A fresh project has no tables until its
+ * migrations are applied, and these pages are prerendered at build time — so
+ * without this the first deploy to a new environment fails the build instead
+ * of coming up with an empty schedule.
+ */
+const UNDEFINED_TABLE = "42P01";
+
 function toSession(row: SelectedSessionRow): Session {
   return {
     id: row.id,
@@ -44,6 +52,7 @@ export async function fetchSessions(): Promise<Session[]> {
     .order("start_time");
 
   if (error) {
+    if (error.code === UNDEFINED_TABLE) return [];
     throw new Error(`Failed to load sessions: ${error.message}`);
   }
 
@@ -61,6 +70,7 @@ export async function fetchSessionById(id: string): Promise<Session | null> {
     .maybeSingle();
 
   if (error) {
+    if (error.code === UNDEFINED_TABLE) return null;
     throw new Error(`Failed to load session ${id}: ${error.message}`);
   }
 

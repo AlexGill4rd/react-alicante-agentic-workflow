@@ -160,7 +160,9 @@ connected.
 
 ## 10. Deploy to Vercel
 
-1. [vercel.com](https://vercel.com) → sign in with GitHub.
+1. [vercel.com](https://vercel.com) → **Continue with GitHub**. This creates
+   the account if you don't have one; there is no separate signup. Authorise
+   Vercel's GitHub app when asked — it needs access to import your fork.
 2. **Add New → Project → Import Git Repository** → pick your fork.
 3. Add the env vars. Same names, different values per environment — that's
    the whole reason they're variables and not code:
