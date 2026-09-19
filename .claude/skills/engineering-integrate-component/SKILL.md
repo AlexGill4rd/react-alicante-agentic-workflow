@@ -59,9 +59,9 @@ Create or update a route-specific container (e.g., `<Feature>Area.tsx` in `_comp
   - `error` / `success` messages from hook
 - Owns any UI-only state (e.g., transient success banner) — NOT in the presentational component
 - NO business logic or fetch calls — only state plumbing
-- **Tokens** — any color the container renders directly (loading/error/success copy, a title) must be a CSS variable from `variables.css`, verified in both `:root` and `[data-theme="light"]`. Never a hardcoded hex/rgba or a stock Chakra scale (`red.500`, `green.300`, etc.) — map to the nearest semantic token (`--error-hex`, `--success`, `--text-*`).
-- **Typography** — any text the container renders directly (a heading, a success/error message) uses the matching semantic atom (`SectionTitle`, `CardTitle`, `BodyText`, `LabelText`) instead of a raw `<Text fontSize={...}>` prop combination assembled inline.
-- **Icons** — any icon the container renders directly (a spinner, a success checkmark, an inline error icon) goes through the shared icon wrapper — never a raw `<Icon as={...}>` or a hardcoded `width`/`height`/`size`.
+- **Tokens** — any color the container renders directly (loading/error/success copy, a title) must be a CSS variable from `app/globals.css`, present in both the dark block and the `[data-theme="light"]` override. Never a hardcoded hex/rgba or a stock Chakra scale (`red.500`, `green.300`) — map to the nearest semantic token.
+- **Typography** — any text the container renders directly (a heading, a success/error message) uses the classes that role already uses elsewhere, not a new inline size.
+- **Icons** — any icon the container renders directly (a spinner, a success checkmark, an inline error icon) renders at the app's standard size, not a per-component one.
 
 ### 5. Tests
 - Hook: `hooks/use<Feature>Handler.test.ts` using `renderHook` — covers success, validation error, and unexpected error paths.
@@ -87,7 +87,7 @@ Create or update a route-specific container (e.g., `<Feature>Area.tsx` in `_comp
 - [ ] `pnpm test -- --testPathPattern="<actionName>|use<Feature>Handler|<Feature>Area"` — all pass.
 - [ ] `$1`'s own file is unchanged (or only its prop *types* changed, not its rendering logic).
 - [ ] Server Action validates with Zod and never trusts client input.
-- [ ] Any color, icon, or text element the container renders directly uses a verified token, the shared icon wrapper, and the matching semantic typography atom — no hardcoded values, no stock Chakra color scales.
+- [ ] Any color, icon, or text the container renders directly uses a verified token and the app's existing sizes — no hardcoded values, no stock Chakra color scales.
 
 ---
 

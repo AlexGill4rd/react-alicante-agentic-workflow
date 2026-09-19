@@ -20,12 +20,7 @@ argument-hint: "[path]"
 - `$ARGUMENTS` (optional): path to directory to audit.
 - If omitted: scan all of the following directories:
   - `components/primitives/`
-  - `components/ui/`
-  - `components/brand/`
-  - `components/forms/`
-  - `components/molecules/`
-  - `components/organisms/`
-  - `components/templates/`
+  - `components/layout/`
   - `hooks/`
   - `utils/`
   - `app/**/_components/`
@@ -36,7 +31,7 @@ argument-hint: "[path]"
 
 ## Workflow
 1. **Determine scope:** If `$ARGUMENTS` provided, use that path. Otherwise use the default directory list above.
-2. **Find untested files:** For each `.tsx`/`.ts` file in scope, check if a co-located `.test.tsx` or `.test.ts` exists. List all files with no test — prioritise primitives → ui → molecules → organisms → hooks → utils.
+2. **Find untested files:** For each `.tsx`/`.ts` file in scope, check if a co-located `.test.tsx` or `.test.ts` exists. List all files with no test — prioritise primitives → layout → page components → hooks → utils.
 3. **Evaluate existing tests:** For each test file found, check:
    - Has a snapshot test (`asFragment() → toMatchSnapshot()`)
    - Has rendering tests (key elements asserted via `screen`)

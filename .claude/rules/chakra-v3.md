@@ -19,8 +19,8 @@ Lessons from a v2 → v3 migration. Each one caused a real visual or behavior bu
 - `Menu.Item` needs a `value`. For links use `asChild` with the link element as the child.
 - `required` goes on `Field.Root`, not on `NativeSelect.Field`.
 - Icons: use `react-icons`. For v2 icon parity, `react-icons/md` has identical paths (`MdExpandMore`, `MdArrowForward`, `MdMenu`).
-- Toasts: `toaster.create({ title, description, type, closable })` from `@/components/chakra/toaster`. There is no `useToast`.
-- Color mode: `useColorMode` from `@/components/chakra/color-mode` (wraps `next-themes`). `variables.css` light mode depends on the `data-theme` attribute it sets.
+- Toasts: v3 has no `useToast`. Create a toaster component with `createToaster` and call `toaster.create({ title, description, type, closable })`; this starter has not needed one yet.
+- Color mode: `useColorMode` from `@/components/primitives/color-mode` (wraps `next-themes`). `app/globals.css` light mode depends on the `data-theme` attribute it sets.
 
 ## Testing
 

@@ -82,7 +82,7 @@ WCAG 2.1 AA accessibility reviewer for this repository — Next.js App Router an
 ### Dynamic Content
 - Loading states announced (`aria-busy`, `aria-live`)
 - Modal/dialog focus management verified (Chakra `Dialog` handles this — check for overrides)
-- Toast notifications use `toaster.create` from `@/components/chakra/toaster` (accessible by default)
+- Toast notifications use a toaster component — this starter has none yet, so adding one is part of the work (accessible by default)
 
 ### Responsive and Zoom
 - Content readable at 200% zoom

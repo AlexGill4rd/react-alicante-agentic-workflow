@@ -53,19 +53,17 @@ argument-hint: "<filepath>"
    - Pick one approach per component: Chakra props → CSS custom properties → Tailwind → SCSS Module.
    - Use `skinConfigs` from `@/constants/theme` for theme tokens.
    - Convert inline styles to the chosen approach.
-   - Replace raw icon rendering (`<Icon as={IconComponent} boxSize={...}>`, `boxSize={4}`, `size={20}`, hardcoded svg/react-icons `width`/`height`) with the app's shared icon wrapper — there is one default inline-icon size (20px) for the whole app, not a per-component choice, and the wrapper also defaults `flexShrink={0}` and `aria-hidden={true}` (drop explicit `flexShrink={0}`/`aria-hidden` props once migrated — they're redundant). Route raw `<svg>` and react-icons components through it too, never pass `width`/`height`/`size` to them directly. A component rendering at a different size than its neighbors is drift to fix, not a "tier" to preserve — don't invent a category to justify a number that just happened to be copy-pasted from somewhere. Only keep a size deviation if it traces to a confirmed Figma spec, and only keep `aria-hidden={false}` if the icon conveys something the adjacent text doesn't.
-8. **Execute — Typography Composition** (components only):
-   - Classify text by role before changing it: section title, section subtitle, card title, body copy, label/eyebrow, supporting metadata, or display typography.
-   - Reuse `SectionTitle`, `SectionSubTitle`, `CardTitle`, `BodyText`, `LabelText`, and `CardMetaText` for their matching roles.
-   - Replace copied `<Text>` prop combinations with the appropriate atom while preserving rendered output.
-   - Keep genuine display typography (hero headlines, metrics, decorative code) specialized when forcing it into a generic atom would weaken semantics or require excessive overrides.
-   - Do not turn `BodyText` into an all-purpose component with many unrelated variants. Prefer narrow semantic primitives.
+   - Keep one inline-icon size across the app: a component rendering its icon at a different size than its neighbours is drift to fix, not a tier to preserve. Only keep a deviation that traces to a design spec.
+8. **Execute — Typography** (components only):
+   - Classify text by role before changing it: section title, card title, body copy, label, metadata, or genuine display typography.
+   - This app styles text with Tailwind classes and has no typography component set. Make the same role use the same classes it uses elsewhere, rather than a new size per component.
+   - When one role's treatment appears a third time, extract a small named component for it instead of copying the class string again.
 9. **Execute — Layout Composition** (components only):
    - Classify each wrapper element by structural role before changing it: card shell, pill/badge, icon+text row, stat block, divider, or genuine one-off layout.
-   - Before extracting anything new, grep `components/primitives/`, `components/ui/`, and `components/molecules/` for an existing layout shell with the same recipe (e.g. border + radius + padding pill, icon + gap + text row). Reuse it instead of re-declaring the prop block.
+   - Before extracting anything new, grep `components/primitives/` and `components/layout/` for an existing layout shell with the same recipe (e.g. border + radius + padding pill, icon + gap + text row). Reuse it instead of re-declaring the prop block.
    - If the same structural prop block (border/radius/padding/gap combination) appears more than once — including across unrelated files, not just within the file being refactored — extract it into a small layout component that accepts content as `children`/props and owns only positioning, spacing, and borders.
    - **Also flag complexity even with zero duplication.** A block that's unique to this file can still need extraction if it nests 3+ levels of `Box`/`Flex` for one concern, or a single element carries 5+ style props (a heading with an embedded accent span, a multi-layer absolute-positioned overlay). The duplication check above isn't the only trigger — don't wave through a deeply-nested unique block just because nothing else in the codebase looks like it yet.
-   - Keep layout components decoupled from content: a layout shell must not import page-specific data, hardcode copy, or pick its own typography role — the caller supplies content (text atoms, icons) as children/props. Conversely, a content/text atom (e.g. `CardMetaText`, `LabelText`) must not own border, padding, or absolute positioning — that belongs to the layout shell wrapping it.
+   - Keep layout components decoupled from content: a layout shell must not import page-specific data, hardcode copy, or pick its own text styling — the caller supplies content as children/props. Conversely, a text component must not own border, padding, or absolute positioning — that belongs to the layout shell wrapping it.
    - Don't force a shared layout component onto two wrappers that only superficially look similar — if alignment, spacing, or semantics genuinely differ (e.g. a centered bullet dot vs a top-aligned status icon), leave them separate rather than building an over-flexible component to cover both.
 10. **Execute — Responsive Value Dedup** (if a Chakra responsive object repeats itself):
    - Scan responsive-object props (`{ base: ..., sm: ..., md: ..., lg: ..., xl: ... }`) for breakpoints carrying the identical value/expression.
@@ -117,7 +115,7 @@ Components that are **NOT leaf nodes** (should be further decomposed):
 - No redundant repetition — collapse duplicated values/expressions (responsive breakpoint objects, repeated literals, copy-pasted prop blocks) to the minimal code that produces the same output.
 - No duplicated typography recipes — repeated text roles must use the matching shared typography atom.
 - No duplicated layout shells — a repeated bordered/padded wrapper, pill, or icon+text row recipe must be extracted into (or reuse) a shared layout component instead of being re-declared inline.
-- No hardcoded icon sizes, no raw `<Icon as={...}>` — every icon (Chakra, raw svg, or react-icons) renders via the shared icon wrapper, never `width`/`height`/`size` props directly on the icon component. Don't preserve an inherited size difference as if it were an intentional tier — collapse it to the default unless a Figma spec says otherwise. Drop redundant explicit `flexShrink={0}`/`aria-hidden` once migrated — the wrapper defaults both.
+- No hardcoded icon sizes that differ from the rest of the app. Don't preserve an inherited size difference as if it were an intentional tier — collapse it to the standard one unless a design spec says otherwise.
 - No wider client boundaries — preserve existing `'use client'` boundaries or make them narrower, never wider. Removing a `'use client'` entirely counts as narrowing too — keep it only if the component uses hooks, event handlers, or browser APIs (Chakra UI v3 alone doesn't need it).
 - **Server-only imports require Server Components** — if a component uses `getTranslations` or server-side DB calls, it must NOT have `'use client'`. Fix as part of refactoring.
 - No stray `console.log` left behind — log deliberately, on failure paths.
@@ -135,7 +133,7 @@ Components that are **NOT leaf nodes** (should be further decomposed):
 - [ ] No inline styles, no relative cross-directory imports, no unused imports remain.
 - [ ] Body, heading, label, and metadata typography uses semantic text primitives; remaining raw `Text` is justified display typography.
 - [ ] No structural prop block (border + radius + padding, icon + gap + text, etc.) is duplicated verbatim across this file and existing components; repeats are extracted into a shared layout component decoupled from content.
-- [ ] No raw `<Icon as={...}>` or icon-size numbers remain — every icon renders via the shared icon wrapper, with no unconfirmed size deviation kept around as a "tier," and no redundant explicit `flexShrink={0}`/`aria-hidden` left in place.
+- [ ] No icon-size deviation remains that isn't backed by a design spec.
 
 ---
 

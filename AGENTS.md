@@ -41,6 +41,13 @@ read-only from the app's side. One client, `createSupabaseClient` from
 
 Data access goes through `services/`, never a Supabase call inside a component.
 
+## Branches
+
+`dev` is the default branch and the base for everything: feature branches cut
+from it and merge back into it, and skills that diff a branch compare against
+`origin/dev`. `main` only ever receives a release PR, and a merge there is what
+deploys production.
+
 ## Commands
 
 | Command                | What it does                                                               |
@@ -48,7 +55,7 @@ Data access goes through `services/`, never a Supabase call inside a component.
 | `pnpm dev`             | Dev server                                                                 |
 | `pnpm build`           | Production build — catches Server/Client boundary errors nothing else does |
 | `pnpm lint`            | ESLint                                                                     |
-| `npx tsc --noEmit`     | Type check (no `type-check` script in this repo)                           |
+| `pnpm type-check`      | Type check (`tsc --noEmit`)                                                |
 | `pnpm test`            | Vitest, co-located `*.test.ts(x)` files                                    |
 | `pnpm db:push:dry-run` | Shows pending migrations                                                   |
 | `pnpm db:types`        | Regenerates `types/supabase.types.ts`                                      |

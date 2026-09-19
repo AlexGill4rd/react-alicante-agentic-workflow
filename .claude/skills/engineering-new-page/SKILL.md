@@ -22,7 +22,7 @@ argument-hint: "<page-name>"
 ## Prerequisites
 - Confirm `app/` exists.
 - Confirm `app/$ARGUMENTS/` does not already exist.
-- Grep `locales/en.json` to confirm no conflicting namespace exists for this page.
+- Grep `messages/en.json` to confirm no conflicting namespace exists for this page.
 - **Figma reference — resolve before Step 1, not after the page is built.** Ask for the Figma link/frame if one wasn't already given. If no reference exists or it isn't accessible, stop and get the user's explicit sign-off on which visual details you'll be assuming (chrome vs. minimal layout, color splits, spacing, per-breakpoint behavior, copy) before scaffolding — do not default to a guessed pattern and start writing. See Design Fidelity below for the full scope of what "100%" covers.
 
 ## Workflow
@@ -42,8 +42,8 @@ argument-hint: "<page-name>"
    - Import page-level components from `./_components/`.
    - `page.tsx` is a Server Component — use `getTranslations` from `next-intl/server` (async), never the `useTranslations` client hook here.
    - Default export the page component.
-   - **Wrap the page's content in `PageContent`** (`@/components/templates/PageContent`) — inside the main `_components` page component, not `page.tsx` itself. It owns the page max-width, responsive horizontal page padding, and the top padding that clears the fixed navbar (plus `verticalSpacing`, `noPaddingTop`, and `variant="article"` options). Don't hand-roll a `Box` with `paddingX`/`paddingY`/`maxWidth` to replicate this — that drift is how `/login` first shipped without the standard page padding. The full chrome chain is: `page.tsx` → the site-chrome template (site chrome) → your `_components` page component → `PageContent` (content shell). Full-bleed multi-section marketing pages use `SectionsWrapper` per section instead (see Step 5).
-4. **Add translation namespace** to `locales/en.json` matching the page name (e.g., `"AboutPage": {}`).
+   - **Reuse the page shell the other pages use** rather than hand-rolling width and padding. Read a sibling `layout.tsx` under `app/[locale]/` and follow it: the same max-width, the same horizontal padding, the same spacing under the nav. Copying `paddingX`/`maxWidth` values into a new page is how one route ends up 8px narrower than the rest, and nobody notices until it is on screen.
+4. **Add translation namespace** to `messages/en.json` matching the page name (e.g., `"AboutPage": {}`).
 5. **Create initial section component** in `_components/` using `SectionsWrapper` from `@/templates/SectionsWrapper` and a `skinConfigs` from `@/constants/theme`.
 
 ## Translations on multi-section pages
@@ -71,13 +71,13 @@ argument-hint: "<page-name>"
 - `app/$ARGUMENTS/page.tsx`
 - `app/$ARGUMENTS/layout.tsx`
 - `app/$ARGUMENTS/_components/` directory with initial section component.
-- Translation namespace added to `locales/en.json`.
+- Translation namespace added to `messages/en.json`.
 
 ## Verification
 - [ ] `pnpm type-check` — zero new errors.
 - [ ] `pnpm build` — catches Server/Client boundary errors (e.g. `createContext is not a function`) that type-check and the test suite never execute against.
 - [ ] **Actually load the route in a real `next dev` session and check the browser console for errors** — `pnpm build` and the tests do not exercise Turbopack's dev compiler. Confirmed bug class: a library whose `react-server` export condition hangs or OOMs Turbopack dev, but not the production build, on any route rendering a component that imports it — invisible to every other check in this list. Start the dev server, request the route (`curl` or a real browser), and watch the dev server log for hangs/crashes, not just type-check/build/test passing.
-- [ ] Translation namespace exists in `locales/en.json`.
+- [ ] Translation namespace exists in `messages/en.json`.
 - [ ] Every visual detail (chrome vs. minimal layout, color split, spacing, alignment, line breaks, per-breakpoint layout) traces to the Figma reference — or, if no reference was available, the user explicitly signed off on the specific assumptions made. No detail was silently guessed.
 
 ---

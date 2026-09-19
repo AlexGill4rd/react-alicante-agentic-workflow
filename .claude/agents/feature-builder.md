@@ -138,7 +138,7 @@ If type errors → stop, show the error, fix before continuing.
 
 **2b. Backend** — two independent kinds of work, not always both needed:
 - Component needs a mutation or data fetch → create the Server Action first (standalone → `/engineering-new-server-action`; otherwise this is the first half of `/engineering-integrate-component`, see 2c). No UI wiring yet.
-- Ticket needs to gate a route based on auth/session state (not "wired to a component" at all — it intercepts the request before any page or Server Action runs) → add a handler in `utils/middleware/`, wire it into the chain in `proxy.ts`. No existing skill covers this — implement it directly, following the shape of the existing handlers (e.g. `unauthenticatedAccountRedirect.ts`).
+- Ticket needs to gate a route based on auth/session state (not "wired to a component" at all — it intercepts the request before any page or Server Action runs) → add a handler in `utils/middleware/`, wire it into the chain in `middleware.ts`. No existing skill covers this — implement it directly, following the shape of the existing handlers (e.g. `unauthenticatedAccountRedirect.ts`).
 
 ⏸️ **BREAKPOINT 4 — Backend pieces created. Show the Server Actions/hooks, wait for confirmation before wiring them into the UI.**
 
@@ -188,7 +188,7 @@ If the feature is interactive (a form, a button that triggers a mutation, any us
 /audit-i18n
 ```
 
-Fix any hardcoded strings found. Add missing translation keys to `locales/en.json`.
+Fix any hardcoded strings found. Add missing translation keys to `messages/en.json`.
 
 → Update state file: Phase 3 ✅
 

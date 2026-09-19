@@ -40,20 +40,11 @@ argument-hint: "<ComponentName> <tier|route>"
    - Define a `$1Props` interface with all typed props — no `any`. For forms, props include `onSubmit`, `isLoading`, `genericError` — supplied by the caller, never owned by this component (see `/engineering-integrate-component`).
    - Use Chakra UI components for layout (`Flex`, `Box`, `Text`).
    - User-facing strings come from `next-intl` — `useTranslations` in a Client Component, or passed down as props from a Server Component that resolved them.
-   - **Tokens — verify before using:** every color, border, or radius value must be a CSS variable defined in `styles/settings/variables.css` in *both* the `:root` block and the `[data-theme="light"]` block. Run `grep -n "\-\-token-name:" styles/settings/variables.css` before using a token — never assume one exists because it sounds right or appears in unrelated design notes. If no token fits, add one to both blocks instead of hardcoding a value.
-   - **Icon source — react-icons by default, custom SVG only for an unreproducible brand constraint:** default to an existing `react-icons` icon (`Fi`/`Md`/`Hi`/`Fa`/`Si` families) even if its exact style (outline vs. solid) isn't a perfect visual match — technical consistency (one dependency, no hand-maintained path data, automatic `currentColor`) wins over a marginal style preference. Only hand-roll a custom SVG component when a icon needs a fixed multi-color rendering that no `currentColor`-based icon can express — e.g. `GoogleIcon` exists because Google's sign-in button spec mandates its exact 4-color "G," not because of a style choice. Before adding a new custom SVG, grep `components/brand/icons/` and react-icons' typings for an existing equivalent first.
-   - **Icon sizing:** never render an icon directly (no raw `<Icon as={...}>`, no `width`/`height`/`size` props on the icon component). Always use the app's shared icon wrapper — it works uniformly for Chakra icons, react-icons, and raw `<svg>` components, and already defaults `boxSize` to `var(--icon-size)` (20px, the one inline-icon size for the whole app), `flexShrink={0}`, and `aria-hidden={true}` (icons paired with adjacent text are decorative by default — pass `aria-hidden={false}` explicitly only when the icon conveys something the text doesn't). Don't introduce a second size tier for a new component just because it feels slightly more prominent — a confirmed Figma spec is required before any icon deviates from the default, otherwise it's drift, not design. The one accepted exception is an icon-in-button (`leftIcon`/`rightIcon` on a `Button` whose `size` prop varies) — there, Chakra's own `1em` button-relative sizing is the correct pattern, not drift; leave it un-migrated.
-   - **Typography composition:** assign every text element a semantic role, then use the matching atom:
-     - Body / description copy → `<BodyText>`
-     - Section headings → `<SectionTitle>`
-     - Section subtitles → `<SectionSubTitle>`
-     - Card headings → `<CardTitle>`
-     - Repeated uppercase labels / eyebrows → `<LabelText>`
-     - Compact card timing, pricing, or metadata → `<CardMetaText>`
-   - Import typography primitives directly from `@/components/primitives/<Component>`.
-   - Do not recreate an existing role with raw `<Text fontSize=...>` props. Hero headlines, metrics, and other genuine display typography may use `Text` when no existing primitive represents the role; use the project typography scale and keep that treatment inside a named, focused component.
-   - Do not force labels, headings, or metadata into `BodyText` merely to avoid raw `Text`. Reuse by semantic role, not by HTML tag alone.
-   - **Layout composition:** before writing new wrapper markup — a bordered/padded pill, an icon+text row, a stat block — grep `components/primitives/`, `components/ui/`, and `components/molecules/` for an existing layout shell with the same structural recipe (border + radius + padding, icon + gap + text, etc.) and reuse it by passing content as `children`/props. If none exists and the recipe is plausibly used by more than one component, extract a small layout component instead of inlining the prop block.
+   - **Tokens — verify before using:** every color, border, or radius value must be a CSS variable defined in `app/globals.css`, in both the dark block and the `[data-theme="light"]` override. Run `grep -n "\-\-token-name:" app/globals.css` before using one — never assume a token exists because the name sounds right. If none fits, add it to both blocks rather than hardcoding a value.
+   - **Icon source:** use an existing `lucide-react` icon, even when its style is not a perfect match — one dependency and `currentColor` support beat a marginal visual preference. Hand-roll an SVG only when an icon needs fixed multi-colour rendering that `currentColor` cannot express, such as a third party's brand mark.
+   - **Icon sizing:** keep one inline-icon size across the app. Pass the same `size` value the neighbouring components use rather than picking a new one per component; a size that differs from its neighbours is drift, not design, unless a design spec says otherwise.
+   - **Typography:** this app has no typography component set — text is styled with Tailwind classes. Match the classes the equivalent role already uses elsewhere (a card title, a body paragraph) instead of inventing a size. When the same treatment appears a third time, extract a small named component for it.
+   - **Layout composition:** before writing new wrapper markup — a bordered/padded pill, an icon+text row, a stat block — grep `components/primitives/` and `components/layout/` for an existing layout shell with the same structural recipe (border + radius + padding, icon + gap + text, etc.) and reuse it by passing content as `children`/props. If none exists and the recipe is plausibly used by more than one component, extract a small layout component instead of inlining the prop block.
    - **Extract on complexity too, not just duplication.** A block that's never repeated anywhere else can still deserve its own named component if it's deeply nested or prop-heavy for one concern — e.g. 3+ levels of nested `Box`/`Flex`, or a single element carrying 5+ style props to do a distinct job (a heading with an embedded accent `<Box as="span">`, a complex absolute-positioned overlay). Don't wait for a second occurrence to justify naming something that's already hard to read at a glance.
    - Decouple layout from content: a layout component (pill, card shell, icon row) owns positioning, spacing, and borders only — it receives content via `children`/props and never imports page-specific data or hardcodes copy. A content/text atom (e.g. `CardMetaText`) owns typography only — it must not own border, padding, or absolute positioning; that belongs to the layout shell wrapping it.
    - **If this component is a form:**
@@ -67,7 +58,7 @@ argument-hint: "<ComponentName> <tier|route>"
    - Default export the component.
    - Internal order: hooks → handlers → render.
 3. **Create `$1.test.tsx`** alongside the component:
-   - Include a snapshot test.
+   - No snapshot by default — assert what the component should render. `engineering-new-test` explains when a snapshot earns its place.
    - Include at least one behavioral assertion (for forms: that client-side validation messages render for invalid input).
 4. **Create `$1.module.scss`** only if complex or nested styles are needed.
 5. **Create `types.ts`** only if the component has local types shared across sub-components.
@@ -81,7 +72,7 @@ argument-hint: "<ComponentName> <tier|route>"
 
 ## Constraints
 - No inline styles — use Chakra props, Tailwind, or SCSS modules.
-- No hardcoded colors, radii, or border values — every value must trace to a token verified in both theme blocks of `variables.css`.
+- No hardcoded colors, radii, or border values — every value must trace to a token verified in both theme blocks of `app/globals.css`.
 - No hardcoded icon sizes, no raw `<Icon as={...}>` — every icon renders via the shared icon wrapper. No new size tier without a confirmed Figma spec, no `aria-hidden={false}` override unless the icon conveys something the adjacent text doesn't.
 - No skipping the test file — every component ships with a test.
 - No unnecessary `'use client'` — only add if hooks, events, or browser APIs are genuinely needed, or the component renders Chakra UI (which needs it regardless — see Server vs Client Components rule).
@@ -95,16 +86,16 @@ argument-hint: "<ComponentName> <tier|route>"
 
 ## Output
 - `$1.tsx` — component file with typed props and default export.
-- `$1.test.tsx` — test file with snapshot and behavioral tests.
+- `$1.test.tsx` — test file with behavioural assertions.
 - `$1.module.scss` — styles file (only if needed).
 - `types.ts` — shared local types (only if needed).
 - Any newly extracted reusable field(s) in `components/forms/`.
 
 ## Verification
 - [ ] `pnpm type-check` — zero new errors.
-- [ ] `pnpm test -- --testPathPattern=$1` — snapshot and behavioral tests pass.
+- [ ] `pnpm test $1` — the component's tests pass.
 - [ ] Every visual detail (color split, spacing, alignment, line breaks, per-breakpoint layout) traces to the Figma reference — or, if no reference was available, the user explicitly signed off on the specific assumptions made. No detail was silently guessed.
-- [ ] Every token used exists in both `:root` and `[data-theme="light"]` in `variables.css`.
+- [ ] Every token used exists in both `:root` and `[data-theme="light"]` in `app/globals.css`.
 - [ ] Every icon renders via the shared icon wrapper — no raw `Icon as={...}`, no `width`/`height`/`size` prop on the icon component itself, and no new size tier without a confirmed Figma spec.
 - [ ] Every text element uses the matching semantic typography atom, except justified display typography.
 - [ ] No structural prop block (pill, icon+text row, stat block) duplicates an existing layout component; layout shells are decoupled from content.

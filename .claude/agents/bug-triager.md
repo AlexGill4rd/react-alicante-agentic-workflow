@@ -55,7 +55,7 @@ Work from the error outward:
 2. If it's a UI bug — identify the component from the route (`app/[locale]/*/page.tsx` → `_components/`).
 3. If it's a data bug — trace from the component to the hook → lib → Supabase query.
 4. If it's a Server Action error — read `app/actions/` and check Zod schema, response shape, and error handling.
-5. If it's an i18n bug — grep the translation key in `locales/en.json` and check the `useTranslations` namespace.
+5. If it's an i18n bug — grep the translation key in `messages/en.json` and check the `useTranslations` namespace.
 
 Read each file in the call chain — do not guess from filenames alone.
 
@@ -78,7 +78,7 @@ Identify the category:
 - **Async race condition** — state read before data resolves
 - **Wrong component tier** — Client Component calling server-only code (or vice versa)
 - **Zod schema mismatch** — action schema doesn't match what the form sends
-- **i18n key missing** — key exists in component but not in `locales/en.json`
+- **i18n key missing** — key exists in component but not in `messages/en.json`
 - **RLS policy** — Supabase returning empty result due to row-level security
 - **CSS/styling** — layout regression from a class or token change
 
