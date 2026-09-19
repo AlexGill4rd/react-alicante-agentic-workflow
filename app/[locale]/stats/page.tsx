@@ -6,7 +6,7 @@ import {
   getSessionCountByHour,
   getSessionCountByTrack,
 } from "@/utils/session-stats";
-import { PageHeading } from "@/components/layout/page-heading";
+import { PageHeading } from "@/components/atoms/page-heading";
 import { Flex, Grid } from "@chakra-ui/react";
 import { notFound } from "next/navigation";
 

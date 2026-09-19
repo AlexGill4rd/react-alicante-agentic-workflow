@@ -1,4 +1,4 @@
-import { PageShell } from "@/components/layout/page-shell";
+import { PageShell } from "@/components/templates/page-shell";
 
 export default function StatsLayout({
   children,

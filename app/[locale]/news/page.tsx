@@ -1,5 +1,5 @@
 import { NewsList } from "@/app/[locale]/news/_components/news-list";
-import { PageHeading } from "@/components/layout/page-heading";
+import { PageHeading } from "@/components/atoms/page-heading";
 import { Flex, Text } from "@chakra-ui/react";
 import { Suspense } from "react";
 

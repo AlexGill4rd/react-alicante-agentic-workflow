@@ -1,5 +1,5 @@
 import { SessionTimeline } from "@/app/[locale]/sessions/_components/session-timeline";
-import { PageHeading } from "@/components/layout/page-heading";
+import { PageHeading } from "@/components/atoms/page-heading";
 import { fetchSessions } from "@/services/sessions";
 import { Flex } from "@chakra-ui/react";
 

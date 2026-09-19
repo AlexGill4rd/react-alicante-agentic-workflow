@@ -5,19 +5,21 @@ working in this codebase reads from that same source — no per-tool copies.
 
 ## Layout
 
-| Folder                 | Holds                                                    |
-| ---------------------- | -------------------------------------------------------- |
-| `app/[locale]/`        | App Router routes, with page-local `_components/`        |
-| `components/ui/`       | Building blocks — badge, button, card                    |
-| `components/layout/`   | Page chrome — shell, nav, footer, headings               |
-| `components/chakra/`   | Chakra setup — provider, color mode, Emotion registry    |
-| `hooks/`               | Reusable React hooks                                     |
-| `services/`            | Data access — Supabase, external APIs                    |
-| `utils/`               | Pure functions, no dependencies                          |
-| `types/`               | Shared types, including generated `supabase.types.ts`    |
-| `i18n/`                | next-intl routing, navigation helpers and request config |
-| `messages/`            | `en.json`, `es.json` — every user-facing string          |
-| `supabase/migrations/` | Schema changes, one file each                            |
+| Folder                  | Holds                                                    |
+| ----------------------- | -------------------------------------------------------- |
+| `app/[locale]/`         | App Router routes, with page-local `_components/`        |
+| `components/atoms/`     | Smallest pieces — badge, button, card, page heading      |
+| `components/molecules/` | Atoms combined — nav links, language toggle, footer      |
+| `components/organisms/` | Whole sections — site nav                                |
+| `components/templates/` | Page skeletons — page shell                              |
+| `components/theme/`     | Chakra and theme wiring, outside the tiers               |
+| `hooks/`                | Reusable React hooks                                     |
+| `services/`             | Data access — Supabase, external APIs                    |
+| `utils/`                | Pure functions, no dependencies                          |
+| `types/`                | Shared types, including generated `supabase.types.ts`    |
+| `i18n/`                 | next-intl routing, navigation helpers and request config |
+| `messages/`             | `en.json`, `es.json` — every user-facing string          |
+| `supabase/migrations/`  | Schema changes, one file each                            |
 
 ## Internationalisation
 

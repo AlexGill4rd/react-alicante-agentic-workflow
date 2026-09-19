@@ -23,4 +23,4 @@ Attendees often look for a person, not a time slot. Today the only way to find a
 ## Notes
 
 - Follow the existing page pattern, e.g. `app/stats/page.tsx` + `app/stats/layout.tsx`.
-- Nav links live in `components/layout/site-nav.tsx`; labels in `utils/translations.ts`.
+- Nav links live in `components/organisms/site-nav.tsx`; labels in `utils/translations.ts`.

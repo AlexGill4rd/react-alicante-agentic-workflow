@@ -1,6 +1,6 @@
 import { FeaturedSessions } from "@/app/[locale]/_components/featured-sessions";
 import { Hero } from "@/app/[locale]/_components/hero";
-import { PageShell } from "@/components/layout/page-shell";
+import { PageShell } from "@/components/templates/page-shell";
 import { fetchSessions } from "@/services/sessions";
 
 const FEATURED_SESSION_COUNT = 3;

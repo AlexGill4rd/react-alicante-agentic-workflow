@@ -19,8 +19,10 @@ argument-hint: "[path]"
 ## Inputs
 - `$ARGUMENTS` (optional): path to directory to audit.
 - If omitted: scan all of the following directories:
-  - `components/ui/`
-  - `components/layout/`
+  - `components/atoms/`
+  - `components/molecules/`
+  - `components/organisms/`
+  - `components/templates/`
   - `hooks/`
   - `utils/`
   - `app/**/_components/`

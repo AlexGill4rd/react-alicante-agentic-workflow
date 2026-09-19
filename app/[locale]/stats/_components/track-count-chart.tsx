@@ -11,7 +11,12 @@ import {
   YAxis,
 } from "recharts";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/atoms/card";
 import type { TrackSessionCount } from "@/utils/session-stats";
 
 interface TrackCountChartProps {

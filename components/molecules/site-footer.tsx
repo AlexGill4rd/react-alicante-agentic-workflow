@@ -1,4 +1,4 @@
-import { ThemeSwitcher } from "@/components/layout/theme-switcher";
+import { ThemeSwitcher } from "@/components/molecules/theme-switcher";
 import { Flex, Link, Text } from "@chakra-ui/react";
 
 export function SiteFooter() {

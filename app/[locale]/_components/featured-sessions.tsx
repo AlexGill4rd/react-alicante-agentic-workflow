@@ -1,4 +1,9 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/atoms/card";
 import { Link } from "@/i18n/navigation";
 import type { Session } from "@/types/session";
 import { Badge, Flex, Grid, Heading, Text } from "@chakra-ui/react";

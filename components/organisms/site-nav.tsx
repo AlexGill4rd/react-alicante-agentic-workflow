@@ -1,7 +1,7 @@
 "use client";
 
-import { LanguageToggle } from "@/components/layout/language-toggle";
-import { NavLinks, type NavLink } from "@/components/layout/nav-links";
+import { LanguageToggle } from "@/components/molecules/language-toggle";
+import { NavLinks, type NavLink } from "@/components/molecules/nav-links";
 import { Link, usePathname } from "@/i18n/navigation";
 import { isStatsEnabled } from "@/utils/feature-flags";
 import { Box, Flex, IconButton } from "@chakra-ui/react";

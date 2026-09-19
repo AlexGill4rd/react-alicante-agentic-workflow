@@ -1,5 +1,5 @@
-import { SiteFooter } from "@/components/layout/site-footer";
-import { SiteNav } from "@/components/layout/site-nav";
+import { SiteFooter } from "@/components/molecules/site-footer";
+import { SiteNav } from "@/components/organisms/site-nav";
 import { Flex } from "@chakra-ui/react";
 import type { ReactNode } from "react";
 
