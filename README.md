@@ -4,6 +4,8 @@ Conference companion app for the React Alicante workshop: schedule, stats and te
 
 Built with Next.js (App Router), Chakra UI v3, Tailwind CSS, Recharts and Supabase. There's no login: every page is public, and the schedule is read from a Supabase `sessions` table.
 
+**Workshop attendees: start with [docs/starter-repo/attendee-setup.md](docs/starter-repo/attendee-setup.md)** — accounts, both Supabase projects, Vercel and your tickets, in order. The short version below assumes you already have those.
+
 ## Run locally
 
 You need two Supabase projects, one for QA and one for Production. Local development uses the QA one; Production has its own credentials and gets migrations at release time.

@@ -2,7 +2,7 @@ import { execFileSync } from "node:child_process";
 import { readdirSync, readFileSync } from "node:fs";
 import path from "node:path";
 
-const TICKETS_DIR = "docs/workshop/tickets";
+const TICKETS_DIR = "docs/starter-repo/tickets";
 const LABEL = "feature";
 const dryRun = process.argv.includes("--dry-run");
 
