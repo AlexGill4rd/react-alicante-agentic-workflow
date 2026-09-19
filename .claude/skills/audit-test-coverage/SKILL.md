@@ -19,7 +19,7 @@ argument-hint: "[path]"
 ## Inputs
 - `$ARGUMENTS` (optional): path to directory to audit.
 - If omitted: scan all of the following directories:
-  - `components/primitives/`
+  - `components/ui/`
   - `components/layout/`
   - `hooks/`
   - `utils/`

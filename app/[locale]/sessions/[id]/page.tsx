@@ -1,4 +1,4 @@
-import { Badge } from "@/components/primitives/badge";
+import { Badge } from "@/components/ui/badge";
 import { Link } from "@/i18n/navigation";
 import { fetchSessionById, fetchSessions } from "@/services/sessions";
 import { Flex, Heading, Text } from "@chakra-ui/react";

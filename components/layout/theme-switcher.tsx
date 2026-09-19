@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/primitives/button";
+import { Button } from "@/components/ui/button";
 import { Menu, Portal } from "@chakra-ui/react";
 import { Laptop, Moon, Sun } from "lucide-react";
 import { useIsClient } from "@/hooks/use-is-client";

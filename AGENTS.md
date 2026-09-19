@@ -8,7 +8,9 @@ working in this codebase reads from that same source — no per-tool copies.
 | Folder                 | Holds                                                    |
 | ---------------------- | -------------------------------------------------------- |
 | `app/[locale]/`        | App Router routes, with page-local `_components/`        |
-| `components/`          | Shared components, grouped by role (`layout/`, `ui/`)    |
+| `components/ui/`       | Building blocks — badge, button, card                    |
+| `components/layout/`   | Page chrome — shell, nav, footer, headings               |
+| `components/chakra/`   | Chakra setup — provider, color mode, Emotion registry    |
 | `hooks/`               | Reusable React hooks                                     |
 | `services/`            | Data access — Supabase, external APIs                    |
 | `utils/`               | Pure functions, no dependencies                          |

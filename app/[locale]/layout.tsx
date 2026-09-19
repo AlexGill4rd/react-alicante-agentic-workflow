@@ -3,8 +3,8 @@ import { Geist } from "next/font/google";
 import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
-import { EmotionRegistry } from "@/components/primitives/emotion-registry";
-import { Provider } from "@/components/primitives/provider";
+import { EmotionRegistry } from "@/components/chakra/emotion-registry";
+import { Provider } from "@/components/chakra/provider";
 import { routing } from "@/i18n/routing";
 import "../globals.css";
 
