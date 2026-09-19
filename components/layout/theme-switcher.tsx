@@ -3,19 +3,15 @@
 import { Button } from "@/components/primitives/button";
 import { Menu, Portal } from "@chakra-ui/react";
 import { Laptop, Moon, Sun } from "lucide-react";
+import { useIsClient } from "@/hooks/use-is-client";
 import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
 
 const ThemeSwitcher = () => {
-  const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
+  // The icon depends on the stored theme, which the server cannot know.
+  const isClient = useIsClient();
 
-  // useEffect only runs on the client, so now we can safely show the UI
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
+  if (!isClient) {
     return null;
   }
 
