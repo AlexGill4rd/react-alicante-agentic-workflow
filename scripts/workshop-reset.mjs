@@ -1,7 +1,5 @@
 import { execFileSync } from "node:child_process";
 
-const BASELINE = "workshop-baseline";
-
 function fail(message) {
   console.error(`\n✖ ${message}\n`);
   process.exit(1);
@@ -43,15 +41,27 @@ if (!isFork) {
   fail(`${repo} is not a fork. Only run this in your practice fork.`);
 }
 
-// The tag comes with the fork and marks the clean starting point. Creating it
-// here would tag whatever the run left behind, so refuse instead.
-if (!git(["tag", "--list", BASELINE])) {
+// The baseline is the latest real release tag (vX.Y.Z), the same one
+// release-post-merge creates — not a marker made up for this script. That
+// keeps one tag meaning one thing, the way the codebase these skills come
+// from does it. Creating one here would tag whatever the run left behind, so
+// refuse instead.
+function latestVersionTag() {
+  const tags = git(["tag", "--list", "v*.*.*", "--sort=-v:refname"])
+    .split("\n")
+    .filter(Boolean);
+  return tags[0];
+}
+
+if (!latestVersionTag()) {
   git(["fetch", "--tags", "--quiet", "origin"]);
 }
-if (!git(["tag", "--list", BASELINE])) {
+const BASELINE = latestVersionTag();
+if (!BASELINE) {
   fail(
-    `No ${BASELINE} tag. It should come from the repo you forked.\n` +
-      `  Fetch it with: git fetch --tags upstream`,
+    "No vX.Y.Z tag found. The baseline is whichever release has actually " +
+      "shipped — run a release first, or fetch tags with:\n" +
+      "  git fetch --tags upstream",
   );
 }
 
