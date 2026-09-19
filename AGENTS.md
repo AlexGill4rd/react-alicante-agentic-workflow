@@ -9,6 +9,7 @@ working in this codebase reads from that same source — no per-tool copies.
 | ---------------------- | -------------------------------------------------------- |
 | `app/[locale]/`        | App Router routes, with page-local `_components/`        |
 | `components/`          | Shared components, grouped by role (`layout/`, `ui/`)    |
+| `hooks/`               | Reusable React hooks                                     |
 | `services/`            | Data access — Supabase, external APIs                    |
 | `utils/`               | Pure functions, no dependencies                          |
 | `types/`               | Shared types, including generated `supabase.types.ts`    |
