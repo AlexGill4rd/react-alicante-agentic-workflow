@@ -25,7 +25,7 @@ metadata:
 ### 1. Migration drift
 Ask the user to run this themselves and share the output — it connects to the linked project:
 ```bash
-cd apps/academy && pnpm db:migrations:list
+pnpm db:migrations:list
 ```
 - Every row must have both a Local and Remote timestamp.
 - **Local only (no Remote):** migration exists in files but has not been applied to QA — ask the user to run `pnpm db:push`.

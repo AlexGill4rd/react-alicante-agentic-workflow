@@ -66,19 +66,17 @@ gh run list --branch $(git branch --show-current) --limit 1 \
   --jq '.[0] | "\(.conclusion) \(.url)"'
 ```
 
-Build the test suite table from the CI jobs. The CI pipeline runs these jobs (from `ci-academy.yml`):
+Build the test suite table from the CI jobs. The pipeline in
+`.github/workflows/ci.yml` runs one job, `check`, with these steps:
 
-| Suite | CI job |
+| Suite | CI step |
 |---|---|
-| Prettier | `lint` |
-| ESLint | `lint` |
-| Type-check (academy) | `build` |
-| Type-check (mdx-service) | `test` |
-| Unit tests (academy) | `test` |
-| Unit tests (mdx-service) | `test` |
-| Build | `build` |
-| E2E (Playwright) | `e2e` |
-| Dependency audit (OSV) | `audit` |
+| ESLint | `pnpm lint` |
+| Type-check | `npx tsc --noEmit` |
+| Unit tests | `pnpm test` |
+
+The build is not in CI — Vercel builds every push and every pull request, so
+take the build's status from the PR's Vercel check instead.
 
 Mark each ✅ passed or ❌ failed based on the CI run conclusion. If CI hasn't run yet, mark each as ⏳ pending.
 
@@ -111,15 +109,10 @@ Present the full draft including the changelog entry AND the test suite table. A
 
 | Suite | Status |
 |---|---|
-| Prettier | ✅ passed |
 | ESLint | ✅ passed |
-| Type-check (academy) | ✅ passed |
-| Type-check (mdx-service) | ✅ passed |
-| Unit tests (academy) | ✅ passed |
-| Unit tests (mdx-service) | ✅ passed |
-| Build | ✅ passed |
-| E2E (Playwright) | ✅ passed |
-| Dependency audit (OSV) | ✅ passed |
+| Type-check | ✅ passed |
+| Unit tests | ✅ passed |
+| Build (Vercel) | ✅ passed |
 
 CI: <ci_run_url>
 ```

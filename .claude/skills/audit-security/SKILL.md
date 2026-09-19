@@ -1,6 +1,6 @@
 ---
 name: audit-security
-description: Security audit for apps/academy. Default scope is the current feature's diff — the changed files and the security surfaces they touch. With --full, audits the whole app before a release. Report only. Called by feature-builder Phase 6 (diff) and release-check-env-vars (--full), or engineer directly.
+description: Security audit for this app. Default scope is the current feature's diff — the changed files and the security surfaces they touch. With --full, audits the whole app before a release. Report only. Called by feature-builder Phase 6 (diff) and release-check-env-vars (--full), or engineer directly.
 
 metadata:
   domain: engineering
@@ -20,7 +20,7 @@ argument-hint: "[--full] [path]"
 
 ## Inputs
 - No arguments → **diff mode**: `git diff origin/dev...HEAD --name-only` plus uncommitted files from `git status --short`.
-- `--full` → **full mode**: all of `apps/academy`.
+- `--full` → **full mode**: the whole app.
 - A path → that path only, with the diff-mode checks.
 
 ## Prerequisites
@@ -38,14 +38,14 @@ Only run the checks for surfaces the scope touches. If a changed utility is impo
 
 | Changed file | Check |
 |---|---|
-| `src/app/actions/**` | Zod validation at the boundary; `checkPublicActionRateLimit` on public mutations; auth guard where the action needs a user; typed `AppError` errors; rejected input is logged, not silently dropped |
-| `src/app/api/**/route.ts` | Webhook signature verified before parsing body (`crypto.timingSafeEqual`, 401 when header missing); secrets in `Authorization` header, never query params; custom form routes don't bypass CSRF protection |
-| `src/app/auth/**/route.ts`, `src/proxy.ts` | Session/cookie handling; redirects only to allowed paths; anon key only (never service role on the edge); unexpected params logged |
+| Server Actions (`app/**/actions.ts`, `'use server'` files) | Input validated at the boundary; rejected input is logged, not silently dropped; secrets read server-side only |
+| `app/api/**/route.ts` | Webhook signature verified before parsing body (`crypto.timingSafeEqual`, 401 when header missing); secrets in `Authorization` header, never query params; custom form routes don't bypass CSRF protection |
+| `services/**` | The Supabase client uses the publishable key only, never a service role key; external API URLs come from env vars, not hardcoded |
 | `supabase/migrations/*.sql` | RLS enabled in the same migration as `CREATE TABLE`, with a policy for every role that needs access |
 | `next.config.ts` | Security headers and CSP not removed or weakened |
 | `.env.example`, `process.env` usage | No secret behind a `NEXT_PUBLIC_` prefix; no hardcoded keys/tokens |
 | `*.tsx` | Frontend checks (step 3) |
-| `package.json` | New dependency noted; the `osv-scanner` job in `.github/workflows/ci-academy.yml` still runs |
+| `package.json` | New dependency noted, with what it pulls in |
 
 ### 3. Frontend checks (any `.tsx` in scope)
 - `dangerouslySetInnerHTML` — content must be sanitized (e.g. DOMPurify). Unsanitized → Critical.
@@ -57,8 +57,7 @@ Only run the checks for surfaces the scope touches. If a changed utility is impo
 ### 4. Full mode only — app-wide posture
 - Security headers and CSP exist in `next.config.ts` `headers()`.
 - `.env*` files are gitignored.
-- `osv-scanner` job present and enabled in CI.
-- Error boundaries and Sentry config exist.
+- Error boundaries exist for the routes that fetch data.
 - Every form that captures PII validates input and is rate limited.
 - RLS on every table — run `/audit-database-health` for this instead of re-checking by hand.
 
