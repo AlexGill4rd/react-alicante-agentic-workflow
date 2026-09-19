@@ -1,2 +1,10 @@
+# pnpm 11 asks before running a dependency's install scripts, and reads the
+# answers from here (not package.json). Without an entry per package, a clean
+# install — CI, or a fresh clone — fails with ERR_PNPM_IGNORED_BUILDS.
 allowBuilds:
+  # Picks the native binary for the platform; ESLint's TypeScript resolver
+  # needs it.
   unrs-resolver: true
+  # Native watcher and compiler we never reach: Next uses its own toolchain.
+  "@parcel/watcher": false
+  "@swc/core": false
