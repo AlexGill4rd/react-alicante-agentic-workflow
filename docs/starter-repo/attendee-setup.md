@@ -183,16 +183,25 @@ Open [supabase.com/dashboard/projects](https://supabase.com/dashboard/projects)
 and click **New project**. Create two projects, one after the other: **`ra-qa`**
 for development and **`ra-prod`** for your deployed site.
 
-Generate the database password and save it: you need it when you link the
-project. It does not go in `.env.local`. Under **Security**, uncheck
-**Automatically expose new tables**. Leave the other options as they are.
+Click **Generate a password**, copy it, and save it in a secure note or a text
+document, with the project name next to it. You need it later when you link the
+project. It does not go in `.env.local`.
+
+Under **Security**, uncheck **Automatically expose new tables**. Leave the other
+options as they are.
 
 ![The Supabase new project form for ra-qa](images/supabase-project-qa.png)
 
 Then click **Create new project**.
 
-Note each project's ref, the id in its URL `https://<ref>.supabase.co`. You
-need both below.
+When the project is ready, look at the address bar of your browser:
+
+```
+https://supabase.com/dashboard/project/<ref>
+```
+
+The `<ref>` after `/project/` is the project ref, a string of 20 letters. Save it
+in the same note, next to the password. You need both refs below.
 
 ### Wire up environment variables
 
@@ -200,22 +209,28 @@ need both below.
 cp .env.example .env.local
 ```
 
-Open `.env.local`, replace everything in it with this, and fill in the three
+Open `.env.local`, replace everything in it with this, and replace the three
 values in `<...>`. Local development uses **QA**.
 
 ```dotenv
-NEXT_PUBLIC_SUPABASE_URL=<ra-qa Project URL>
-NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=<ra-qa publishable key>
-SUPABASE_PRODUCTION_PROJECT_REF=<ra-prod ref>
+NEXT_PUBLIC_SUPABASE_URL=https://<qa-ref>.supabase.co
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=<qa-publishable-key>
+SUPABASE_PRODUCTION_PROJECT_REF=<prod-ref>
 NEWS_API_URL=https://hn.algolia.com/api/v1
 NEXT_PUBLIC_ENABLE_STATS=true
 ```
 
-Where to find them:
+- `<qa-ref>` and `<prod-ref>`: the refs you saved in your note. To check the
+  URL, open `ra-qa` → **Integrations → Data API**. The API URL there ends with
+  `/rest/v1/`. Use only the part before it: `https://<qa-ref>.supabase.co`.
 
-- **Project URL:** `ra-qa` → **Settings → Data API**
-- **Publishable key:** `ra-qa` → **Settings → API Keys**
-- **ra-prod ref:** the id in its URL `https://<ref>.supabase.co`
+![The Supabase Data API page with the API URL](images/supabase-data-api.png)
+
+- `<qa-publishable-key>`: `ra-qa` → **Settings → API Keys**. On the tab
+  **Publishable and secret API keys**, click the copy icon next to the
+  `default` publishable key.
+
+![The Supabase API Keys page with the publishable key](images/supabase-api-keys.png)
 
 ### Connect and create the tables
 
