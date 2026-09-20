@@ -348,48 +348,40 @@ again. It only reads the file when it starts.
 
 ## 5. Deploy to Vercel
 
-1. If you don't have a Vercel account, create one at
-   [vercel.com/signup](https://vercel.com/signup). Signing up with **GitHub** or
-   **Google** is the fastest. GitHub is best, because Vercel then already has
-   access to your fork. Already have an account? Skip this step.
-2. Go to [vercel.com/new](https://vercel.com/new). Under **Import Git
-   Repository**, use the dropdown to choose the GitHub account that owns your
-   fork: your username, or an organization if you forked into one. Find your
-   fork and click **Import**. If your fork is missing, click **Adjust GitHub App
-   Permissions**.
+1. Create a Vercel account at [vercel.com/signup](https://vercel.com/signup), if
+   you don't have one. Signing up with GitHub is the fastest.
+2. Go to [vercel.com/new](https://vercel.com/new). Choose the GitHub account that
+   owns your fork, find your fork, and click **Import**. Fork missing? Click
+   **Adjust GitHub App Permissions**.
 
    ![The Vercel Import Git Repository list](images/vercel-import.png)
 
-3. Add the env vars. The names are the same, and the values differ per
-   environment:
+3. Add these environment variables. The same variable can have a different value
+   in Production and in Preview: Preview uses `ra-qa`, Production uses `ra-prod`.
 
-   | Variable                               | Preview      | Production    |
-   | -------------------------------------- | ------------ | ------------- |
-   | `NEXT_PUBLIC_SUPABASE_URL`             | `ra-qa` URL  | `ra-prod` URL |
-   | `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | `ra-qa` key  | `ra-prod` key |
-   | `NEWS_API_URL`                         | same in both | same in both  |
-   | `NEXT_PUBLIC_ENABLE_STATS`             | `true`       | `false`       |
+   | Variable                               | Preview                 | Production                                     |
+   | -------------------------------------- | ----------------------- | ---------------------------------------------- |
+   | `NEXT_PUBLIC_SUPABASE_URL`             | same as in `.env.local` | `https://<prod ref>.supabase.co`               |
+   | `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | same as in `.env.local` | `ra-prod` → **Settings → API Keys**, copy icon |
+   | `NEWS_API_URL`                         | same in both            | same in both                                   |
+   | `NEXT_PUBLIC_ENABLE_STATS`             | `true`                  | `false`                                        |
 
-   In the form, the **Environments** dropdown has checkboxes. `NEWS_API_URL` has
-   the same value in both, so tick **Production** and **Preview**, as in the
-   picture. The other variables have different values: add each one twice, once
-   for **Preview** and once for **Production**. Type **Config** is fine for all
-   of them. `NEXT_PUBLIC_` values are baked in at build time, so changing one
-   needs a redeploy.
+   In the form, tick the environments with the **Environments** dropdown.
+   `NEWS_API_URL` is the same in both: tick **Production** and **Preview**. For
+   the others, add each variable twice, once per environment. Keep the type
+   **Config**.
 
    ![The Vercel form for NEWS_API_URL, with Production and Preview ticked](images/vercel-env-var-form.png)
 
-   ![The Vercel Environment Variables page, with the values hidden](images/vercel-env-vars.png)
+4. Click **Deploy**, the button at the bottom of the Configure Project page.
+   The first deployment is a **Production** deployment, so your site goes live
+   right away.
 
-4. Click **Deploy**. It is the button at the bottom of the Configure Project
-   page, the page you get after you click **Import**.
+Check: the deployment shows **Ready**.
 
-Check: the deployment shows **Ready** and your site opens. Its `/en/sessions`
-stays empty until the release step applies the migrations to `ra-prod`.
-
-After the first deployment, check which branch is Production. In your project,
-open **Settings → Environments**. **Production** must track the branch `main`.
-`dev` and feature branches get Preview deployments.
+Then check the Production branch. Open **Settings → Environments**.
+**Production** must track `main`. `dev` and feature branches get Preview
+deployments.
 
 ![The Vercel Environments page](images/vercel-environments.png)
 
