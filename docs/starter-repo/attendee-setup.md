@@ -99,24 +99,30 @@ npx playwright install chromium
 
 ## 2. Fork and clone
 
-Open a terminal in the folder where you keep your projects, then run:
+Open a terminal in the folder where you keep your projects. Then fork and clone
+in one command:
 
 ```bash
 gh repo fork engineering-workshops/react-alicante-agentic-workflow --clone
-cd react-alicante-agentic-workflow
-pnpm install
-claude
 ```
 
-The first command makes your own copy of the repo on GitHub (the fork) and
-downloads it to your computer (`--clone`). From here on, run every command
-inside this folder.
+Or click **Fork** on
+[github.com/engineering-workshops/react-alicante-agentic-workflow](https://github.com/engineering-workshops/react-alicante-agentic-workflow),
+then clone your fork:
 
-In `claude`, log in when prompted, and approve the Playwright server when it
-asks. Then exit.
+```bash
+git clone https://github.com/<your-username>/react-alicante-agentic-workflow.git
+```
 
-Check: `git remote -v` shows your fork as `origin` and the workshop repo as
-`upstream`.
+Then, inside the folder:
+
+```bash
+cd react-alicante-agentic-workflow
+pnpm install
+claude   # log in, approve the Playwright server, then exit
+```
+
+Check: `git remote -v` shows your fork as `origin`.
 
 ## 3. Create a Supabase account
 
