@@ -141,48 +141,55 @@ pnpm install
 claude   # log in, approve the Playwright server, then exit
 ```
 
-Check: `git remote -v` shows your fork as `origin`. Example, for the user
-`octocat`:
+Check:
 
-```
-origin    https://github.com/octocat/react-alicante-agentic-workflow.git (fetch)
-origin    https://github.com/octocat/react-alicante-agentic-workflow.git (push)
-upstream  https://github.com/engineering-workshops/react-alicante-agentic-workflow.git (fetch)
-upstream  https://github.com/engineering-workshops/react-alicante-agentic-workflow.git (push)
+```bash
+git remote get-url origin   # prints your fork's URL
 ```
 
-You see your own username. The `upstream` lines only appear if you forked with
-`gh`.
+The URL has your GitHub username in it, not `engineering-workshops`.
 
 ## 3. Set up Supabase
 
 ### Create an account
 
-You need two projects, and the free tier allows only 2 per account. Use a fresh
-account:
+You will create a new Supabase account with an alias of your email. Everyone
+does this, so every account has two free project slots for the two databases:
+QA and Production.
 
-- New to Supabase: sign up at [supabase.com/dashboard/sign-up](https://supabase.com/dashboard/sign-up).
-- Already have projects: sign up again at the same link with an email alias
-  (`you+react-alicante@gmail.com`) and **email/password**. Don't use "Sign in
-  with GitHub": it picks your existing account.
+1. Make your alias. An alias is a second address that delivers to your normal
+   inbox. Add `+alicante` before the `@`: `example@gmail.com` becomes
+   `example+alicante@gmail.com`.
+2. Go to [supabase.com/dashboard/sign-up](https://supabase.com/dashboard/sign-up).
+3. Sign up with the alias and a password. Don't use "Continue with GitHub".
+4. Confirm your email.
+
+![The Supabase sign-up form](images/supabase-sign-up.png)
 
 ### Create an organization
 
-Go to [supabase.com/dashboard/new](https://supabase.com/dashboard/new). Any name. Type: Educational.
+Go to [supabase.com/dashboard/new](https://supabase.com/dashboard/new) and fill
+in the form:
+
+- **Name:** `React-Alicante-Workshop` (any name works)
+- **Type:** Educational
+- **Plan:** Free - $0/month
+
+![The Supabase new organization form](images/supabase-organization.png)
 
 ### Create two projects
 
 Open [supabase.com/dashboard/projects](https://supabase.com/dashboard/projects)
-and click **New project**. Create **`ra-qa`** and **`ra-prod`**. QA is for
-development, Production is for your deployed site.
+and click **New project**. Create two projects, one after the other: **`ra-qa`**
+for development and **`ra-prod`** for your deployed site.
 
-For each:
+Generate the database password and save it: you need it when you link the
+project. It does not go in `.env.local`. Under **Security**, uncheck
+**Automatically expose new tables**. Leave the other options as they are.
 
-- Database password: use the generator and save it. Note which project it
-  belongs to.
-- Region: closest to you.
-- Security options: keep "Enable Data API" checked, uncheck "Automatically
-  expose new tables", keep "Enable automatic RLS" unchecked.
+![The Supabase new project form for ra-qa](images/supabase-project-qa.png)
+
+Then click **Create new project**.
 
 Note each project's ref, the id in its URL `https://<ref>.supabase.co`. You
 need both below.
@@ -193,17 +200,22 @@ need both below.
 cp .env.example .env.local
 ```
 
-Local development uses **QA**. From `ra-qa`: **Settings → Data API** for the
-Project URL, **Settings → API Keys** for the publishable key.
-`SUPABASE_PRODUCTION_PROJECT_REF` is the `ra-prod` ref.
+Open `.env.local`, replace everything in it with this, and fill in the three
+values in `<...>`. Local development uses **QA**.
 
-```
-NEXT_PUBLIC_SUPABASE_URL=your-qa-project-url
-NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=your-qa-publishable-key
-SUPABASE_PRODUCTION_PROJECT_REF=your-prod-project-ref
+```dotenv
+NEXT_PUBLIC_SUPABASE_URL=<ra-qa Project URL>
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=<ra-qa publishable key>
+SUPABASE_PRODUCTION_PROJECT_REF=<ra-prod ref>
 NEWS_API_URL=https://hn.algolia.com/api/v1
 NEXT_PUBLIC_ENABLE_STATS=true
 ```
+
+Where to find them:
+
+- **Project URL:** `ra-qa` → **Settings → Data API**
+- **Publishable key:** `ra-qa` → **Settings → API Keys**
+- **ra-prod ref:** the id in its URL `https://<ref>.supabase.co`
 
 ### Connect and create the tables
 
