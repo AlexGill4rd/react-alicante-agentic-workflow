@@ -3,24 +3,23 @@
 Do all of this before the workshop. It takes about half an hour, most of it
 waiting for installs and account confirmations.
 
-Read it here on GitHub; step 1 is where you get your own copy of the repo.
-
 ## Prerequisites
 
 Install:
 
-- **Node.js 22+** (`node -v`). Claude Code needs 22; Next.js alone would accept 20.9.
+- **Node.js 22 or newer** (check with `node -v`). Download the LTS installer
+  from [nodejs.org](https://nodejs.org), or on macOS run `brew install node`.
 - **pnpm** (`npm install -g pnpm`, check with `pnpm -v`)
 - **Git** (`git --version`). macOS: `xcode-select --install`. Windows:
   [Git for Windows](https://git-scm.com/download/win), which Claude Code on
   Windows also needs.
 - **Google Chrome**, used by the Playwright browser tools (step 3)
-- **Playwright's browsers**, downloaded once with `npx playwright install
-chromium`. Do this at home: it is about 700 MB, and thirty people pulling it
-  over the venue wifi is not a plan. The repo ships the Playwright MCP server
-  in `.mcp.json`, so there is nothing else to configure — Claude Code asks you
-  to approve it the first time you start it in the project.
-- GitHub CLI and Claude Code: steps 2 and 3 below
+- **Playwright's browsers**, downloaded once with
+  `npx playwright install chromium`. Do this before the workshop: the download
+  is about 700 MB. The repo already ships the Playwright MCP server in
+  `.mcp.json`, so there is nothing else to configure. Claude Code asks you to
+  approve it the first time you start it in the project.
+- GitHub CLI and Claude Code: steps 1 and 3 below
 
 Accounts:
 
@@ -31,18 +30,7 @@ Accounts:
 Not needed: TypeScript and the Supabase CLI come with `pnpm install`;
 Docker (Supabase runs in the cloud); the Vercel CLI.
 
-## 1. Fork and clone
-
-```bash
-gh repo fork engineering-workshops/react-alicante-agentic-workflow --clone
-cd react-alicante-agentic-workflow
-pnpm install
-```
-
-No `gh`? Use the "Fork" button on GitHub instead, then `git clone` your
-fork's URL.
-
-## 2. Install the GitHub CLI
+## 1. Install the GitHub CLI
 
 ```bash
 brew install gh        # macOS
@@ -55,6 +43,23 @@ Linux: [cli.github.com](https://cli.github.com). Then:
 gh auth login
 gh auth status   # verify
 ```
+
+## 2. Fork and clone
+
+Open a terminal in the folder where you keep your projects, then run:
+
+```bash
+gh repo fork engineering-workshops/react-alicante-agentic-workflow --clone
+cd react-alicante-agentic-workflow
+pnpm install
+```
+
+The first command makes your own copy of the repo on GitHub (the fork) and
+downloads it to your computer (`--clone`). From here on, run every command
+inside this folder.
+
+Check: `git remote -v` shows your fork as `origin` and the workshop repo as
+`upstream`.
 
 ## 3. Install Claude Code
 
@@ -84,7 +89,7 @@ Any name. Type: Educational (cosmetic only, no effect on limits).
 
 Create them one after the other: **`ra-qa`** and **`ra-prod`**. QA is what you
 develop against; Production is what your deployed site uses. Different
-projects means different credentials, which is the point.
+projects mean different credentials.
 
 For each:
 
@@ -138,7 +143,7 @@ Check: in `ra-qa`, **Table Editor → sessions** shows 8 rows. `ra-prod` stays
 empty for now.
 
 **`db push` can't connect?** The direct database connection is often IPv6
-only, and some networks (conference wifi included) are IPv4 only. Use the
+only, and some networks are IPv4 only. Use the
 Session pooler instead, which works everywhere:
 
 1. Supabase → **Connect** → **Session pooler** → copy the connection string.
@@ -165,8 +170,8 @@ in Spanish.
    the account if you don't have one; there is no separate signup. Authorise
    Vercel's GitHub app when asked — it needs access to import your fork.
 2. **Add New → Project → Import Git Repository** → pick your fork.
-3. Add the env vars. Same names, different values per environment — that's
-   the whole reason they're variables and not code:
+3. Add the env vars. The names are the same, and the values differ per
+   environment:
 
    | Variable                               | Preview      | Production    |
    | -------------------------------------- | ------------ | ------------- |
@@ -178,9 +183,8 @@ in Spanish.
    In Vercel each variable has checkboxes for Production, Preview and
    Development, so add the Supabase ones twice, once per environment.
 
-   Stats are off in Production on purpose: the feature ships hidden and gets
-   switched on later. `NEXT_PUBLIC_` values are baked in at build time, so
-   flipping it needs a redeploy.
+   Set `NEXT_PUBLIC_ENABLE_STATS` to `false` in Production. `NEXT_PUBLIC_`
+   values are baked in at build time, so changing one needs a redeploy.
 
 4. **Settings → Environments → Production → Branch Tracking**: confirm it says
    `main`. Vercel picks `main` on import, so it should already be right.
@@ -221,8 +225,7 @@ claude --agent release-manager "next minor"
 
 You then talk to the agent directly.
 
-Don't ask a normal Claude session to "run release-manager". That starts it as a
-subagent, and a subagent can't take your "yes" through the assistant that
-launched it, so it stops at the first confirmation.
+Always start the agent with `claude --agent`. Asking a normal session to "run
+release-manager" does not work.
 
 Check: the agent greets you and asks its first question.
