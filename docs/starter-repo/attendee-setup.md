@@ -205,32 +205,33 @@ in the same note, next to the password. You need both refs below.
 
 ### Wire up environment variables
 
+Create your env file and open it in your editor:
+
 ```bash
 cp .env.example .env.local
 ```
 
-Open `.env.local`, replace everything in it with this, and replace the three
-values in `<...>`. Local development uses **QA**.
+Replace everything in it with this, using your own values:
 
 ```dotenv
-NEXT_PUBLIC_SUPABASE_URL=https://<qa-ref>.supabase.co
-NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=<qa-publishable-key>
-SUPABASE_PRODUCTION_PROJECT_REF=<prod-ref>
+NEXT_PUBLIC_SUPABASE_URL=https://abcdefghijklmnopqrst.supabase.co
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_publishable_AbCdEfGhIjKlMnOpQrSt
+SUPABASE_PRODUCTION_PROJECT_REF=uvwxyzabcdefghijklmn
 NEWS_API_URL=https://hn.algolia.com/api/v1
 NEXT_PUBLIC_ENABLE_STATS=true
 ```
 
-- `<qa-ref>` and `<prod-ref>`: the refs you saved in your note. To check the
-  URL, open `ra-qa` → **Integrations → Data API**. The API URL there ends with
-  `/rest/v1/`. Use only the part before it: `https://<qa-ref>.supabase.co`.
+**`NEXT_PUBLIC_SUPABASE_URL`**: open `ra-qa` → **Integrations → Data API** and
+copy the API URL. Remove the ending `/rest/v1/`.
 
 ![The Supabase Data API page with the API URL](images/supabase-data-api.png)
 
-- `<qa-publishable-key>`: `ra-qa` → **Settings → API Keys**. On the tab
-  **Publishable and secret API keys**, click the copy icon next to the
-  `default` publishable key.
+**`NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`**: open `ra-qa` → **Settings → API
+Keys** and copy the `default` publishable key.
 
 ![The Supabase API Keys page with the publishable key](images/supabase-api-keys.png)
+
+**`SUPABASE_PRODUCTION_PROJECT_REF`**: the ref of `ra-prod`, from your note.
 
 ### Connect and create the tables
 
