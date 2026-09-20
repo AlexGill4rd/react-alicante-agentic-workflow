@@ -114,6 +114,8 @@ Report findings. For each issue found:
 
 → Update state: DB Health ✅ when no blockers found (or all blockers resolved).
 
+⏸️ **Stop.** Report only the database health findings, then wait for the user to say 'next'. Do not start step 5 in the same message.
+
 ---
 
 ### 5. Test Coverage Check
@@ -126,6 +128,8 @@ Report untested files by priority. This is informational — gaps do not block t
 For each High-priority untested file added in this release:
 > "⚠️ New file `<path>` has no test. This was added in this release — consider adding a test before merging."
 
+⏸️ **Stop.** Report only the coverage findings, as a short list, then wait for the user to say 'next'. Do not start step 6 in the same message.
+
 ---
 
 ### 6. Full Security Audit
@@ -136,6 +140,19 @@ Invoke `/audit-security --full` — the whole app, not just one feature's diff (
 Report findings. **Critical and High are blockers** — the release should not go to QA with them open. Medium/Low are noted as follow-ups.
 
 → Update state: Security Audit ✅ when no Critical/High findings remain.
+
+⏸️ **Stop.** Report only the security findings, then wait for the user before step 7.
+
+---
+
+### 7. File and Fix Blockers
+
+If step 4 or step 6 found a blocker (a table missing RLS, or a Critical or High security finding), invoke `release-qa-bugs`, passing each blocker as a bug with its severity, file and line:
+> "Track QA bugs for v<version>. Blockers from the release audit: <title, severity, file:line, what is wrong>"
+
+It creates the issues under the `v<version> QA` milestone and runs the fix flow. Do not mark steps 4 and 6 complete until the fixes are merged into the release branch.
+
+Medium/Low findings are not blockers: report them as follow-ups, do not file them here.
 
 ---
 
@@ -148,6 +165,7 @@ Report findings. **Critical and High are blockers** — the release should not g
 - DB health RLS failures are **blockers** — do not mark this step complete while tables are unprotected.
 - Test coverage gaps are **informational** — only flag new files from this release as requiring attention.
 - Security audit Critical/High findings are **blockers** — do not mark this step complete while they are open.
+- Start each audit report with one verdict line: ✅ nothing to do, ⚠️ action needed, or ℹ️ information only. Then list only the items behind it, each tagged Fix (a blocker) or Info. Keep each report under ten lines.
 
 ## Output
 
