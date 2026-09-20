@@ -89,9 +89,11 @@ Check:
 claude --version   # prints a version number, e.g. 2.1.278 (Claude Code)
 ```
 
-### Playwright's browsers
+### Browser for Playwright
 
-About 700 MB, so do it before the workshop.
+Claude tests the app in a browser with the Playwright tools, which the repo
+already configures. Download the browser now. About 700 MB, so do it before the
+workshop.
 
 ```bash
 npx playwright install chromium
@@ -210,10 +212,11 @@ connected. (`/es/sessions` is the Spanish version.)
 
 ## 9. Deploy to Vercel
 
-1. Go to [vercel.com/new](https://vercel.com/new) and click **Continue with
-   GitHub**. This creates the account if you don't have one. Authorise Vercel's
-   GitHub app when asked.
-2. Under **Import Git Repository**, pick your fork.
+1. Create a Vercel account at [vercel.com/signup](https://vercel.com/signup):
+   click **Continue with GitHub** and authorise Vercel's GitHub app. Already
+   have an account? Skip this step.
+2. Go to [vercel.com/new](https://vercel.com/new) and, under **Import Git
+   Repository**, pick your fork.
 3. Add the env vars. The names are the same, and the values differ per
    environment:
 
