@@ -208,3 +208,21 @@ agents read tickets from your repo, not the starter repo. Safe to run twice:
 tickets that already exist are skipped.
 
 Check: your fork's **Issues** tab shows 3 open issues.
+
+## 12. Start the agents
+
+Start a session as the agent you want to talk to. Run it from the repo root and
+add your first request in quotes:
+
+```bash
+claude --agent feature-builder "#1"
+claude --agent release-manager "next minor"
+```
+
+You then talk to the agent directly.
+
+Don't ask a normal Claude session to "run release-manager". That starts it as a
+subagent, and a subagent can't take your "yes" through the assistant that
+launched it, so it stops at the first confirmation.
+
+Check: the agent greets you and asks its first question.

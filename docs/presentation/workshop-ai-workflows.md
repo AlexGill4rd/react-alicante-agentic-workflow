@@ -422,6 +422,42 @@ Agents have `## Boundaries` sections that define the hard edges:
 
 This prevents over-automation. Humans hold the keys to irreversible actions.
 
+### Merging: best practices
+
+The agents never merge. The human does, so the human needs to pick the right option.
+
+**Feature PR into `dev` — Squash and merge**
+
+- One PR gives one commit on `dev`.
+- The PR title becomes the commit message, so it must read `type(scope): subject`. The changelog is built from these commits.
+- Merge only when CI is green.
+- Delete the branch after merging.
+- Keep PRs small and focused.
+
+**Release PR into `main` — Create a merge commit**
+
+- Never squash and never rebase. A squash gives the tag a commit with no link to `dev`, and the next changelog lists old commits again.
+- Only the release branch goes to `main`. No direct commits.
+- Merge after QA passed and CI is green, and after the Production migrations are applied.
+- Tag and publish the release right after, then merge `main` back to `dev`.
+
+**Where the skills say it**
+
+- `feature-builder` tells the user to squash and delete the branch.
+- `release-qa-bugs` says the same for fix PRs into the release branch.
+- `release-pre-merge` tells the user to use a merge commit for the release PR.
+
+### Things to improve next
+
+Agent workflows are never finished. Every real release shows a small gap, and the fix goes into the skill, so the next run is better. Ideas we have not built yet:
+
+- **Clean up the release branch.** After the tag and the merge back to `dev`, `release-post-merge` could offer to delete the release branch, locally and on origin. It deletes a remote branch, so it needs its own confirmation step.
+- **Check the merge method.** Today the skill only tells the user which button to click. A later version could check the result, for example that the tag commit has two parents, and warn if not.
+- **Changelog range.** `release-generate-changelog` could start from the merge-back commit and not only from the last tag, so a squash never repeats old commits.
+- **Ignore the working files.** The state files of the agents (`release-state.md`, `feature-state.md`) belong in `.gitignore`. We found this only when a skill stopped on a dirty tree.
+
+The lesson for the workshop: the tooling is part of the codebase. You read it, run it, and change it with normal PRs. Each release is a test of the skills.
+
 ---
 
 ### Exercises — Part 4
