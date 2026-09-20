@@ -109,13 +109,11 @@ Invoke **`release-open-pr`**:
 
 After the skill completes, print:
 
-> "Release PR is open. Vercel will generate a preview link automatically — use that link for QA testing.
->
-> Come back when testing is complete — with bugs found, or to confirm QA passed."
+> "Release PR is open and Vercel is building the preview. Do not test it yet. Reply 'next' and I will check the environment variables first."
 
 → Update state file: Phase 3 ✅.
 
-**Wait. Do not proceed until the user returns.**
+**Wait. Do not proceed until the user replies.**
 
 ---
 
