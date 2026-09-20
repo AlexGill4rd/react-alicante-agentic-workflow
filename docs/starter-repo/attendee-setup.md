@@ -303,7 +303,12 @@ rows.
 **`db push` can't connect?** Some networks are IPv4 only, and the direct
 connection needs IPv6. Use the Session pooler instead:
 
-1. Supabase → **Connect** → **Session pooler** → copy the connection string.
+1. In `ra-qa`, click **Connect**, open the **Direct** tab, and under
+   **Connection Method** choose **Session pooler**. Keep the type **URI** and
+   copy the connection string below it.
+
+   ![The Supabase Connect dialog with Session pooler selected](images/supabase-session-pooler.png)
+
 2. Replace `[YOUR-PASSWORD]` in it with your DB password.
 3. Run:
 
