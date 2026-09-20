@@ -410,7 +410,11 @@ git commit --allow-empty -m "Trigger a preview"
 git push origin dev
 ```
 
-In Vercel → **Deployments**, open the new Preview when it shows **Ready**.
+In Vercel → **Deployments**, click the newest row with the **Preview** badge and
+the branch `dev`. When it shows **Ready**, click **Visit**. The preview URL is
+under **Domains**.
+
+![The Vercel Preview deployment with the Visit button and its domains](images/vercel-preview.png)
 
 Check: its `/en/sessions` shows the schedule from `ra-qa`.
 
