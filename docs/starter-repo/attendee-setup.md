@@ -177,31 +177,36 @@ in the form:
 
 ![The Supabase new organization form](images/supabase-organization.png)
 
-### Create two projects
+### Create the QA project: `ra-qa`
 
-Open [supabase.com/dashboard/projects](https://supabase.com/dashboard/projects)
-and click **New project**. Create two projects, one after the other: **`ra-qa`**
-for development and **`ra-prod`** for your deployed site.
+You create two projects: one for development (QA) and one for your deployed
+site (Production). Start with QA.
 
-Click **Generate a password**, copy it, and save it in a secure note or a text
-document, with the project name next to it. You need it later when you link the
-project. It does not go in `.env.local`.
+1. Open [supabase.com/dashboard/projects](https://supabase.com/dashboard/projects)
+   and click **New project**.
+2. Name it `ra-qa`. Click **Generate a password**, copy it, and save it in a
+   secure note or a text document, with the project name next to it. It does
+   not go in `.env.local`.
+3. Leave the other options, including **Security**, as they are.
 
-Under **Security**, uncheck **Automatically expose new tables**. Leave the other
-options as they are.
+   ![The Supabase new project form for ra-qa](images/supabase-project-qa.png)
 
-![The Supabase new project form for ra-qa](images/supabase-project-qa.png)
+4. Click **Create new project**. When it is ready, open **Settings → General**.
+   The **Project ID** is the **QA project ref**. Click **Copy** and save it in
+   your note as `qa ref`, next to the password.
 
-Then click **Create new project**.
+   ![The Supabase General settings with the Project ID](images/supabase-project-id.png)
 
-When the project is ready, look at the address bar of your browser:
+### Create the Production project: `ra-prod`
 
-```
-https://supabase.com/dashboard/project/<ref>
-```
+Repeat the same steps:
 
-The `<ref>` after `/project/` is the project ref, a string of 20 letters. Save it
-in the same note, next to the password. You need both refs below.
+1. Click **New project** and name it `ra-prod`.
+2. Generate a new password and save it in your note.
+3. Leave the other options as they are.
+4. Click **Create new project**. Open **Settings → General**. The **Project
+   ID** is the **Production project ref**. Copy it and save it in your note as
+   `prod ref`.
 
 ### Wire up environment variables
 
@@ -231,22 +236,69 @@ Keys** and copy the `default` publishable key.
 
 ![The Supabase API Keys page with the publishable key](images/supabase-api-keys.png)
 
-**`SUPABASE_PRODUCTION_PROJECT_REF`**: the ref of `ra-prod`, from your note.
+**`SUPABASE_PRODUCTION_PROJECT_REF`**: the `prod ref` from your note. To find it
+again, open `ra-prod` → **Settings → General** and copy the **Project ID**.
 
 ### Connect and create the tables
 
-The schedule lives in a `sessions` table, created by the migrations in
-`supabase/migrations/`. Link to **QA** and push:
+The app shows a conference schedule. The schedule is stored in a database table
+called `sessions`. The repo has files, called migrations, that create and fill
+that table. You apply them to your QA project in five steps:
 
-```bash
-pnpm supabase login                          # opens browser, one-time
-pnpm supabase link --project-ref <qa-ref>    # asks for the DB password
-pnpm db:push                                 # creates and fills the tables
-```
+1. Log in to Supabase:
 
-`<qa-ref>` is the `ra-qa` ref you noted in "Create two projects".
+   ```bash
+   pnpm supabase login
+   ```
 
-Check: in `ra-qa`, **Table Editor → sessions** shows 8 rows.
+   A browser window opens and shows a verification code. Click **Copy code**.
+
+   ![The Supabase browser page with the verification code](images/supabase-login-browser.png)
+
+   Paste it in the terminal where it says "Enter your verification code", and
+   press Enter.
+
+   ![The terminal asking for the verification code](images/supabase-login-terminal.png)
+
+   Check that you are logged in. This lists your projects, and you see `ra-qa`
+   and `ra-prod`:
+
+   ```bash
+   pnpm db:link:status
+   ```
+
+2. Link the repo to `ra-qa`. Use the `qa ref` from your note. It asks for the
+   `ra-qa` database password from your note:
+
+   ```bash
+   pnpm supabase link --project-ref <qa-ref>
+   ```
+
+   Check that the link worked. Run `pnpm db:link:status` again: the `●` in the
+   first column must be on the `ra-qa` row.
+
+3. Preview what will be created. Nothing changes yet:
+
+   ```bash
+   pnpm db:push:dry-run
+   ```
+
+   It lists the migrations that will be applied.
+
+4. Create and fill the tables. It asks you to confirm:
+
+   ```bash
+   pnpm db:push
+   ```
+
+5. Generate the TypeScript types from your database:
+
+   ```bash
+   pnpm db:types
+   ```
+
+Check: in Supabase, open `ra-qa` → **Table Editor** → **sessions**. It shows 8
+rows.
 
 **`db push` can't connect?** Some networks are IPv4 only, and the direct
 connection needs IPv6. Use the Session pooler instead:
