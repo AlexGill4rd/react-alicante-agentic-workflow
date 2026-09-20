@@ -13,7 +13,6 @@ in step 3, and Vercel in step 5. Docker and the Vercel CLI are not needed.
 5. [Deploy to Vercel](#5-deploy-to-vercel)
 6. [Check both environments](#6-check-both-environments)
 7. [Create your workshop tickets](#7-create-your-workshop-tickets)
-8. [Start the agents](#8-start-the-agents)
 
 ## 1. Install the tools
 
@@ -429,19 +428,8 @@ to run twice: tickets that already exist are skipped.
 
 Check: your fork's **Issues** tab shows 3 open issues.
 
-## 8. Start the agents
+## Next
 
-Start a session as the agent you want to talk to. Run it from the repo root and
-add your first request in quotes:
-
-```bash
-claude --agent feature-builder "#1"
-claude --agent release-manager "next minor"
-```
-
-You then talk to the agent directly.
-
-Always start the agent with `claude --agent`. Asking a normal session to "run
-release-manager" does not work.
-
-Check: the agent greets you and asks its first question.
+Setup is done. In the workshop you continue with the
+[feature-builder walkthrough](feature-builder-walkthrough.md), then the
+[release-manager walkthrough](release-manager-walkthrough.md).

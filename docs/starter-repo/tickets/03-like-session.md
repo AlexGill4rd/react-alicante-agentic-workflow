@@ -19,7 +19,7 @@ It has to be an environment variable:
 - [ ] Each session page has a "👍 Like" button.
 - [ ] Clicking it calls a Server Action that posts `{ "sessionId": "...", "likedAt": "..." }` to `FEEDBACK_WEBHOOK_URL`.
 - [ ] The button shows "Thanks!" on success and "Something went wrong" otherwise.
-- [ ] `FEEDBACK_WEBHOOK_URL` is in `.env.example` and in the README's env variable table.
+- [ ] `FEEDBACK_WEBHOOK_URL` is in `.env.example`.
 - [ ] The variable is set in Vercel, and liking a session on the deployed preview shows the request arriving.
 
 ## Notes
