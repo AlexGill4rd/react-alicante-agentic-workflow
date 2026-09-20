@@ -232,12 +232,16 @@ copy the API URL. Remove the ending `/rest/v1/`.
 ![The Supabase Data API page with the API URL](images/supabase-data-api.png)
 
 **`NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`**: open `ra-qa` → **Settings → API
-Keys** and copy the `default` publishable key.
+Keys** and copy the `default` publishable key. Use the copy icon: the text on the
+page is cut off.
 
 ![The Supabase API Keys page with the publishable key](images/supabase-api-keys.png)
 
 **`SUPABASE_PRODUCTION_PROJECT_REF`**: the `prod ref` from your note. To find it
 again, open `ra-prod` → **Settings → General** and copy the **Project ID**.
+
+Check: the ref in `NEXT_PUBLIC_SUPABASE_URL` is the Project ID of `ra-qa`, not
+`ra-prod`. Mixing them up is the most common mistake.
 
 ### Connect and create the tables
 
@@ -326,6 +330,15 @@ Open `localhost:3000/en/sessions`.
 
 Check: the schedule shows up, so Supabase is connected. Then stop the server
 with `Ctrl+C`.
+
+**"Invalid API key"?** The key is incomplete or from another project. Copy it
+again with the copy icon, not by selecting the text.
+
+**"Could not find the table"?** The ref in `NEXT_PUBLIC_SUPABASE_URL` is not the
+Project ID of `ra-qa`. Fix it.
+
+After you change `.env.local`, stop the server with `Ctrl+C` and run `pnpm dev`
+again. It only reads the file when it starts.
 
 ## 5. Deploy to Vercel
 
