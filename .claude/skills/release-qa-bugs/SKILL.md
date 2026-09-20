@@ -198,7 +198,7 @@ For each user-owned branch, say:
 For Claude-owned PRs, print each URL.
 
 Wait for the user to confirm all PRs (theirs and Claude's) are open, then say:
-> "All PRs are open. Review and merge each into `release-<x-x-x>`. Come back after all are merged to run another QA round or proceed to pre-merge checks."
+> "All PRs are open. Review and merge each into `release-<x-x-x>` with **Squash and merge**, and delete each fix branch afterwards. Come back after all are merged to run another QA round or proceed to pre-merge checks."
 
 **Wait. Do not auto-merge.**
 
