@@ -381,20 +381,22 @@ again. It only reads the file when it starts.
 
    ![The Vercel Environment Variables page, with the values hidden](images/vercel-env-vars.png)
 
-4. In your project, open **Settings → Environments**. **Production** must track
-   the branch `main`. `dev` and feature branches get Preview deployments.
-
-   ![The Vercel Environments page](images/vercel-environments.png)
-
-   If Production says `dev`, click **Production**, change **Branch Tracking** to
-   `main`, and click **Save**.
-
-   ![The Vercel Production Branch Tracking set to main](images/vercel-branch-tracking.png)
-
-5. Click **Deploy**.
+4. Click **Deploy**. It is the button at the bottom of the Configure Project
+   page, the page you get after you click **Import**.
 
 Check: the deployment shows **Ready** and your site opens. Its `/en/sessions`
 stays empty until the release step applies the migrations to `ra-prod`.
+
+After the first deployment, check which branch is Production. In your project,
+open **Settings → Environments**. **Production** must track the branch `main`.
+`dev` and feature branches get Preview deployments.
+
+![The Vercel Environments page](images/vercel-environments.png)
+
+If Production says `dev`, click **Production**, change **Branch Tracking** to
+`main`, and click **Save**.
+
+![The Vercel Production Branch Tracking set to main](images/vercel-branch-tracking.png)
 
 ## 6. Check both environments
 
