@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+    branches: [dev, main]
+  pull_request:
+    branches: [dev, main]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - run: pnpm lint
+
+      - run: npx tsc --noEmit
+
+      - run: pnpm test
+
+# No `pnpm build` here on purpose: the schedule pages are prerendered, so a
+# build needs real Supabase credentials. Adding them as repository secrets
+# would be one more setup step for every fork, and Vercel already builds every
+# push and pull request — a failed build shows up there.
