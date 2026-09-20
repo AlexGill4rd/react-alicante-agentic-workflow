@@ -75,26 +75,18 @@ again.
 
 ### Claude Code
 
-You log in with a Claude account. You need a paid plan (Pro or Max) from
-[claude.com/pricing](https://claude.com/pricing), or Anthropic API credits from
-[platform.claude.com/settings/billing](https://platform.claude.com/settings/billing). The free plan doesn't
-include Claude Code.
+You need a paid Claude plan first. Pro is the minimum:
+[claude.com/pricing](https://claude.com/pricing). The free plan doesn't include
+Claude Code.
 
-**Native install (recommended).** Needs no Node.js.
-
-macOS, Linux, WSL:
+**Option 1 (recommended):**
 
 ```bash
-curl -fsSL https://claude.ai/install.sh | bash
+curl -fsSL https://claude.ai/install.sh | bash   # macOS, Linux, WSL
+irm https://claude.ai/install.ps1 | iex          # Windows PowerShell
 ```
 
-Windows PowerShell:
-
-```powershell
-irm https://claude.ai/install.ps1 | iex
-```
-
-**Or install with npm.** Works on every system.
+**Option 2:** with npm, on any system:
 
 ```bash
 npm install -g @anthropic-ai/claude-code
@@ -103,7 +95,7 @@ npm install -g @anthropic-ai/claude-code
 Check:
 
 ```bash
-claude --version   # prints a version number, e.g. 2.1.278 (Claude Code)
+claude --version   # prints a version number
 ```
 
 ### Browser for Playwright
