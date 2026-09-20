@@ -79,6 +79,17 @@ Schema changes live in `supabase/migrations/`. Add a new file for each change an
 
 Claude can still run `pnpm db:push:dry-run`, so the usual flow is: Claude shows you the dry run, you apply the migration.
 
+## Running the agents
+
+Start a session as the agent you want to talk to:
+
+```bash
+claude --agent release-manager
+claude --agent feature-builder
+```
+
+You then talk to the agent directly. If you ask a normal session to "run release-manager" instead, it starts as a subagent inside that session, and its report can appear twice: once from the agent, once from the assistant repeating it. It is the same message, and you answer once.
+
 ## Deploy to Vercel
 
 1. Import the repo in Vercel.
