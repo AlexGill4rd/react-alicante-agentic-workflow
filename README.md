@@ -81,14 +81,16 @@ Claude can still run `pnpm db:push:dry-run`, so the usual flow is: Claude shows 
 
 ## Running the agents
 
-Start a session as the agent you want to talk to:
+Start a session as the agent you want to talk to. Run it from the repo root, and add your first request in quotes:
 
 ```bash
-claude --agent release-manager
-claude --agent feature-builder
+claude --agent release-manager "next minor"
+claude --agent feature-builder "#123"
 ```
 
-You then talk to the agent directly. If you ask a normal session to "run release-manager" instead, it starts as a subagent inside that session, and its report can appear twice: once from the agent, once from the assistant repeating it. It is the same message, and you answer once.
+You then talk to the agent directly.
+
+Do not ask a normal session to "run release-manager". That starts it as a subagent, and a subagent cannot take your "yes" through the assistant that launched it, so it stops at the first confirmation. Its report can also appear twice: once from the agent, once from the assistant repeating it.
 
 ## Deploy to Vercel
 
