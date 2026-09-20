@@ -152,7 +152,7 @@ If step 4 or step 6 found a blocker (a table missing RLS, or a Critical or High 
 
 It creates the issues under the `v<version> QA` milestone and runs the fix flow. Do not mark steps 4 and 6 complete until the fixes are merged into the release branch.
 
-Medium/Low findings are not blockers: report them as follow-ups, do not file them here.
+Follow-ups (Medium/Low security findings, an unindexed foreign key) are not blockers. After reporting them, ask the user whether to file them as tickets. If yes, invoke `product-github-issue-manager` with `create-bug` for each one, without a milestone, so they stay out of this release.
 
 ---
 
