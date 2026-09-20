@@ -126,8 +126,9 @@ gh repo fork engineering-workshops/react-alicante-agentic-workflow --clone
 ```
 
 Or click **Fork** on
-[github.com/engineering-workshops/react-alicante-agentic-workflow](https://github.com/engineering-workshops/react-alicante-agentic-workflow),
-then clone your fork:
+[github.com/engineering-workshops/react-alicante-agentic-workflow](https://github.com/engineering-workshops/react-alicante-agentic-workflow).
+Untick **Copy the `dev` branch only**, so your fork also gets the `main`
+branch. Then clone your fork:
 
 ```bash
 git clone https://github.com/<your-username>/react-alicante-agentic-workflow.git
@@ -147,7 +148,12 @@ Check:
 git remote get-url origin   # prints your fork's URL
 ```
 
-The URL has your GitHub username in it, not `engineering-workshops`.
+The URL has your GitHub username in it, not `engineering-workshops`. Then check
+that you have the `main` branch:
+
+```bash
+git branch -r   # the list includes origin/main
+```
 
 ## 3. Set up Supabase
 
@@ -342,11 +348,18 @@ again. It only reads the file when it starts.
 
 ## 5. Deploy to Vercel
 
-1. Create a Vercel account at [vercel.com/signup](https://vercel.com/signup):
-   click **Continue with GitHub** and authorise Vercel's GitHub app. Already
-   have an account? Skip this step.
-2. Go to [vercel.com/new](https://vercel.com/new) and, under **Import Git
-   Repository**, pick your fork.
+1. If you don't have a Vercel account, create one at
+   [vercel.com/signup](https://vercel.com/signup). Signing up with **GitHub** or
+   **Google** is the fastest. GitHub is best, because Vercel then already has
+   access to your fork. Already have an account? Skip this step.
+2. Go to [vercel.com/new](https://vercel.com/new). Under **Import Git
+   Repository**, use the dropdown to choose the GitHub account that owns your
+   fork: your username, or an organization if you forked into one. Find your
+   fork and click **Import**. If your fork is missing, click **Adjust GitHub App
+   Permissions**.
+
+   ![The Vercel Import Git Repository list](images/vercel-import.png)
+
 3. Add the env vars. The names are the same, and the values differ per
    environment:
 
@@ -357,13 +370,27 @@ again. It only reads the file when it starts.
    | `NEWS_API_URL`                         | same in both | same in both  |
    | `NEXT_PUBLIC_ENABLE_STATS`             | `true`       | `false`       |
 
-   Each variable has checkboxes for Production, Preview and Development, so
-   add the Supabase ones twice. `NEXT_PUBLIC_` values are baked in at build
-   time, so changing one needs a redeploy.
+   In the form, the **Environments** dropdown has checkboxes. `NEWS_API_URL` has
+   the same value in both, so tick **Production** and **Preview**, as in the
+   picture. The other variables have different values: add each one twice, once
+   for **Preview** and once for **Production**. Type **Config** is fine for all
+   of them. `NEXT_PUBLIC_` values are baked in at build time, so changing one
+   needs a redeploy.
 
-4. **Settings → Environments → Production → Branch Tracking**: confirm it says
-   `main`. Production deploys when the release PR merges into `main`; `dev` and
-   feature branches get Preview deployments.
+   ![The Vercel form for NEWS_API_URL, with Production and Preview ticked](images/vercel-env-var-form.png)
+
+   ![The Vercel Environment Variables page, with the values hidden](images/vercel-env-vars.png)
+
+4. In your project, open **Settings → Environments**. **Production** must track
+   the branch `main`. `dev` and feature branches get Preview deployments.
+
+   ![The Vercel Environments page](images/vercel-environments.png)
+
+   If Production says `dev`, click **Production**, change **Branch Tracking** to
+   `main`, and click **Save**.
+
+   ![The Vercel Production Branch Tracking set to main](images/vercel-branch-tracking.png)
+
 5. Click **Deploy**.
 
 Check: the deployment shows **Ready** and your site opens. Its `/en/sessions`
@@ -371,8 +398,11 @@ stays empty until the release step applies the migrations to `ra-prod`.
 
 ## 6. Check both environments
 
-**Production:** open your site from the Vercel dashboard. It loads.
-`/en/sessions` is empty for now, because `ra-prod` has no tables yet.
+**Production:** in your Vercel project, open **Overview** and click **Visit**.
+The site loads. `/en/sessions` is empty for now, because `ra-prod` has no tables
+yet.
+
+![The Vercel Production Deployment with the Visit button](images/vercel-production.png)
 
 **Preview (QA):** push an empty commit to `dev`:
 
