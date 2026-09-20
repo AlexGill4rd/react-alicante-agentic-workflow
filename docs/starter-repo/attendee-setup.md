@@ -366,10 +366,15 @@ again. It only reads the file when it starts.
    | `NEWS_API_URL`                         | same in both            | same in both                                   |
    | `NEXT_PUBLIC_ENABLE_STATS`             | `true`                  | `false`                                        |
 
-   In the form, tick the environments with the **Environments** dropdown.
-   `NEWS_API_URL` is the same in both: tick **Production** and **Preview**. For
-   the others, add each variable twice, once per environment. Keep the type
-   **Config**.
+   Each variable is created in a form. Its **Environments** dropdown chooses
+   where the value applies:
+
+   - **Same value in both** (`NEWS_API_URL`): tick **Production** and
+     **Preview**, as in the picture. You create it once.
+   - **Different values** (the other three): create the variable twice. Tick only
+     **Preview** for the first one, and only **Production** for the second one.
+
+   Keep the type **Config**.
 
    ![The Vercel form for NEWS_API_URL, with Production and Preview ticked](images/vercel-env-var-form.png)
 
