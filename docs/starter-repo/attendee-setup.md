@@ -4,7 +4,16 @@ It takes about half an hour, most of it waiting for installs and account
 confirmations.
 
 You will create four accounts as you go: GitHub and Claude in step 1, Supabase
-in step 3, and Vercel in step 9. Docker and the Vercel CLI are not needed.
+in step 3, and Vercel in step 5. Docker and the Vercel CLI are not needed.
+
+1. [Install the tools](#1-install-the-tools)
+2. [Fork and clone](#2-fork-and-clone)
+3. [Set up Supabase](#3-set-up-supabase)
+4. [Run it locally](#4-run-it-locally)
+5. [Deploy to Vercel](#5-deploy-to-vercel)
+6. [Check both environments](#6-check-both-environments)
+7. [Create your workshop tickets](#7-create-your-workshop-tickets)
+8. [Start the agents](#8-start-the-agents)
 
 ## 1. Install the tools
 
@@ -132,9 +141,22 @@ pnpm install
 claude   # log in, approve the Playwright server, then exit
 ```
 
-Check: `git remote -v` shows your fork as `origin`.
+Check: `git remote -v` shows your fork as `origin`. Example, for the user
+`octocat`:
 
-## 3. Create a Supabase account
+```
+origin    https://github.com/octocat/react-alicante-agentic-workflow.git (fetch)
+origin    https://github.com/octocat/react-alicante-agentic-workflow.git (push)
+upstream  https://github.com/engineering-workshops/react-alicante-agentic-workflow.git (fetch)
+upstream  https://github.com/engineering-workshops/react-alicante-agentic-workflow.git (push)
+```
+
+You see your own username. The `upstream` lines only appear if you forked with
+`gh`.
+
+## 3. Set up Supabase
+
+### Create an account
 
 You need two projects, and the free tier allows only 2 per account. Use a fresh
 account:
@@ -144,11 +166,11 @@ account:
   (`you+react-alicante@gmail.com`) and **email/password**. Don't use "Sign in
   with GitHub": it picks your existing account.
 
-## 4. Create an organization
+### Create an organization
 
 Go to [supabase.com/dashboard/new](https://supabase.com/dashboard/new). Any name. Type: Educational.
 
-## 5. Create two Supabase projects
+### Create two projects
 
 Open [supabase.com/dashboard/projects](https://supabase.com/dashboard/projects)
 and click **New project**. Create **`ra-qa`** and **`ra-prod`**. QA is for
@@ -163,9 +185,9 @@ For each:
   expose new tables", keep "Enable automatic RLS" unchecked.
 
 Note each project's ref, the id in its URL `https://<ref>.supabase.co`. You
-need both in the next step.
+need both below.
 
-## 6. Wire up environment variables
+### Wire up environment variables
 
 ```bash
 cp .env.example .env.local
@@ -183,7 +205,7 @@ NEWS_API_URL=https://hn.algolia.com/api/v1
 NEXT_PUBLIC_ENABLE_STATS=true
 ```
 
-## 7. Connect Supabase and create the tables
+### Connect and create the tables
 
 The schedule lives in a `sessions` table, created by the migrations in
 `supabase/migrations/`. Link to **QA** and push:
@@ -194,7 +216,7 @@ pnpm supabase link --project-ref <qa-ref>    # asks for the DB password
 pnpm db:push                                 # creates and fills the tables
 ```
 
-`<qa-ref>` is the `ra-qa` ref from step 5.
+`<qa-ref>` is the `ra-qa` ref you noted in "Create two projects".
 
 Check: in `ra-qa`, **Table Editor → sessions** shows 8 rows.
 
@@ -209,7 +231,7 @@ connection needs IPv6. Use the Session pooler instead:
    pnpm supabase db push --db-url "<connection-string>"
    ```
 
-## 8. Run it locally
+## 4. Run it locally
 
 ```bash
 pnpm dev
@@ -220,7 +242,7 @@ Open `localhost:3000/en/sessions`.
 Check: the schedule shows up, so Supabase is connected. Then stop the server
 with `Ctrl+C`.
 
-## 9. Deploy to Vercel
+## 5. Deploy to Vercel
 
 1. Create a Vercel account at [vercel.com/signup](https://vercel.com/signup):
    click **Continue with GitHub** and authorise Vercel's GitHub app. Already
@@ -249,7 +271,7 @@ with `Ctrl+C`.
 Check: the deployment shows **Ready** and your site opens. Its `/en/sessions`
 stays empty until the release step applies the migrations to `ra-prod`.
 
-## 10. Check both environments
+## 6. Check both environments
 
 **Production:** open your site from the Vercel dashboard. It loads.
 `/en/sessions` is empty for now, because `ra-prod` has no tables yet.
@@ -265,7 +287,7 @@ In Vercel → **Deployments**, open the new Preview when it shows **Ready**.
 
 Check: its `/en/sessions` shows the schedule from `ra-qa`.
 
-## 11. Create your workshop tickets
+## 7. Create your workshop tickets
 
 ```bash
 pnpm workshop:tickets
@@ -276,7 +298,7 @@ to run twice: tickets that already exist are skipped.
 
 Check: your fork's **Issues** tab shows 3 open issues.
 
-## 12. Start the agents
+## 8. Start the agents
 
 Start a session as the agent you want to talk to. Run it from the repo root and
 add your first request in quotes:
