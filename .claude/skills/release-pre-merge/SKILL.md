@@ -77,7 +77,7 @@ Print a summary:
 - ✅ DB migrations applied to Production
 
 Then ask:
-> "All checks passed. The release PR is ready to merge. Go to GitHub, merge the PR, and come back to run post-merge steps."
+> "All checks passed. The release PR is ready to merge. Go to GitHub and merge the PR with **Create a merge commit** — not squash and not rebase, they break the tag history and the next changelog repeats old commits. Then come back to run post-merge steps."
 
 **Do NOT merge the PR — the user merges manually.**
 

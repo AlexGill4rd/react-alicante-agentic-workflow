@@ -290,7 +290,7 @@ Invoke `/product-create-pr-description`:
 
 The PR description must include `Closes #<number>` in the summary. Update the existing PR's description (don't open a new one), then mark it ready for review.
 
-User merges the PR manually.
+User merges the PR manually. Tell them to use **Squash and merge** (the PR title becomes the commit message) and to delete the branch afterwards.
 
 → Delete `.claude/feature-state.md`
 
