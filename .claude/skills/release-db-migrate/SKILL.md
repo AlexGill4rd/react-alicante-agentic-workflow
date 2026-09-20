@@ -27,7 +27,7 @@ Local dev and QA both point to the same Supabase project (QA). Migrations applie
 
 ## Prerequisites
 - **Supabase CLI available:** ask the user to run `pnpm supabase --version` and confirm it's installed.
-- **Logged in:** ask the user to run `pnpm db:link:status` and share the output. If it contains "not logged in" or fails → stop, tell user to run `supabase login` then retry.
+- **Logged in and linked:** ask the user to run `pnpm db:link:status` and share the output. It lists the projects; the row with `●` in the first column is the linked one. If it contains "not logged in" or fails → stop, tell user to run `supabase login` then retry. If no row has `●` → stop, tell the user to run `pnpm supabase link --project-ref <QA project ref>`, then run `db:link:status` again.
 - **On correct branch:** Must be on `release-<x-x-x>` (after QA passed, before merging).
 - **`SUPABASE_PRODUCTION_PROJECT_REF` set in `.env.local`** — this is the Production project ref. If missing → stop, tell the user to add it (see `.env.example`).
 
@@ -43,11 +43,13 @@ Ask the user to relink to the Production project themselves, using the ref from 
 pnpm supabase link --project-ref $SUPABASE_PRODUCTION_PROJECT_REF
 ```
 
-Then ask them to verify and share the output:
+Linking prints no proof that it worked. Ask them to check with the link status command and share the output:
 
 ```bash
 pnpm db:link:status
 ```
+
+Tell them how to read it: the `●` in the first column marks the linked project, and it must be on the Production row.
 
 Once they paste it, confirm:
 > "The linked project shown above should be your **Production** project, not QA. Please confirm this is correct before we proceed."
@@ -121,6 +123,21 @@ git commit -m "chore(db): regenerate Supabase types after v$ARGUMENTS migrations
 
 ---
 
+### 4. Link Back to QA
+
+Local development points to QA, so the user must undo the Production link. Ask them to run:
+
+```bash
+pnpm supabase link --project-ref <QA project ref>
+pnpm db:link:status
+```
+
+Tell them to check that the `●` is now on the QA row, and to share the output.
+
+**Wait for confirmation before marking this step complete.**
+
+---
+
 ## Constraints
 
 - Do NOT apply Production migrations after the code is already deployed — always DB first.
@@ -142,6 +159,7 @@ git commit -m "chore(db): regenerate Supabase types after v$ARGUMENTS migrations
 - [ ] User ran `pnpm db:push` and it completed without errors
 - [ ] User has verified schema changes in dashboard
 - [ ] User ran `pnpm db:types`, and the updated `supabase.types.ts` is committed to the release branch
+- [ ] User linked back to QA and `db:link:status` shows the `●` on the QA row
 
 ---
 
