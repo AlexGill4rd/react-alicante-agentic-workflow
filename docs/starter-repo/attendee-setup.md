@@ -3,37 +3,36 @@
 Do all of this before the workshop. It takes about half an hour, most of it
 waiting for installs and account confirmations.
 
-## Before you start
-
-Accounts:
-
-- GitHub, Supabase (step 3), Vercel (step 9)
-- Claude: a paid plan (Pro or Max) or Anthropic API credits. The free plan
-  doesn't include Claude Code.
-
-Not needed: Docker and the Vercel CLI.
+You will create four accounts as you go: GitHub and Claude in step 1, Supabase
+in step 3, and Vercel in step 9. Docker and the Vercel CLI are not needed.
 
 ## 1. Install the tools
 
-### Node.js 22 or newer
-
-Download it from [nodejs.org](https://nodejs.org), or on macOS:
+### Node.js 22.13 or newer
 
 ```bash
-brew install node
-node -v   # prints v22.x.x or higher, e.g. v24.16.0
+node -v   # v22.13.0 or higher is fine
 ```
+
+Not installed, or a lower version? Install the LTS version:
+
+1. Download the **LTS** installer from [nodejs.org](https://nodejs.org).
+2. Run it and accept the defaults.
+3. Open a new terminal and run `node -v` again.
+
+Tested on Node 22 and 24. If you get errors, use Node 24 LTS.
 
 ### Git
 
-macOS:
-
 ```bash
-xcode-select --install
-git --version   # any version is fine, e.g. git version 2.45.1
+git --version   # any version is fine
 ```
 
-Windows: [Git for Windows](https://git-scm.com/download/win), then run `git --version`. Any version is fine.
+Not installed? Install it, then open a new terminal and run `git --version`:
+
+- macOS: run `xcode-select --install` and click **Install**.
+- Windows: download from [git-scm.com/download/win](https://git-scm.com/download/win) and accept the defaults.
+- Linux: [git-scm.com/downloads](https://git-scm.com/downloads).
 
 ### Google Chrome
 
@@ -48,6 +47,8 @@ pnpm -v   # prints a version number, e.g. 11.25.0
 
 ### GitHub CLI
 
+You need a GitHub account: sign up at [github.com/signup](https://github.com/signup).
+
 ```bash
 brew install gh                   # macOS
 winget install --id GitHub.cli    # Windows (Linux: cli.github.com)
@@ -57,12 +58,12 @@ gh auth status                    # prints "Logged in to github.com"
 
 ### Claude Code
 
-```bash
-npm install -g @anthropic-ai/claude-code
-claude --version   # prints a version number, e.g. 2.1.278 (Claude Code)
-```
+You log in with a Claude account. You need a paid plan (Pro or Max) from
+[claude.com/pricing](https://claude.com/pricing), or Anthropic API credits from
+[platform.claude.com/settings/billing](https://platform.claude.com/settings/billing). The free plan doesn't
+include Claude Code.
 
-Or use the native installer, which needs no Node.js.
+**Native install (recommended).** Needs no Node.js.
 
 macOS, Linux, WSL:
 
@@ -74,6 +75,18 @@ Windows PowerShell:
 
 ```powershell
 irm https://claude.ai/install.ps1 | iex
+```
+
+**Or install with npm.** Works on every system.
+
+```bash
+npm install -g @anthropic-ai/claude-code
+```
+
+Check:
+
+```bash
+claude --version   # prints a version number, e.g. 2.1.278 (Claude Code)
 ```
 
 ### Playwright's browsers
@@ -110,19 +123,20 @@ Check: `git remote -v` shows your fork as `origin` and the workshop repo as
 You need two projects, and the free tier allows only 2 per account. Use a fresh
 account:
 
-- New to Supabase: sign up normally.
-- Already have projects: sign up again with an email alias
+- New to Supabase: sign up at [supabase.com/dashboard/sign-up](https://supabase.com/dashboard/sign-up).
+- Already have projects: sign up again at the same link with an email alias
   (`you+react-alicante@gmail.com`) and **email/password**. Don't use "Sign in
   with GitHub": it picks your existing account.
 
 ## 4. Create an organization
 
-Any name. Type: Educational.
+Go to [supabase.com/dashboard/new](https://supabase.com/dashboard/new). Any name. Type: Educational.
 
 ## 5. Create two Supabase projects
 
-Create **`ra-qa`** and **`ra-prod`**. QA is for development, Production is for
-your deployed site.
+Open [supabase.com/dashboard/projects](https://supabase.com/dashboard/projects)
+and click **New project**. Create **`ra-qa`** and **`ra-prod`**. QA is for
+development, Production is for your deployed site.
 
 For each:
 
@@ -190,9 +204,10 @@ connected. (`/es/sessions` is the Spanish version.)
 
 ## 9. Deploy to Vercel
 
-1. [vercel.com](https://vercel.com) → **Continue with GitHub**. This creates the
-   account if you don't have one. Authorise Vercel's GitHub app when asked.
-2. **Add New → Project → Import Git Repository** → pick your fork.
+1. Go to [vercel.com/new](https://vercel.com/new) and click **Continue with
+   GitHub**. This creates the account if you don't have one. Authorise Vercel's
+   GitHub app when asked.
+2. Under **Import Git Repository**, pick your fork.
 3. Add the env vars. The names are the same, and the values differ per
    environment:
 

@@ -2,6 +2,9 @@
   "private": true,
   "version": "0.2.1",
   "packageManager": "pnpm@11.25.0",
+  "engines": {
+    "node": ">=22.13"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
