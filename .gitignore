@@ -44,3 +44,9 @@ next-env.d.ts
 
 # release-manager working file, deleted at the end of each release
 .claude/release-state.md
+
+# feature-builder working file, deleted at the end of each feature
+.claude/feature-state.md
+
+# personal Claude Code settings, machine-specific
+.claude/settings.local.json
