@@ -455,6 +455,7 @@ Agent workflows are never finished. Every real release shows a small gap, and th
 - **Check the merge method.** Today the skill only tells the user which button to click. A later version could check the result, for example that the tag commit has two parents, and warn if not.
 - **Changelog range.** `release-generate-changelog` could start from the merge-back commit and not only from the last tag, so a squash never repeats old commits.
 - **Ignore the working files.** The state files of the agents (`release-state.md`, `feature-state.md`) belong in `.gitignore`. We found this only when a skill stopped on a dirty tree.
+- **A verifier agent.** Today an agent checks its own work with a checklist. A separate, read-only agent could check that the process was followed, starting fresh and looking only at git and GitHub: the release PR used a merge commit, the tag is on `main`, `dev` and `main` have the same content, the state file is gone, the QA milestone is closed. It cannot check human steps, such as testing the preview.
 
 The lesson for the workshop: the tooling is part of the codebase. You read it, run it, and change it with normal PRs. Each release is a test of the skills.
 
