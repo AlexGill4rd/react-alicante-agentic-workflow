@@ -207,8 +207,10 @@ connection needs IPv6. Use the Session pooler instead:
 pnpm dev
 ```
 
-Open `localhost:3000/en/sessions`. If the schedule shows up, Supabase is
-connected. (`/es/sessions` is the Spanish version.)
+Open `localhost:3000/en/sessions`.
+
+Check: the schedule shows up, so Supabase is connected. Then stop the server
+with `Ctrl+C`.
 
 ## 9. Deploy to Vercel
 
@@ -234,14 +236,28 @@ connected. (`/es/sessions` is the Spanish version.)
 4. **Settings → Environments → Production → Branch Tracking**: confirm it says
    `main`. Production deploys when the release PR merges into `main`; `dev` and
    feature branches get Preview deployments.
-5. Deploy.
+5. Click **Deploy**.
 
-The first deployment is a Production one, so your site is live right away.
-After that, only merges into `main` update Production. `/en/sessions` in
-Production stays empty until the release step applies the migrations to
-`ra-prod`. Preview works straight away.
+Check: the deployment shows **Ready** and your site opens. Its `/en/sessions`
+stays empty until the release step applies the migrations to `ra-prod`.
 
-## 10. Create your workshop tickets
+## 10. Check both environments
+
+**Production:** open your site from the Vercel dashboard. It loads.
+`/en/sessions` is empty for now, because `ra-prod` has no tables yet.
+
+**Preview (QA):** push an empty commit to `dev`:
+
+```bash
+git commit --allow-empty -m "Trigger a preview"
+git push origin dev
+```
+
+In Vercel → **Deployments**, open the new Preview when it shows **Ready**.
+
+Check: its `/en/sessions` shows the schedule from `ra-qa`.
+
+## 11. Create your workshop tickets
 
 ```bash
 pnpm workshop:tickets
@@ -252,7 +268,7 @@ to run twice: tickets that already exist are skipped.
 
 Check: your fork's **Issues** tab shows 3 open issues.
 
-## 11. Start the agents
+## 12. Start the agents
 
 Start a session as the agent you want to talk to. Run it from the repo root and
 add your first request in quotes:
