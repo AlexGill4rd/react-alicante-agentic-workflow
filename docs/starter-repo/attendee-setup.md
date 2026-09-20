@@ -1,7 +1,7 @@
 # React Alicante Workshop — Attendee Setup
 
-Do all of this before the workshop. It takes about half an hour, most of it
-waiting for installs and account confirmations.
+It takes about half an hour, most of it waiting for installs and account
+confirmations.
 
 You will create four accounts as you go: GitHub and Claude in step 1, Supabase
 in step 3, and Vercel in step 9. Docker and the Vercel CLI are not needed.
@@ -52,9 +52,26 @@ You need a GitHub account: sign up at [github.com/signup](https://github.com/sig
 ```bash
 brew install gh                   # macOS
 winget install --id GitHub.cli    # Windows (Linux: cli.github.com)
-gh auth login
-gh auth status                    # prints "Logged in to github.com"
 ```
+
+Check if you are already logged in:
+
+```bash
+gh auth status   # "Logged in to github.com" means you are done
+```
+
+If not, run `gh auth login`. It asks a few questions. Use the arrow keys and
+press Enter to answer:
+
+1. Account: **GitHub.com**
+2. Protocol: **HTTPS**
+3. How to authenticate: **Login with a web browser**
+
+For any other question, press Enter to accept the default.
+
+The terminal then shows a one-time code. Copy it and press Enter. Your browser
+opens and asks for that code: paste it and authorise. Then run `gh auth status`
+again.
 
 ### Claude Code
 
@@ -92,8 +109,7 @@ claude --version   # prints a version number, e.g. 2.1.278 (Claude Code)
 ### Browser for Playwright
 
 Claude tests the app in a browser with the Playwright tools, which the repo
-already configures. Download the browser now. About 700 MB, so do it before the
-workshop.
+already configures. The download is about 700 MB.
 
 ```bash
 npx playwright install chromium
