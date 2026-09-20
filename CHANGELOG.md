@@ -1,5 +1,25 @@
 # Changelog
 
+## [0.2.1] — 2026-09-20
+
+### Maintenance
+
+- Tell the user which merge method to use
+- Show how to check the Supabase link in release-db-migrate
+- Add merge best practices, things to improve and how to start the agents
+- Add the verifier agent idea to the things to improve
+
+## Test Suite
+
+| Suite          | Status     |
+| -------------- | ---------- |
+| ESLint         | ⏳ pending |
+| Type-check     | ⏳ pending |
+| Unit tests     | ⏳ pending |
+| Build (Vercel) | ⏳ pending |
+
+CI: pending — branch not yet pushed
+
 ## [0.2.0] — 2026-09-20
 
 ### Features
