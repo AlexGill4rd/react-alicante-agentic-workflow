@@ -419,14 +419,18 @@ Check: its `/en/sessions` shows the schedule from `ra-qa`.
 
 ## 7. Create your workshop tickets
 
+The workshop tickets are files in the repo. Run this command in your fork's
+folder to create them as GitHub issues, so the agent can read them:
+
 ```bash
 pnpm workshop:tickets
 ```
 
-Creates the workshop tickets as issues in your fork, and turns Issues on. Safe
-to run twice: tickets that already exist are skipped.
+It turns Issues on for your fork. It is safe to run twice: tickets that already
+exist are skipped.
 
-Check: your fork's **Issues** tab shows 3 open issues.
+Check: your fork's **Issues** tab shows 3 open issues: a Speakers page, the
+session level, and a Like button.
 
 ## Next
 
