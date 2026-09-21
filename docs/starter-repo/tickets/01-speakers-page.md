@@ -4,6 +4,12 @@
 
 A new `/speakers` page listing every speaker with the session(s) they give. Each session links to its session page.
 
+## Expected result
+
+![The Speakers page](https://raw.githubusercontent.com/engineering-workshops/react-alicante-agentic-workflow/dev/docs/starter-repo/tickets/images/speakers-page.png)
+
+It should look similar. The details are yours.
+
 ## Why
 
 Attendees often look for a person, not a time slot. Today the only way to find a speaker is to scan the whole schedule.
