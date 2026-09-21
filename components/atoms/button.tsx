@@ -2,6 +2,7 @@ import {
   Button as ChakraButton,
   type ButtonProps as ChakraButtonProps,
 } from "@chakra-ui/react";
+import type { ButtonHTMLAttributes } from "react";
 
 export type ButtonVariant =
   "default" | "destructive" | "outline" | "secondary" | "ghost" | "link";
@@ -9,8 +10,8 @@ export type ButtonVariant =
 export type ButtonSize = "default" | "sm" | "lg" | "icon";
 
 export interface ButtonProps extends Omit<
-  ChakraButtonProps,
-  "variant" | "size"
+  ButtonHTMLAttributes<HTMLButtonElement>,
+  "style" | "className" | "color"
 > {
   variant?: ButtonVariant;
   size?: ButtonSize;
@@ -67,14 +68,9 @@ const SIZE_PROPS: Record<ButtonSize, ChakraButtonProps> = {
 export function Button({
   variant = "default",
   size = "default",
-  css,
   ...props
 }: ButtonProps) {
   return (
-    <ChakraButton
-      {...SIZE_PROPS[size]}
-      css={{ ...VARIANT_CSS[variant], ...css }}
-      {...props}
-    />
+    <ChakraButton {...SIZE_PROPS[size]} css={VARIANT_CSS[variant]} {...props} />
   );
 }
