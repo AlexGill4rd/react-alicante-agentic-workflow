@@ -32,7 +32,19 @@ Use the number of that ticket in your fork's **Issues** tab. It is normally #1.
 
 ## Steps
 
-To do: what the agent asks, where it stops, and what you answer.
+1. Claude Code asks if you trust the folder. The repo pre-approves two tools in
+   `.claude/settings.json`: taking screenshots in the browser, and `gh pr`
+   commands. Choose **Yes, I trust this folder**.
+
+   ![Claude Code asking to trust the folder](images/feature-builder-trust.png)
+
+2. Claude Code asks about the MCP server from `.mcp.json`. It is Playwright: the
+   agent uses it to test your feature in a browser. Choose **Use this MCP
+   server**.
+
+   ![Claude Code asking to use the MCP server](images/feature-builder-mcp.png)
+
+To do: the next stops, what the agent asks, and what you answer.
 
 ## Merge the pull request
 
