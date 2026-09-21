@@ -162,7 +162,23 @@ The agent stops at each **Breakpoint**. Read the report, then answer.
 
 ## Merge the pull request
 
-To do: merge with **Squash and merge**, then delete the branch.
+You are the human reviewer now. Before you merge:
+
+1. Read the code in the **Files changed** tab.
+2. Open the preview. In the Vercel comment on the PR, click **Preview**, and
+   check the Speakers page there.
+
+   ![The Vercel comment with the Preview link](images/feature-builder-vercel-preview.png)
+
+3. Check that all checks have passed. The green button says **Merge pull
+   request**, which is not the one we want. Open the arrow next to it and choose
+   **Squash and merge**.
+
+   ![The merge box with the checks and the merge button](images/feature-builder-merge-box.png)
+
+4. Confirm, then delete the branch. The ticket closes on merge.
+
+To do: the screenshots of the squash choice and the branch delete.
 
 ## Repeat for ticket 2
 
