@@ -133,12 +133,18 @@ branch. Then clone your fork:
 git clone https://github.com/<your-username>/react-alicante-agentic-workflow.git
 ```
 
-Then, inside the folder:
+Then, inside the folder, install the project's dependencies. This also installs
+the Supabase CLI, so you do not need a separate install:
 
 ```bash
 cd react-alicante-agentic-workflow
 pnpm install
-claude   # log in, approve the Playwright server, then exit
+```
+
+Then start Claude Code once. Log in, approve the Playwright server, then exit:
+
+```bash
+claude
 ```
 
 Check:
@@ -268,6 +274,10 @@ that table. You apply them to your QA project in five steps:
    press Enter.
 
    ![The terminal asking for the verification code](images/supabase-login-terminal.png)
+
+   Before you log in, keep only one browser open: the one where you are logged
+   in to the Supabase account you just created. The login opens in it. If another
+   account opens, run `pnpm supabase logout` and log in again.
 
    Check that you are logged in. This lists your projects, and you see `ra-qa`
    and `ra-prod`:
