@@ -144,7 +144,21 @@ The agent stops at each **Breakpoint**. Read the report, then answer.
 
     ![The agent asking to push and re-review](images/feature-builder-push-rereview.png)
 
-To do: the pull request.
+20. **Breakpoint 8: all audits done.** The agent lists what it did with each
+    audit. Phase 7 replaces the phase table with the real PR description, marks
+    the PR ready for a human to review (that is you), and deletes the progress
+    file. Answer **yes** to go on.
+
+    ![The agent's report after all audits](images/feature-builder-breakpoint-audits.png)
+
+21. Phase 7 runs. The agent writes the PR description (with `Closes #4`), marks
+    the PR ready for review and deletes the progress file. The agent is done.
+
+    ![The agent's final report](images/feature-builder-pr-ready.png)
+
+    Open the PR to read the description.
+
+    ![The final PR description](images/feature-builder-pr-description.png)
 
 ## Merge the pull request
 
