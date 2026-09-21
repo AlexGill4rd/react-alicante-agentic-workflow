@@ -1,147 +1,323 @@
 # React Alicante Workshop — Attendee Setup
 
-Do all of this before the workshop. It takes about half an hour, most of it
-waiting for installs and account confirmations.
+It takes about half an hour, most of it waiting for installs and account
+confirmations.
 
-Read it here on GitHub; step 1 is where you get your own copy of the repo.
+You will create four accounts as you go: GitHub and Claude in step 1, Supabase
+in step 3, and Vercel in step 5. Docker and the Vercel CLI are not needed.
 
-## Prerequisites
+1. [Install the tools](#1-install-the-tools)
+2. [Fork and clone](#2-fork-and-clone)
+3. [Set up Supabase](#3-set-up-supabase)
+4. [Run it locally](#4-run-it-locally)
+5. [Deploy to Vercel](#5-deploy-to-vercel)
+6. [Check both environments](#6-check-both-environments)
+7. [Create your workshop tickets](#7-create-your-workshop-tickets)
 
-Install:
+## 1. Install the tools
 
-- **Node.js 22+** (`node -v`). Claude Code needs 22; Next.js alone would accept 20.9.
-- **pnpm** (`npm install -g pnpm`, check with `pnpm -v`)
-- **Git** (`git --version`). macOS: `xcode-select --install`. Windows:
-  [Git for Windows](https://git-scm.com/download/win), which Claude Code on
-  Windows also needs.
-- **Google Chrome**, used by the Playwright browser tools (step 3)
-- **Playwright's browsers**, downloaded once with `npx playwright install
-chromium`. Do this at home: it is about 700 MB, and thirty people pulling it
-  over the venue wifi is not a plan. The repo ships the Playwright MCP server
-  in `.mcp.json`, so there is nothing else to configure — Claude Code asks you
-  to approve it the first time you start it in the project.
-- GitHub CLI and Claude Code: steps 2 and 3 below
-
-Accounts:
-
-- GitHub, Supabase (step 4), Vercel (step 10)
-- Claude: a paid plan (Pro or Max) or Anthropic API credits. The free plan
-  doesn't include Claude Code.
-
-Not needed: TypeScript and the Supabase CLI come with `pnpm install`;
-Docker (Supabase runs in the cloud); the Vercel CLI.
-
-## 1. Fork and clone
+### Node.js 22.13 or newer
 
 ```bash
-gh repo fork engineering-workshops/react-alicante-agentic-workflow --clone
-cd react-alicante-agentic-workflow
-pnpm install
+node -v   # v22.13.0 or higher is fine
 ```
 
-No `gh`? Use the "Fork" button on GitHub instead, then `git clone` your
-fork's URL.
+Not installed, or a lower version? Install the LTS version:
 
-## 2. Install the GitHub CLI
+1. Download the **LTS** installer from [nodejs.org](https://nodejs.org).
+2. Run it and accept the defaults.
+3. Open a new terminal and run `node -v` again.
+
+Tested on Node 22 and 24. If you get errors, use Node 24 LTS.
+
+### Git
 
 ```bash
-brew install gh        # macOS
-winget install --id GitHub.cli   # Windows
+git --version   # any version is fine
 ```
 
-Linux: [cli.github.com](https://cli.github.com). Then:
+Not installed? Install it, then open a new terminal and run `git --version`:
+
+- macOS: run `xcode-select --install` and click **Install**.
+- Windows: download from [git-scm.com/download/win](https://git-scm.com/download/win) and accept the defaults.
+- Linux: [git-scm.com/downloads](https://git-scm.com/downloads).
+
+### Google Chrome
+
+Download it from [google.com/chrome](https://www.google.com/chrome/).
+
+### pnpm
 
 ```bash
-gh auth login
-gh auth status   # verify
+npm install -g pnpm
+pnpm -v   # prints a version number, e.g. 11.25.0
 ```
 
-## 3. Install Claude Code
+### GitHub CLI
+
+You need a GitHub account: sign up at [github.com/signup](https://github.com/signup).
+
+```bash
+brew install gh                   # macOS
+winget install --id GitHub.cli    # Windows (Linux: cli.github.com)
+```
+
+Check if you are already logged in:
+
+```bash
+gh auth status   # "Logged in to github.com" means you are done
+```
+
+If not, run `gh auth login`. It asks a few questions. Use the arrow keys and
+press Enter to answer:
+
+1. Account: **GitHub.com**
+2. Protocol: **HTTPS**
+3. How to authenticate: **Login with a web browser**
+
+For any other question, press Enter to accept the default.
+
+The terminal then shows a one-time code. Copy it and press Enter. Your browser
+opens and asks for that code: paste it and authorise. Then run `gh auth status`
+again.
+
+### Claude Code
+
+You need a paid Claude plan first. Pro is the minimum:
+[claude.com/pricing](https://claude.com/pricing). The free plan doesn't include
+Claude Code.
+
+**Option 1 (recommended):**
+
+```bash
+curl -fsSL https://claude.ai/install.sh | bash   # macOS, Linux, WSL
+irm https://claude.ai/install.ps1 | iex          # Windows PowerShell
+```
+
+**Option 2:** with npm, on any system:
 
 ```bash
 npm install -g @anthropic-ai/claude-code
 ```
 
-Run `claude` from inside the repo folder and log in when prompted.
-[claude.com/claude-code](https://claude.com/claude-code) for install issues.
+Check:
 
-## 4. Create a Supabase account
+```bash
+claude --version   # prints a version number
+```
 
-You need **two projects**, one for QA and one for Production, and the free tier
-caps at exactly 2 per account (across all orgs). So start from a fresh account:
+### Browser for Playwright
 
-- New to Supabase: sign up normally.
-- Already have projects elsewhere: sign up again with an email alias
-  (`you+react-alicante@gmail.com`) using **email/password**, not "Sign in
-  with GitHub" — GitHub login ignores the alias and resolves to your
-  existing account. A fresh account has both project slots free.
+Claude tests the app in a browser with the Playwright tools, which the repo
+already configures. The download is about 700 MB.
 
-## 5. Create an organization
+```bash
+npx playwright install chromium
+```
 
-Any name. Type: Educational (cosmetic only, no effect on limits).
+## 2. Fork and clone
 
-## 6. Create two Supabase projects
+Open a terminal in the folder where you keep your projects. Then fork and clone
+in one command:
 
-Create them one after the other: **`ra-qa`** and **`ra-prod`**. QA is what you
-develop against; Production is what your deployed site uses. Different
-projects means different credentials, which is the point.
+```bash
+gh repo fork engineering-workshops/react-alicante-agentic-workflow --clone
+```
 
-For each:
+Or click **Fork** on
+[github.com/engineering-workshops/react-alicante-agentic-workflow](https://github.com/engineering-workshops/react-alicante-agentic-workflow).
+Untick **Copy the `dev` branch only**, so your fork also gets the `main`
+branch. Then clone your fork:
 
-- Database password: use the generator, save it, and note which project it
-  belongs to.
-- Region: closest to you.
-- Security options: leave "Enable Data API" checked, uncheck "Automatically
-  expose new tables", leave "Enable automatic RLS" unchecked. The migrations
-  grant read access to the one table they create and enable row level security
-  on it, so nothing else is exposed by default.
+```bash
+git clone https://github.com/<your-username>/react-alicante-agentic-workflow.git
+```
 
-Note each project's ref, the id in its URL `https://<ref>.supabase.co`. You
-need both in the next step.
+Then, inside the folder:
 
-## 7. Wire up environment variables
+```bash
+cd react-alicante-agentic-workflow
+pnpm install
+claude   # log in, approve the Playwright server, then exit
+```
+
+Check:
+
+```bash
+git remote get-url origin   # prints your fork's URL
+```
+
+The URL has your GitHub username in it, not `engineering-workshops`. Then check
+that you have the `main` branch:
+
+```bash
+git branch -r   # the list includes origin/main
+```
+
+## 3. Set up Supabase
+
+### Create an account
+
+You will create a new Supabase account with an alias of your email. Everyone
+does this, so every account has two free project slots for the two databases:
+QA and Production.
+
+1. Make your alias. An alias is a second address that delivers to your normal
+   inbox. Add `+alicante` before the `@`: `example@gmail.com` becomes
+   `example+alicante@gmail.com`.
+2. Go to [supabase.com/dashboard/sign-up](https://supabase.com/dashboard/sign-up).
+3. Sign up with the alias and a password. Don't use "Continue with GitHub".
+4. Confirm your email.
+
+![The Supabase sign-up form](images/supabase-sign-up.png)
+
+### Create an organization
+
+Go to [supabase.com/dashboard/new](https://supabase.com/dashboard/new) and fill
+in the form:
+
+- **Name:** `React-Alicante-Workshop` (any name works)
+- **Type:** Educational
+- **Plan:** Free - $0/month
+
+![The Supabase new organization form](images/supabase-organization.png)
+
+### Create the QA project: `ra-qa`
+
+You create two projects: one for development (QA) and one for your deployed
+site (Production). Start with QA.
+
+1. Open [supabase.com/dashboard/projects](https://supabase.com/dashboard/projects)
+   and click **New project**.
+2. Name it `ra-qa`. Click **Generate a password**, copy it, and save it in a
+   secure note or a text document, with the project name next to it. It does
+   not go in `.env.local`.
+3. Leave the other options, including **Security**, as they are.
+
+   ![The Supabase new project form for ra-qa](images/supabase-project-qa.png)
+
+4. Click **Create new project**. When it is ready, open **Settings → General**.
+   The **Project ID** is the **QA project ref**. Click **Copy** and save it in
+   your note as `qa ref`, next to the password.
+
+   ![The Supabase General settings with the Project ID](images/supabase-project-id.png)
+
+### Create the Production project: `ra-prod`
+
+Repeat the same steps:
+
+1. Click **New project** and name it `ra-prod`.
+2. Generate a new password and save it in your note.
+3. Leave the other options as they are.
+4. Click **Create new project**. Open **Settings → General**. The **Project
+   ID** is the **Production project ref**. Copy it and save it in your note as
+   `prod ref`.
+
+### Wire up environment variables
+
+Create your env file and open it in your editor:
 
 ```bash
 cp .env.example .env.local
 ```
 
-Local development points at **QA**. From the `ra-qa` project: **Settings →
-Data API** for the Project URL, **Settings → API Keys** for the publishable
-key. `SUPABASE_PRODUCTION_PROJECT_REF` is the **`ra-prod`** ref, used later to
-relink before applying migrations to Production.
+Replace everything in it with this, using your own values:
 
-```
-NEXT_PUBLIC_SUPABASE_URL=your-qa-project-url
-NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=your-qa-publishable-key
-SUPABASE_PRODUCTION_PROJECT_REF=your-prod-project-ref
+```dotenv
+NEXT_PUBLIC_SUPABASE_URL=https://abcdefghijklmnopqrst.supabase.co
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_publishable_AbCdEfGhIjKlMnOpQrSt
+SUPABASE_PRODUCTION_PROJECT_REF=uvwxyzabcdefghijklmn
 NEWS_API_URL=https://hn.algolia.com/api/v1
 NEXT_PUBLIC_ENABLE_STATS=true
 ```
 
-## 8. Connect Supabase and create the tables
+**`NEXT_PUBLIC_SUPABASE_URL`**: open `ra-qa` → **Integrations → Data API** and
+copy the API URL. Remove the ending `/rest/v1/`.
 
-The schedule lives in a `sessions` table, created by the migrations in
-`supabase/migrations/`. The Supabase CLI comes with `pnpm install`.
+![The Supabase Data API page with the API URL](images/supabase-data-api.png)
 
-Link to **QA** and push. Production gets the same migrations later, at release
-time, through `release-db-migrate`.
+**`NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`**: open `ra-qa` → **Settings → API
+Keys** and copy the `default` publishable key. Use the copy icon: the text on the
+page is cut off.
 
-```bash
-pnpm supabase login                          # opens browser, one-time
-pnpm supabase link --project-ref <qa-ref>    # asks for that project's DB password
-pnpm db:push                                 # creates and fills the tables
-```
+![The Supabase API Keys page with the publishable key](images/supabase-api-keys.png)
 
-`<qa-ref>` is the id in the `ra-qa` project URL: `https://<qa-ref>.supabase.co`.
+**`SUPABASE_PRODUCTION_PROJECT_REF`**: the `prod ref` from your note. To find it
+again, open `ra-prod` → **Settings → General** and copy the **Project ID**.
 
-Check: in `ra-qa`, **Table Editor → sessions** shows 8 rows. `ra-prod` stays
-empty for now.
+Check: the ref in `NEXT_PUBLIC_SUPABASE_URL` is the Project ID of `ra-qa`, not
+`ra-prod`. Mixing them up is the most common mistake.
 
-**`db push` can't connect?** The direct database connection is often IPv6
-only, and some networks (conference wifi included) are IPv4 only. Use the
-Session pooler instead, which works everywhere:
+### Connect and create the tables
 
-1. Supabase → **Connect** → **Session pooler** → copy the connection string.
+The app shows a conference schedule. The schedule is stored in a database table
+called `sessions`. The repo has files, called migrations, that create and fill
+that table. You apply them to your QA project in five steps:
+
+1. Log in to Supabase:
+
+   ```bash
+   pnpm supabase login
+   ```
+
+   A browser window opens and shows a verification code. Click **Copy code**.
+
+   ![The Supabase browser page with the verification code](images/supabase-login-browser.png)
+
+   Paste it in the terminal where it says "Enter your verification code", and
+   press Enter.
+
+   ![The terminal asking for the verification code](images/supabase-login-terminal.png)
+
+   Check that you are logged in. This lists your projects, and you see `ra-qa`
+   and `ra-prod`:
+
+   ```bash
+   pnpm db:link:status
+   ```
+
+2. Link the repo to `ra-qa`. Use the `qa ref` from your note. It asks for the
+   `ra-qa` database password from your note:
+
+   ```bash
+   pnpm supabase link --project-ref <qa-ref>
+   ```
+
+   Check that the link worked. Run `pnpm db:link:status` again: the `●` in the
+   first column must be on the `ra-qa` row.
+
+3. Preview what will be created. Nothing changes yet:
+
+   ```bash
+   pnpm db:push:dry-run
+   ```
+
+   It lists the migrations that will be applied.
+
+4. Create and fill the tables. It asks you to confirm:
+
+   ```bash
+   pnpm db:push
+   ```
+
+5. Generate the TypeScript types from your database:
+
+   ```bash
+   pnpm db:types
+   ```
+
+Check: in Supabase, open `ra-qa` → **Table Editor** → **sessions**. It shows 8
+rows.
+
+**`db push` can't connect?** Some networks are IPv4 only, and the direct
+connection needs IPv6. Use the Session pooler instead:
+
+1. In `ra-qa`, click **Connect**, open the **Direct** tab, and under
+   **Connection Method** choose **Session pooler**. Keep the type **URI** and
+   copy the connection string below it.
+
+   ![The Supabase Connect dialog with Session pooler selected](images/supabase-session-pooler.png)
+
 2. Replace `[YOUR-PASSWORD]` in it with your DB password.
 3. Run:
 
@@ -149,80 +325,115 @@ Session pooler instead, which works everywhere:
    pnpm supabase db push --db-url "<connection-string>"
    ```
 
-## 9. Run it locally
+## 4. Run it locally
 
 ```bash
 pnpm dev
 ```
 
-Visit `localhost:3000` — it redirects to `/en`. Open `/en/sessions`, and if
-the schedule shows up, Supabase is connected. `/es/sessions` is the same page
-in Spanish.
+Open `localhost:3000/en/sessions`.
 
-## 10. Deploy to Vercel
+Check: the schedule shows up, so Supabase is connected. Then stop the server
+with `Ctrl+C`.
 
-1. [vercel.com](https://vercel.com) → **Continue with GitHub**. This creates
-   the account if you don't have one; there is no separate signup. Authorise
-   Vercel's GitHub app when asked — it needs access to import your fork.
-2. **Add New → Project → Import Git Repository** → pick your fork.
-3. Add the env vars. Same names, different values per environment — that's
-   the whole reason they're variables and not code:
+**"Invalid API key"?** The key is incomplete or from another project. Copy it
+again with the copy icon, not by selecting the text.
 
-   | Variable                               | Preview      | Production    |
-   | -------------------------------------- | ------------ | ------------- |
-   | `NEXT_PUBLIC_SUPABASE_URL`             | `ra-qa` URL  | `ra-prod` URL |
-   | `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | `ra-qa` key  | `ra-prod` key |
-   | `NEWS_API_URL`                         | same in both | same in both  |
-   | `NEXT_PUBLIC_ENABLE_STATS`             | `true`       | `false`       |
+**"Could not find the table"?** The ref in `NEXT_PUBLIC_SUPABASE_URL` is not the
+Project ID of `ra-qa`. Fix it.
 
-   In Vercel each variable has checkboxes for Production, Preview and
-   Development, so add the Supabase ones twice, once per environment.
+After you change `.env.local`, stop the server with `Ctrl+C` and run `pnpm dev`
+again. It only reads the file when it starts.
 
-   Stats are off in Production on purpose: the feature ships hidden and gets
-   switched on later. `NEXT_PUBLIC_` values are baked in at build time, so
-   flipping it needs a redeploy.
+## 5. Deploy to Vercel
 
-4. **Settings → Environments → Production → Branch Tracking**: confirm it says
-   `main`. Vercel picks `main` on import, so it should already be right.
-   Production deploys when the release PR merges into `main`; `dev` and feature
-   branches get Preview deployments.
-5. Deploy.
+1. Create a Vercel account at [vercel.com/signup](https://vercel.com/signup), if
+   you don't have one. Signing up with GitHub is the fastest.
+2. Go to [vercel.com/new](https://vercel.com/new). Choose the GitHub account that
+   owns your fork, find your fork, and click **Import**. Fork missing? Click
+   **Adjust GitHub App Permissions**.
 
-The first deployment of a new Vercel project is always a Production one, from
-whatever the repo is at right now — so your site is live before you have
-released anything. After that, only merges into `main` update Production.
+   ![The Vercel Import Git Repository list](images/vercel-import.png)
 
-Production has no tables yet, so `/en/sessions` there stays empty until the
-release step applies the migrations to `ra-prod`. Preview, which points at QA,
-works straight away.
+3. Add these environment variables. The same variable can have a different value
+   in Production and in Preview: Preview uses `ra-qa`, Production uses `ra-prod`.
 
-## 11. Create your workshop tickets
+   | Variable                               | Preview                 | Production                                     |
+   | -------------------------------------- | ----------------------- | ---------------------------------------------- |
+   | `NEXT_PUBLIC_SUPABASE_URL`             | same as in `.env.local` | `https://<prod ref>.supabase.co`               |
+   | `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | same as in `.env.local` | `ra-prod` → **Settings → API Keys**, copy icon |
+   | `NEWS_API_URL`                         | same in both            | same in both                                   |
+   | `NEXT_PUBLIC_ENABLE_STATS`             | `true`                  | `false`                                        |
+
+   Each variable is created in a form. Its **Environments** dropdown chooses
+   where the value applies:
+
+   - **Same value in both** (`NEWS_API_URL`): tick **Production** and
+     **Preview**, as in the picture. You create it once.
+   - **Different values** (the other three): create the variable twice. Tick only
+     **Preview** for the first one, and only **Production** for the second one.
+
+   Keep the type **Config**.
+
+   ![The Vercel form for NEWS_API_URL, with Production and Preview ticked](images/vercel-env-var-form.png)
+
+4. Click **Deploy**, the button at the bottom of the Configure Project page.
+   The first deployment is a **Production** deployment, so your site goes live
+   right away.
+
+Check: the deployment shows **Ready**.
+
+Then check the Production branch. Open **Settings → Environments**.
+**Production** must track `main`. `dev` and feature branches get Preview
+deployments.
+
+![The Vercel Environments page](images/vercel-environments.png)
+
+If Production says `dev`, click **Production**, change **Branch Tracking** to
+`main`, and click **Save**.
+
+![The Vercel Production Branch Tracking set to main](images/vercel-branch-tracking.png)
+
+## 6. Check both environments
+
+**Production:** in your Vercel project, open **Overview** and click **Visit**.
+The site loads. `/en/sessions` is empty for now, because `ra-prod` has no tables
+yet.
+
+![The Vercel Production Deployment with the Visit button](images/vercel-production.png)
+
+**Preview (QA):** push an empty commit to `dev`:
+
+```bash
+git commit --allow-empty -m "Trigger a preview"
+git push origin dev
+```
+
+In Vercel → **Deployments**, click the newest row with the **Preview** badge and
+the branch `dev`. When it shows **Ready**, click **Visit**. The preview URL is
+under **Domains**.
+
+![The Vercel Preview deployment with the Visit button and its domains](images/vercel-preview.png)
+
+Check: its `/en/sessions` shows the schedule from `ra-qa`.
+
+## 7. Create your workshop tickets
+
+The workshop tickets are files in the repo. Run this command in your fork's
+folder to create them as GitHub issues, so the agent can read them:
 
 ```bash
 pnpm workshop:tickets
 ```
 
-Creates the workshop tickets as issues in your fork. Forks start with Issues
-turned off; the script turns them on and points `gh` at your fork, so the
-agents read tickets from your repo, not the starter repo. Safe to run twice:
-tickets that already exist are skipped.
+It turns Issues on for your fork. It is safe to run twice: tickets that already
+exist are skipped.
 
-Check: your fork's **Issues** tab shows 3 open issues.
+Check: your fork's **Issues** tab shows 3 open issues: a Speakers page, the
+session level, and a Like button.
 
-## 12. Start the agents
+## Next
 
-Start a session as the agent you want to talk to. Run it from the repo root and
-add your first request in quotes:
-
-```bash
-claude --agent feature-builder "#1"
-claude --agent release-manager "next minor"
-```
-
-You then talk to the agent directly.
-
-Don't ask a normal Claude session to "run release-manager". That starts it as a
-subagent, and a subagent can't take your "yes" through the assistant that
-launched it, so it stops at the first confirmation.
-
-Check: the agent greets you and asks its first question.
+Setup is done. In the workshop you continue with the
+[feature-builder walkthrough](feature-builder-walkthrough.md), then the
+[release-manager walkthrough](release-manager-walkthrough.md).

@@ -21,12 +21,18 @@ const SESSION_COLUMNS =
   "id, title, speaker, track, room, start_time, duration_minutes, description";
 
 /**
- * Postgres "undefined_table". A fresh project has no tables until its
- * migrations are applied, and these pages are prerendered at build time — so
- * without this the first deploy to a new environment fails the build instead
- * of coming up with an empty schedule.
+ * Codes for "this table does not exist": Postgres `undefined_table` (42P01) and
+ * PostgREST "table not found in the schema cache" (PGRST205), which is what the
+ * Supabase API returns. A fresh project has no tables until its migrations are
+ * applied, and these pages are prerendered at build time — so without this the
+ * first deploy to a new environment fails the build instead of coming up with
+ * an empty schedule.
  */
-const UNDEFINED_TABLE = "42P01";
+const MISSING_TABLE_CODES = ["42P01", "PGRST205"];
+
+function isMissingTable(error: { code?: string }): boolean {
+  return error.code !== undefined && MISSING_TABLE_CODES.includes(error.code);
+}
 
 function toSession(row: SelectedSessionRow): Session {
   return {
@@ -52,7 +58,7 @@ export async function fetchSessions(): Promise<Session[]> {
     .order("start_time");
 
   if (error) {
-    if (error.code === UNDEFINED_TABLE) return [];
+    if (isMissingTable(error)) return [];
     throw new Error(`Failed to load sessions: ${error.message}`);
   }
 
@@ -70,7 +76,7 @@ export async function fetchSessionById(id: string): Promise<Session | null> {
     .maybeSingle();
 
   if (error) {
-    if (error.code === UNDEFINED_TABLE) return null;
+    if (isMissingTable(error)) return null;
     throw new Error(`Failed to load session ${id}: ${error.message}`);
   }
 

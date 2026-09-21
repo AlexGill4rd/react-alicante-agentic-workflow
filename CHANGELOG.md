@@ -1,5 +1,46 @@
 # Changelog
 
+## [0.2.2] — 2026-09-21
+
+### Bug Fixes
+
+- Treat the PostgREST missing-table error as an empty schedule
+
+### Maintenance
+
+- Say what the tickets command does
+- Lean README, walkthrough placeholders, setup ends at the tickets
+- Show where the Vercel Preview URL is
+- Explain when a Vercel variable is ticked for both environments
+- Clearer Vercel step, Production values, first deploy is Production
+- Check the Production branch after the first Vercel deployment
+- Vercel screenshots, fork copies the main branch, Production tracks main
+- Troubleshooting for Invalid API key and missing table, ref check
+- Session pooler screenshot, smaller login screenshots
+- Project ID steps, Supabase login screenshots, dry run and types steps
+- Simpler env step, one example and one screenshot per value
+- Password and ref steps, clearer env placeholders, API keys and Data API screenshots
+- Supabase screenshots, alias email steps, copy-paste env block
+- One Supabase step with sub-sections, table of contents, remote check example
+- Shorter Claude Code section, paid plan first
+- Clearer gh login steps, drop the before-the-workshop notice
+- End the run and deploy steps with a check, add a step to check both environments
+- Add a Vercel account step, say what the Playwright browser is for
+- Shorter fork and clone, add the Fork button option
+- Shorter tool steps, native Claude Code install first, exact links
+- One section per tool with expected output, native Claude Code install
+- Shorter prerequisites and steps 4 to 11
+- Install gh first, explain the clone, drop remarks meant for the author
+
+## Test Suite
+
+| Suite          | Status     |
+| -------------- | ---------- |
+| ESLint         | ⏳ pending |
+| Type-check     | ⏳ pending |
+| Unit tests     | ⏳ pending |
+| Build (Vercel) | ⏳ pending |
+
 ## [0.2.1] — 2026-09-20
 
 ### Maintenance
