@@ -309,4 +309,14 @@ Ticket 2 adds a database column, so the plan has two new things:
 
 ## Done
 
-To do: what you should see when both tickets are merged into `dev`.
+Both tickets are merged into `dev`. You should see:
+
+- The two tickets are **closed** in the **Issues** tab.
+- `dev` has one new commit per ticket, with the PR number in its title.
+- The follow-up tickets from the reviews are still **open**.
+- The app has the Speakers page, and the level on the schedule and on the session
+  pages.
+
+![A session page with the level badge, after the merge](images/feature-builder-done.png)
+
+Ticket 3 is optional. Next: release it to Production with the `release-manager`.
