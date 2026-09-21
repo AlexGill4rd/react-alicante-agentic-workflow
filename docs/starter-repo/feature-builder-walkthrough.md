@@ -182,9 +182,23 @@ To do: the screenshots of the squash choice and the branch delete.
 
 ## Repeat for ticket 2
 
+Update `dev` first (`git checkout dev`, then `git pull`), and check that `git
+status` is clean. Then start the agent for ticket 2:
+
 ```bash
 claude --agent feature-builder "#2"
 ```
+
+Ticket 2 adds a database column, so the plan has two new things:
+
+- A question: should the level also show on the home page? The default is no.
+  Type **confirm**.
+- A manual step: after Phase 1 you run the database commands yourself. The agent
+  only writes the migration file.
+
+![The plan for ticket 2](images/feature-builder-ticket2-plan.png)
+
+To do: the next stops of ticket 2.
 
 ## Done
 
