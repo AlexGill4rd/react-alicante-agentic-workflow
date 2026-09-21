@@ -51,10 +51,40 @@ Use the number of that ticket in your fork's **Issues** tab. It is normally #1.
 
 4. The agent shows its plan: the phases it will run, the ones it skips, and
    things it wants you to check. Ticket 1 is a UI ticket, so it skips the
-   database work (Phase 1) and has no schema change. Read the plan, then answer
-   **yes** to start.
+   database work (Phase 1) and has no schema change. Read the plan, then type
+   **confirm** to start.
 
    ![The agent's plan with the question Confirm to start](images/feature-builder-plan.png)
+
+5. The agent loads its skills and reads the existing code. Wait.
+
+   ![The agent loading the page skill and reading the code](images/feature-builder-skills.png)
+
+6. The agent creates the page, layout, card, nav link and messages. Wait.
+
+   ![The agent creating the files](images/feature-builder-creating.png)
+
+7. **Breakpoint 3: UI scaffold done.** The agent lists the files it created and
+   changed. Nothing is committed yet. Type **confirm** to continue with the next
+   part, the grouping util.
+
+   ![The agent's report after the UI scaffold](images/feature-builder-breakpoint-scaffold.png)
+
+   If you open `/speakers` in your browser now, you see the Speakers link in the
+   nav and the heading. The speaker cards come in the wiring step.
+
+   ![The Speakers page with only the heading](images/feature-builder-speakers-heading.png)
+
+8. **Breakpoint 4: backend done.** The agent created the grouping util. Type
+   **confirm** to wire it into the page and run the build.
+
+   ![The agent's report after the backend](images/feature-builder-breakpoint-backend.png)
+
+   The page is still only a heading. Test the full page after the wiring step.
+
+   The agent does not commit between stops. It leaves the changes in your
+   working tree, so you can read the diff in your editor. Open **Source
+   Control** in VS Code to see it.
 
 To do: the next stops, what the agent asks, and what you answer.
 
