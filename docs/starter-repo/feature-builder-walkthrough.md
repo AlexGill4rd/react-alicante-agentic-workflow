@@ -34,6 +34,10 @@ Use the number of that ticket in your fork's **Issues** tab. It is normally #1.
 
 The agent stops at each **Breakpoint**. Read the report, then answer.
 
+The agent never commits on its own. Read the changes in **Source Control**. When
+a phase works, you tell it to commit (**commit this**), or answer **yes** when it
+asks. It pushes only when you say so.
+
 1. Choose **Yes, I trust this folder**.
 
    ![Claude Code asking to trust the folder](images/feature-builder-trust.png)
@@ -249,6 +253,17 @@ Ticket 2 adds a database column, so the plan has two new things:
    a draft PR. Answer **yes**.
 
    ![The agent's commits and the i18n phase](images/feature-builder-ticket2-commits-i18n.png)
+
+5. The agent pushes and opens a draft PR that closes the ticket. Approve the
+   push. The i18n changes are not committed yet. Answer **yes, start Phase 4**.
+
+   ![The draft pull request for ticket 2](images/feature-builder-ticket2-draft-pr.png)
+
+6. **Breakpoint 6.** The agent commits the i18n changes and writes the tests. It
+   says whether the feature is a critical flow, and where it wrote no test and
+   why. Nothing is pushed yet. Type **confirm** to run the quality gates.
+
+   ![The agent's report after the tests](images/feature-builder-ticket2-tests.png)
 
 To do: the next stops of ticket 2.
 
