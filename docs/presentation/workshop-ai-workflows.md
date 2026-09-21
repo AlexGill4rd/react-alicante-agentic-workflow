@@ -363,6 +363,8 @@ Phase 5 — Review: code-reviewer, accessibility-auditor, /check-quality
 Phase 6 — PR: /create-pr-description
 ```
 
+**End-to-end tests:** Phase 4 writes unit tests. If the feature touches a critical flow (auth, payment, checkout, anything security-related), `feature-builder` files a **separate follow-up ticket** for regression and e2e tests. It does not add e2e tests to the feature PR, and the PR does not wait for that ticket. Ordinary features get no e2e ticket.
+
 **Critical constraint:** The agent presents the plan. The user approves. Only then does execution begin. The agent itself never calls a skill — it hands off to the user or a downstream agent.
 
 ### Deep dive: release-manager
