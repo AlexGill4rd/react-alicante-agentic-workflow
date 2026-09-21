@@ -472,6 +472,8 @@ exist are skipped.
 Check: your fork's **Issues** tab shows 3 open issues: a Speakers page, the
 session level, and a Like button.
 
+![The Issues tab of the fork with the three workshop tickets](images/github-issues.png)
+
 ## Next
 
 Setup is done. In the workshop you continue with the
