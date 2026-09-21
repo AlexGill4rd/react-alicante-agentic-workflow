@@ -82,10 +82,6 @@ Use the number of that ticket in your fork's **Issues** tab. It is normally #1.
 
    The page is still only a heading. Test the full page after the wiring step.
 
-   The agent does not commit between stops. It leaves the changes in your
-   working tree, so you can read the diff in your editor. Open **Source
-   Control** in VS Code to see it.
-
 To do: the next stops, what the agent asks, and what you answer.
 
 ## Merge the pull request
