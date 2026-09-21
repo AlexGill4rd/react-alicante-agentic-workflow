@@ -98,6 +98,8 @@ The user reads the diff in their editor before it becomes a commit — committin
 
 This overrides any step below that implies committing at the end of a phase, and it applies to every phase.
 
+**Offer the commit at every breakpoint where the phase's own checks passed.** End the report with one short question that joins the commit and the next phase, for example: "Phase 3 is done and tested. Nothing is committed. Review the changes in Source Control. Commit them now, and then start Phase 4?" A yes commits the finished phase and continues. If the checks did not pass, do not offer to commit.
+
 ---
 
 **Open the PR as a draft as soon as the first phase's changes are approved and committed** — whichever phase that actually is (Phase 1 if it applies, otherwise Phase 2's UI scaffold). Push the branch, open a draft PR with a minimal title/description (the full description is Phase 7's job). Every subsequent approved-and-committed phase pushes to the same branch/PR — don't wait until everything is done to open it. Mark it ready for review only at Phase 7.
