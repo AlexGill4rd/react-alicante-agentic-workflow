@@ -25,6 +25,7 @@ argument-hint: "<ComponentName>"
 ## Prerequisites
 - Confirm `$1` component exists and is presentational — read it; if it already calls `fetch` or owns submission state directly, stop and flag it to be split first.
 - Confirm backend logic exists — Server Action at `app/actions/<actionName>.ts`, API route at `app/api/<route>/route.ts`, or utility at `services/<name>.ts`
+- Read `.claude/rules/layers.md` first — the container renders and holds the event handlers, the hook holds the logic and state, and only services make API calls
 - Grep `hooks/` for an existing handler hook (e.g. `use<Feature>Handler`) — reuse it if found instead of creating a new one
 - Understand what backend the component needs to call — the action name, the API endpoint, or the utility function
 
@@ -41,11 +42,11 @@ Check if a handler hook already exists (e.g., `useContactFormHandler.ts`).
 If not, create one at `hooks/use<Feature>Handler.ts` following the pattern in `useContactFormHandler.ts`:
 - Named export, typed params and return — no `any`
 - Owns state: `isLoading`, `error`, `success` (or equivalent)
-- Exposes a single `handleSubmit` / `handleAction` callback that:
+- Exposes one action (e.g. `send`) — not a view handler — that:
   - Calls the Server Action (or makes API call)
   - Maps error codes to translated messages
   - Logs unexpected failures — a swallowed error is a silent bug
-  - Invokes `onSuccess` / `onError` callbacks passed via options
+  - Returns the outcome (or invokes `onSuccess` / `onError` callbacks passed via options) and never decides what the view does next (navigate, close a dialog, show a banner)
 - One hook, one concern — if component needs unrelated state (sidebar toggle), that's a separate hook
 
 ### 3. Create Container Component
@@ -53,8 +54,9 @@ If not, create one at `hooks/use<Feature>Handler.ts` following the pattern in `u
 Create or update a route-specific container (e.g., `<Feature>Area.tsx` in `_components/`, following `ContactFormArea.tsx`):
 - `'use client'` directive (owns state)
 - Calls the handler hook
+- Defines the event handler (e.g. `handleSubmit`) that calls the hook's action, then decides what the view does with the outcome
 - Renders the presentational component, passing:
-  - `onSubmit` / `onAction` from hook
+  - `onSubmit` / `onAction` — the handler defined here
   - `isLoading` from hook
   - `error` / `success` messages from hook
 - Owns any UI-only state (e.g., transient success banner) — NOT in the presentational component
@@ -66,7 +68,7 @@ Create or update a route-specific container (e.g., `<Feature>Area.tsx` in `_comp
 ### 5. Tests
 - Hook: `hooks/use<Feature>Handler.test.ts` using `renderHook` — covers success, validation error, and unexpected error paths.
 - Action: `app/actions/<actionName>.test.ts` — covers happy path, validation error (400), and unexpected error (500), mocking Supabase/external clients.
-- Container: extend or add `<Feature>Area.test.tsx` asserting the hook's `handleSubmit` is called on form submit and that loading/error props reach the presentational component (mock the hook).
+- Container: extend or add `<Feature>Area.test.tsx` asserting the hook's action is called when the form is submitted and that loading/error props reach the presentational component (mock the hook).
 
 ## Constraints
 - **Backend must exist first** — don't create backend code in this skill; use `/engineering-create-backend` first
@@ -74,7 +76,8 @@ Create or update a route-specific container (e.g., `<Feature>Area.tsx` in `_comp
 - Never duplicate an existing hook — search `hooks/` first; reuse if it covers the domain
 - Never call Supabase, Resend, or external SDKs directly from container or hook — they should only be called from the backend (action, route, or utility)
 - Never put the service-role Supabase key or other secrets in a Client Component or hook
-- Never add business logic to the container — it's only state plumbing
+- Never add business logic to the container — it's only state plumbing and event handlers
+- Never move view reactions (navigation, dialogs, banners) into the hook — the hook exposes state and actions, the container decides what the view does
 - Container is `'use client'`, presentational component may be sync or async (if async, container handles that)
 
 ## Output

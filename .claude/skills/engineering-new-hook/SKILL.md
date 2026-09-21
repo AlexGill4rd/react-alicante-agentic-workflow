@@ -22,6 +22,7 @@ argument-hint: "<hookName>"
 ## Prerequisites
 - Confirm `$ARGUMENTS` starts with `use` — if not, prefix it and confirm with the user.
 - Grep `hooks/` to confirm a hook with this name does not already exist.
+- Read `.claude/rules/layers.md` first — a hook holds logic and state and calls services; only services make API calls
 - Confirm the logic is reusable state/effect logic — if it is a one-time utility function, it belongs in `utils/`, not `hooks/`.
 
 ## Workflow
@@ -39,6 +40,8 @@ argument-hint: "<hookName>"
 - No default export — hooks use named exports, unlike components.
 - No `'use client'` on the hook file — the directive belongs in the component that imports the hook.
 - No business logic that belongs in `lib/` — hooks manage state and side effects; domain logic belongs in `utils/` or `utils/`.
+- No direct `fetch`, Supabase or SDK calls in a hook — call a service instead.
+- No view reactions in a hook (navigation, dialogs, banners) — return state and actions, and let the component decide.
 - No `any` types — define typed parameters and return types explicitly.
 
 ## Output
