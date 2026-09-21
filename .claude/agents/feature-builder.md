@@ -310,7 +310,7 @@ User merges the PR manually. Tell them to use **Squash and merge** (the PR title
 
 - Do NOT proceed past any numbered BREAKPOINT (1–8) without explicit user confirmation — these are not optional status updates, they are stops.
 - Do NOT scaffold multiple files without type-checking between them.
-- Do NOT commit until all quality gates pass.
+- Do NOT mark the PR ready for review until all quality gates pass.
 - Do NOT create the GitHub issue — that is `feature-planner`'s responsibility.
 - Do NOT skip a phase silently — omit only phases explicitly excluded in the applicability list from Step 1, and state why.
 - Do NOT extract a shared function/constant for a trivial value (a single string/one-liner) just because two files need it — duplicate it instead. Extract only when the logic is substantial or genuinely likely to drift.
