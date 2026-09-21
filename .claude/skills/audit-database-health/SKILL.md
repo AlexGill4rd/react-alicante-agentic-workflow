@@ -23,7 +23,11 @@ metadata:
 ## Workflow
 
 ### 1. Migration drift
-Ask the user to run this themselves and share the output — it connects to the linked project:
+First check which project is linked. Ask the user to run this and share the output — the `●` in the first column must be on the QA project:
+```bash
+pnpm db:link:status
+```
+Then ask them to run this and share the output — it connects to the linked project:
 ```bash
 pnpm db:migrations:list
 ```
