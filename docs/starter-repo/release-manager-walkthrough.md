@@ -7,14 +7,11 @@ Both tickets must be merged into `dev` first.
 
 ## Start
 
-Run it from the repo root, in a terminal:
+Open a terminal in VS Code, not the Claude chat. Run it from the repo root:
 
 ```bash
 claude --agent release-manager "next minor"
 ```
-
-Always start the agent with `claude --agent`. Asking a normal session to "run
-release-manager" does not work.
 
 ## Steps
 

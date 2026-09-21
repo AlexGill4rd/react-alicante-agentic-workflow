@@ -7,36 +7,28 @@ optional, if there is time.
 
 ## Before you start
 
-Stop any dev server that is still running, including old ones you forgot to
-close. The agent starts its own, and two servers can clash on the same port.
+Stop any dev server that is still running, including old ones you forgot. The
+agent starts its own, and two servers can clash on the same port.
 
-- In the terminal where `pnpm dev` runs, press `Ctrl+C`.
-- Still running? Stop whatever uses port 3000 (macOS and Linux):
-
-  ```bash
-  kill $(lsof -ti :3000)
-  ```
-
-- Last resort (macOS and Linux): stop every Node program on your computer.
+- Press `Ctrl+C` in the terminal where `pnpm dev` runs.
+- Still running? Stop all Node programs (macOS and Linux). This also stops other
+  Node programs you have open.
 
   ```bash
   killall -9 node
   ```
 
-  This also stops other Node programs you have open, for example another
-  terminal running Claude Code if you installed it with npm. Use it only when
-  the steps above did not work.
-
 ## Start
 
-Run it from the repo root, in a terminal. Add the ticket number in quotes:
+The first ticket is **Add a Speakers page**. Open a terminal in VS Code, not the
+Claude chat. Check that you are on `dev` and that `git status` is clean. Then run
+the agent from the repo root, with the ticket number in quotes:
 
 ```bash
 claude --agent feature-builder "#1"
 ```
 
-Always start the agent with `claude --agent`. Asking a normal session to "run
-feature-builder" does not work.
+Use the number of that ticket in your fork's **Issues** tab. It is normally #1.
 
 ## Steps
 

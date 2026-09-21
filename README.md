@@ -34,6 +34,6 @@ Schema changes live in `supabase/migrations/`. Add a new file for each change an
 
 ## Claude Code
 
-Start an agent as its own session, from the repo root: `claude --agent <name>`. Do not ask a normal session to "run release-manager": it starts as a subagent, and a subagent cannot take your "yes".
+Start each agent in a terminal, from the repo root: `claude --agent <name>`. The walkthroughs above show how.
 
 `.claude/settings.json` stops Claude from reading `.env` files, from applying migrations (`db:push`) and from force-pushing, and asks before every `git push`. You run the blocked commands yourself.
