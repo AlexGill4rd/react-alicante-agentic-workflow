@@ -95,6 +95,11 @@ Use the number of that ticket in your fork's **Issues** tab. It is normally #1.
 
     ![The agent's report after the scaffold is complete](images/feature-builder-breakpoint-scaffold-complete.png)
 
+    The main feature is now complete. The Speakers page shows a card for each
+    speaker. The next phases add translations, tests and the review.
+
+    ![The finished Speakers page on localhost](images/feature-builder-speakers-page.png)
+
 To do: what you answer here, then the next stops.
 
 ## Merge the pull request
