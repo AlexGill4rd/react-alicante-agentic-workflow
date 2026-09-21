@@ -109,7 +109,22 @@ Use the number of that ticket in your fork's **Issues** tab. It is normally #1.
     The agent then asks two things: push and open a draft PR, and go on with
     Phase 3, the i18n audit.
 
-To do: what you answer to those two questions, then the next stops.
+12. Answer **yes** to push and open the draft PR. The agent asks you to approve
+    the push. It opens a draft pull request that closes your ticket. Its
+    description has a table with the status of each phase, and the agent updates
+    it as the phases finish. Open the **Pull requests** tab to see it.
+
+    ![The draft pull request with the phase status table](images/feature-builder-draft-pr.png)
+
+13. The agent runs the i18n audit (Phase 3) and writes the tests (Phase 4).
+    **Breakpoint 6: tests written and passing.** It lists the new test files and
+    says whether the feature is a critical flow. A critical flow gets a follow-up
+    ticket for e2e tests. The Speakers page is not one. Type **confirm** to run
+    the quality gates (Phase 5).
+
+    ![The agent's report after the i18n audit and the tests](images/feature-builder-breakpoint-tests.png)
+
+To do: the quality gates, the review and the pull request.
 
 ## Merge the pull request
 
