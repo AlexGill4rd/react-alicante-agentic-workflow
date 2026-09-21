@@ -290,6 +290,15 @@ Ticket 2 adds a database column, so the plan has two new things:
 
    ![The review resolution comment on the PR](images/feature-builder-ticket2-resolution.png)
 
+10. **Breakpoint 8.** The agent pushed the fix and posted the resolution comment.
+    Every finding has an outcome: fixed, follow-up ticket, or accepted with a
+    reason. Phase 7 has one more step than ticket 1: a Production Checklist,
+    because the ticket has a migration. It lists that the migration must be
+    applied to Production at release time. Then the agent writes the final PR
+    description and marks the PR ready. Answer **yes** to go on.
+
+    ![The agent's report at Breakpoint 8](images/feature-builder-ticket2-breakpoint8.png)
+
 To do: the merge of ticket 2.
 
 ## Done
