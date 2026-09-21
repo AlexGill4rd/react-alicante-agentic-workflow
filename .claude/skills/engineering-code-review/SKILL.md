@@ -78,7 +78,7 @@ Report findings or "None".
 
 ### 3. Convention Compliance
 
-Run `/engineering-review-component` on each changed `.ts`/`.tsx` file under the source folders (components, hooks, utilities). Do NOT reimplement its checklist — summarise its Pass/Fail output in the report.
+Run `/engineering-review-component` on each changed `.ts`/`.tsx` file under the source folders (components, hooks, utilities). Do NOT reimplement its checklist. Report only its failures, in plain words — never the item numbers, and no list of what passed.
 
 ---
 
@@ -173,6 +173,14 @@ If **'skip re-review'** → done.
 
 ## Output Format
 
+Write for a person reading on GitHub. Short, but enough to act on.
+
+- Start with the verdict and two plain sentences.
+- Only real findings: what is wrong, where, why it matters, the fix.
+- Split **Must fix** and **Worth considering**. Skip empty sections.
+- A small summary table is fine: file, result, one plain sentence. No checklist
+  numbers, no list of what passed.
+
 ```
 ## Code Review: [Component / Feature]
 
@@ -180,7 +188,7 @@ If **'skip re-review'** → done.
 - [Findings or "None"]
 
 ### Convention Compliance
-[/engineering-review-component output — Pass/Fail per item]
+[Only the failures, in plain words. One line: everything else passed]
 
 ### Architecture
 - [Findings or "None"]

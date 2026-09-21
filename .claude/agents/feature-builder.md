@@ -252,6 +252,8 @@ Run in sequence — each may surface issues that need fixing before the next:
 
    Fix any Critical findings before continuing.
 
+   Post the audit result as a PR comment (`gh pr comment <pr-number> --body-file <file>`), with the findings by severity, before you fix anything — so the PR shows what was found. Skip this only if no PR exists yet.
+
 2. **Security — only if the diff touches a security area.** Check with `git diff --name-only origin/dev...HEAD`. It does if any file matches: `app/api/**`, `services/**`, `supabase/migrations/**`, `next.config.ts`, `.env.example`, `package.json`. If none match, state that security review was skipped and why, and go to step 3.
 
    a. Invoke the built-in `/security-review` — generic vulnerabilities (injection, auth bypass, XSS, data exposure) in the diff against `origin/HEAD`, which is `dev`:
@@ -264,10 +266,14 @@ Run in sequence — each may surface issues that need fixing before the next:
 
       Fix any Critical or High findings before continuing. Medium/Low can be noted as follow-ups.
 
-3. Invoke `/engineering-code-review` (not the generic `/code-review` — that one doesn't post to the PR without an explicit `--comment` flag):
+      Post the result of both security checks as one PR comment, the same way, before you fix anything. Skip this only if no PR exists yet.
+
+3. Invoke `/engineering-code-review` (not the generic `/code-review`: this project skill checks this repo's rules):
    > "Review feature #<number>: <title>"
 
    The skill posts findings to the PR and waits for fixes. Resume here after fixes are applied.
+
+4. **Post the resolution as a PR comment.** After the decisions in steps 1–3 — and again after any re-review — post one comment that lists every finding from the accessibility audit, the security review and the code review with its outcome: **fixed** (commit sha), **follow-up ticket** (link) or **accepted** (one-line reason). No finding stays listed without an outcome.
 
 → Update state file: Phase 6 ✅
 
