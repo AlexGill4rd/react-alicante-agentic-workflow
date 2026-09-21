@@ -1,13 +1,12 @@
 "use client";
 
-import { IconToggleButton } from "@/components/atoms/icon-toggle-button";
+import { MenuToggleButton } from "@/components/atoms/menu-toggle-button";
 import { LanguageToggle } from "@/components/molecules/language-toggle";
 import { MobileMenu } from "@/components/molecules/mobile-menu";
 import { NavLinks, type NavLink } from "@/components/molecules/nav-links";
 import { Link, usePathname } from "@/i18n/navigation";
 import { isStatsEnabled } from "@/utils/feature-flags";
 import { Box, Flex } from "@chakra-ui/react";
-import { Menu as MenuIcon, X } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 
@@ -47,13 +46,11 @@ export function SiteNav() {
           </Flex>
 
           <Box display={{ base: "inline-flex", md: "none" }}>
-            <IconToggleButton
-              isOn={open}
+            <MenuToggleButton
+              isOpen={open}
               onToggle={() => setOpen((previous) => !previous)}
-              onIcon={X}
-              offIcon={MenuIcon}
-              onLabel={t("closeMenu")}
-              offLabel={t("openMenu")}
+              openLabel={t("openMenu")}
+              closeLabel={t("closeMenu")}
             />
           </Box>
         </Flex>

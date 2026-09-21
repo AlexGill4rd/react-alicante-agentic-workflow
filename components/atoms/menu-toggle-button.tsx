@@ -1,32 +1,28 @@
 import { IconButton } from "@chakra-ui/react";
-import type { LucideIcon } from "lucide-react";
+import { Menu, X } from "lucide-react";
 
-export interface IconToggleButtonProps {
-  isOn: boolean;
+export interface MenuToggleButtonProps {
+  isOpen: boolean;
   onToggle: () => void;
-  onIcon: LucideIcon;
-  offIcon: LucideIcon;
-  onLabel: string;
-  offLabel: string;
+  openLabel: string;
+  closeLabel: string;
 }
 
-export function IconToggleButton({
-  isOn,
+export function MenuToggleButton({
+  isOpen,
   onToggle,
-  onIcon,
-  offIcon,
-  onLabel,
-  offLabel,
-}: IconToggleButtonProps) {
-  const Icon = isOn ? onIcon : offIcon;
+  openLabel,
+  closeLabel,
+}: MenuToggleButtonProps) {
+  const Icon = isOpen ? X : Menu;
 
   return (
     <IconButton
       variant="plain"
       size="sm"
       color="var(--text-primary)"
-      aria-label={isOn ? onLabel : offLabel}
-      aria-expanded={isOn}
+      aria-label={isOpen ? closeLabel : openLabel}
+      aria-expanded={isOpen}
       onClick={onToggle}
     >
       <Icon size={20} />

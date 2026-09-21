@@ -1,26 +1,23 @@
-import { Menu, X } from "lucide-react";
 import { describe, expect, it, vi } from "vitest";
 
 import { render, screen, userEvent } from "@/tests/utils/render";
 
-import { IconToggleButton } from "./icon-toggle-button";
+import { MenuToggleButton } from "./menu-toggle-button";
 
-function renderToggle(isOn: boolean, onToggle = vi.fn()) {
+function renderToggle(isOpen: boolean, onToggle = vi.fn()) {
   render(
-    <IconToggleButton
-      isOn={isOn}
+    <MenuToggleButton
+      isOpen={isOpen}
       onToggle={onToggle}
-      onIcon={X}
-      offIcon={Menu}
-      onLabel="Close menu"
-      offLabel="Open menu"
+      openLabel="Open menu"
+      closeLabel="Close menu"
     />,
   );
   return onToggle;
 }
 
-describe("IconToggleButton", () => {
-  it("shows the off label and is collapsed when it is off", () => {
+describe("MenuToggleButton", () => {
+  it("offers to open the menu and is collapsed when closed", () => {
     renderToggle(false);
 
     expect(screen.getByRole("button", { name: "Open menu" })).toHaveAttribute(
@@ -29,7 +26,7 @@ describe("IconToggleButton", () => {
     );
   });
 
-  it("shows the on label and is expanded when it is on", () => {
+  it("offers to close the menu and is expanded when open", () => {
     renderToggle(true);
 
     expect(screen.getByRole("button", { name: "Close menu" })).toHaveAttribute(
