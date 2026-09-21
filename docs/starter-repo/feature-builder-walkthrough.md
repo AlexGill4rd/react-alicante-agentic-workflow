@@ -265,7 +265,13 @@ Ticket 2 adds a database column, so the plan has two new things:
 
    ![The agent's report after the tests](images/feature-builder-ticket2-tests.png)
 
-To do: the next stops of ticket 2.
+7. **Breakpoint 7.** The agent committed the tests, and the quality gates pass,
+   with the build too. This time the security review runs in Phase 6, because
+   the ticket has a database migration. Type **confirm** to start Phase 6.
+
+   ![The agent's report after the quality gates](images/feature-builder-ticket2-gates.png)
+
+To do: the review and the merge of ticket 2.
 
 ## Done
 
