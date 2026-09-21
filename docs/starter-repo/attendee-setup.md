@@ -360,13 +360,35 @@ again. It only reads the file when it starts.
 1. Create a Vercel account at [vercel.com/signup](https://vercel.com/signup), if
    you don't have one. Signing up with GitHub is the fastest.
 2. Go to [vercel.com/new](https://vercel.com/new). Choose the GitHub account that
-   owns your fork, find your fork, and click **Import**. Fork missing? Click
-   **Adjust GitHub App Permissions**.
+   owns your fork, find your fork, and click **Import**.
 
-   ![The Vercel Import Git Repository list](images/vercel-import.png)
+   ![The Vercel Import Git Repository list, with your fork](images/vercel-fork-visible.png)
 
-3. Add these environment variables. The same variable can have a different value
-   in Production and in Preview: Preview uses `ra-qa`, Production uses `ra-prod`.
+   **Fork missing?** Vercel may not have access to it yet. Below the list, click
+   **Adjust GitHub App Permissions**:
+
+   ![The Missing Git repository hint](images/vercel-missing-repo.png)
+
+   On the GitHub page, click **Configure** next to your account:
+
+   ![The GitHub page Install Vercel](images/vercel-github-install.png)
+
+   Under **Repository access**, add your fork (or choose **All repositories**)
+   and save. Then reload the Vercel page. Your fork now shows in the list, as in
+   the first picture.
+
+   After you click **Import**, you see the **New Project** page. Leave the
+   settings as they are. The name is yours to choose.
+
+   ![The Vercel New Project page](images/vercel-new-project.png)
+
+3. Open **Environment Variables**. Vercel found the names from `.env.example`.
+   Each one has a **Value** and an **Environments** dropdown.
+
+   ![The Vercel environment variables on the New Project page](images/vercel-new-project-env-vars.png)
+
+   The same variable can have a different value in Production and in Preview:
+   Preview uses `ra-qa`, Production uses `ra-prod`.
 
    | Variable                               | Preview                 | Production                                     |
    | -------------------------------------- | ----------------------- | ---------------------------------------------- |
@@ -374,20 +396,14 @@ again. It only reads the file when it starts.
    | `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | same as in `.env.local` | `ra-prod` → **Settings → API Keys**, copy icon |
    | `NEWS_API_URL`                         | same in both            | same in both                                   |
    | `NEXT_PUBLIC_ENABLE_STATS`             | `true`                  | `false`                                        |
+   - **Same value in both** (`NEWS_API_URL`): keep **Production and Preview**.
+   - **Different values** (the URL, the key and the stats flag): add each variable
+     twice. Set the first one to **Production** only, with the `ra-prod` value.
+     Add it again, set to **Preview** only, with the `ra-qa` value.
+   - `SUPABASE_PRODUCTION_PROJECT_REF`: not needed in Vercel. Remove it with the
+     minus button.
 
-   Each variable is created in a form. Its **Environments** dropdown chooses
-   where the value applies:
-
-   - **Same value in both** (`NEWS_API_URL`): tick **Production** and
-     **Preview**, as in the picture. You create it once.
-   - **Different values** (the other three): create the variable twice. Tick only
-     **Preview** for the first one, and only **Production** for the second one.
-
-   Keep the type **Config**.
-
-   ![The Vercel form for NEWS_API_URL, with Production and Preview ticked](images/vercel-env-var-form.png)
-
-4. Click **Deploy**, the button at the bottom of the Configure Project page.
+4. Click **Create Project**, the button at the bottom of the New Project page.
    The first deployment is a **Production** deployment, so your site goes live
    right away.
 
