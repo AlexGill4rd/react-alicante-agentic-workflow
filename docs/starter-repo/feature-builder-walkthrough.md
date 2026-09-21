@@ -306,7 +306,14 @@ Ticket 2 adds a database column, so the plan has two new things:
 
     ![The agent's final report for ticket 2](images/feature-builder-ticket2-pr-ready.png)
 
-To do: the merge of ticket 2.
+12. You are the human reviewer. Read the code in the **Files changed** tab. Open
+    the preview with **View deployment**, and check that the session pages show
+    the level. Then open the arrow next to the green button and choose
+    **Squash and merge**.
+
+    ![The deployment and the merge button in one view](images/feature-builder-ticket2-merge.png)
+
+To do: the screenshots of the squash choice and the branch delete.
 
 ## Done
 
