@@ -169,20 +169,14 @@ asks. It pushes only when you say so.
 You are the human reviewer now. Before you merge:
 
 1. Read the code in the **Files changed** tab.
-2. Open the preview. In the Vercel comment on the PR, click **Preview**, and
-   check the Speakers page there.
+2. Open the preview with **View deployment**, and check the Speakers page there.
+3. Check that all checks have passed. The green button must say **Squash and
+   merge**. If it says **Merge pull request**, open the arrow next to it and
+   choose **Squash and merge**.
 
-   ![The Vercel comment with the Preview link](images/feature-builder-vercel-preview.png)
-
-3. Check that all checks have passed. The green button says **Merge pull
-   request**, which is not the one we want. Open the arrow next to it and choose
-   **Squash and merge**.
-
-   ![The merge box with the checks and the merge button](images/feature-builder-merge-box.png)
+   ![The deployment, the checks and the Squash and merge button](images/feature-builder-merge.png)
 
 4. Confirm, then delete the branch. The ticket closes on merge.
-
-To do: the screenshots of the squash choice and the branch delete.
 
 ## Repeat for ticket 2
 
@@ -311,9 +305,7 @@ Ticket 2 adds a database column, so the plan has two new things:
     the level. Then open the arrow next to the green button and choose
     **Squash and merge**.
 
-    ![The deployment and the merge button in one view](images/feature-builder-ticket2-merge.png)
-
-To do: the screenshots of the squash choice and the branch delete.
+    ![The deployment, the checks and the Squash and merge button](images/feature-builder-merge.png)
 
 ## Done
 
