@@ -82,7 +82,20 @@ Use the number of that ticket in your fork's **Issues** tab. It is normally #1.
 
    The page is still only a heading. Test the full page after the wiring step.
 
-To do: the next stops, what the agent asks, and what you answer.
+9. The agent wires the page to the data, runs the type-check and the full
+   build, and tests the page in a browser. Wait.
+
+   ![The agent wiring the page and running the build](images/feature-builder-wiring.png)
+
+10. **Breakpoint 5: scaffold complete.** The agent lists the files and what it
+    checked in the browser: data, links, nav, mobile layout, light mode and
+    console. Nothing is committed yet. If it says it stopped your dev server,
+    start it again with `pnpm dev`. Now open `/speakers` and test the page
+    yourself.
+
+    ![The agent's report after the scaffold is complete](images/feature-builder-breakpoint-scaffold-complete.png)
+
+To do: what you answer here, then the next stops.
 
 ## Merge the pull request
 
