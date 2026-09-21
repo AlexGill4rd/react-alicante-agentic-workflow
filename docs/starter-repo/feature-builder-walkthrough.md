@@ -138,12 +138,13 @@ The agent stops at each **Breakpoint**. Read the report, then answer.
 
     ![The agent adding the nav tests](images/feature-builder-fix-tests.png)
 
-19. The agent asks to push both fix commits and post the re-review. Type **push,
-    ready for re-review**, and approve the push.
+19. The agent asks to push both fix commits, and offers a re-review. You choose:
+    type **push, ready for re-review**, or **push, skip re-review**. Approve the
+    push.
 
     ![The agent asking to push and re-review](images/feature-builder-push-rereview.png)
 
-To do: the re-review, then the pull request.
+To do: the pull request.
 
 ## Merge the pull request
 
