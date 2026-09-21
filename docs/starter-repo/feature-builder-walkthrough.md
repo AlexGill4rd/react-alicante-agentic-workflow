@@ -225,6 +225,24 @@ Ticket 2 adds a database column, so the plan has two new things:
 
    ![The agent's report after the migration](images/feature-builder-ticket2-phase1.png)
 
+3. Wait. The agent adds the level to the types, the service, the badge and the
+   timeline block. It does the UI and the backend together, so Breakpoints 3 and
+   4 are combined. Nothing is committed.
+
+   ![The agent's report after the UI and the backend](images/feature-builder-ticket2-ui-backend.png)
+
+   The report ends with the checks and a question. The agent could not check the
+   look in a browser, so you do it: open `/sessions` and look at the timeline
+   blocks. Answer the question, and confirm to start Phase 3 (i18n).
+
+   ![The agent's checks and its question](images/feature-builder-ticket2-checks.png)
+
+4. The agent commits in two parts: the database, and the sessions. Then it does
+   Phase 3 (i18n) and translates the level labels only. It asks to push and open
+   a draft PR. Answer **yes**.
+
+   ![The agent's commits and the i18n phase](images/feature-builder-ticket2-commits-i18n.png)
+
 To do: the next stops of ticket 2.
 
 ## Done

@@ -117,6 +117,8 @@ This overrides any step below that implies committing at the end of a phase, and
 
 ⏸️ **BREAKPOINT 2 — Data/schema changes made (if any). Show the user the migration or data file and wait for confirmation before Backend work (2b) uses it.** Not a dependency for 2a — UI scaffold is presentational-only and doesn't touch the schema; run 2a either before or after this breakpoint, whichever fits the plan.
 
+   For a database change, ask the user to review the migration and to commit it **before** they run the database commands — `.claude/rules/database-migrations.md` says the migration file is committed before `db:push`. Once they report that the push and types are done, ask them to commit the regenerated `types/supabase.types.ts` too. Commit only when the user says so, and ask before you start 2a and 2b.
+
 ---
 
 ### Phase 2 — Scaffold
