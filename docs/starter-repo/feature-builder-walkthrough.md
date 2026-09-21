@@ -44,6 +44,18 @@ Use the number of that ticket in your fork's **Issues** tab. It is normally #1.
 
    ![Claude Code asking to use the MCP server](images/feature-builder-mcp.png)
 
+3. The agent reads the ticket, creates a feature branch and writes a progress
+   file. You do not need to answer.
+
+   ![The agent creating the branch and the progress file](images/feature-builder-branch.png)
+
+4. The agent shows its plan: the phases it will run, the ones it skips, and
+   things it wants you to check. Ticket 1 is a UI ticket, so it skips the
+   database work (Phase 1) and has no schema change. Read the plan, then answer
+   **yes** to start.
+
+   ![The agent's plan with the question Confirm to start](images/feature-builder-plan.png)
+
 To do: the next stops, what the agent asks, and what you answer.
 
 ## Merge the pull request
