@@ -237,6 +237,13 @@ Ticket 2 adds a database column, so the plan has two new things:
 
    ![The agent's checks and its question](images/feature-builder-ticket2-checks.png)
 
+   The session page shows the level as a second badge next to the track. The
+   schedule blocks show it as text.
+
+   ![The session page with the level badge](images/feature-builder-ticket2-session-page.png)
+
+   ![The schedule with the level in each block](images/feature-builder-ticket2-schedule.png)
+
 4. The agent commits in two parts: the database, and the sessions. Then it does
    Phase 3 (i18n) and translates the level labels only. It asks to push and open
    a draft PR. Answer **yes**.
