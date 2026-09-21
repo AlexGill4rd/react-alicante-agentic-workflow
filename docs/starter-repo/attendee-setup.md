@@ -404,10 +404,12 @@ again. It only reads the file when it starts.
      minus button.
 
 4. Click **Create Project**, the button at the bottom of the New Project page.
-   The first deployment is a **Production** deployment, so your site goes live
-   right away.
+   This creates the project, but nothing is deployed yet.
 
-Check: the deployment shows **Ready**.
+Check: the project **Overview** says **No Production Deployment**. That is
+expected: your first push deploys it.
+
+![The Vercel Overview with No Production Deployment](images/vercel-no-production.png)
 
 Then check the Production branch. Open **Settings → Environments**.
 **Production** must track `main`. `dev` and feature branches get Preview
@@ -422,22 +424,34 @@ If Production says `dev`, click **Production**, change **Branch Tracking** to
 
 ## 6. Check both environments
 
-**Production:** in your Vercel project, open **Overview** and click **Visit**.
-The site loads. `/en/sessions` is empty for now, because `ra-prod` has no tables
-yet.
+The first deployment of a new Vercel project is always a **Production**
+deployment, from whatever branch you push. The next ones are Previews.
 
-![The Vercel Production Deployment with the Visit button](images/vercel-production.png)
-
-**Preview (QA):** push an empty commit to `dev`:
+**Production:** push an empty commit to `dev`:
 
 ```bash
 git commit --allow-empty -m "Trigger a preview"
 git push origin dev
 ```
 
-In Vercel → **Deployments**, click the newest row with the **Preview** badge and
-the branch `dev`. When it shows **Ready**, click **Visit**. The preview URL is
-under **Domains**.
+In Vercel → **Deployments**, the new row has the **Production** badge. When it
+shows **Ready**, open the project **Overview** and click **Visit**. The
+site loads. `/en/sessions` is empty for now, because `ra-prod` has no tables
+yet.
+
+**Preview (QA):** push a second empty commit:
+
+```bash
+git commit --allow-empty -m "Trigger a second preview"
+git push origin dev
+```
+
+This row has the **Preview** badge, because Production now exists:
+
+![Two deployments: the second one is a Preview, the first one is Production](images/vercel-two-deployments.png)
+
+When it shows **Ready**, click it, then click **Visit**. The preview URL is under
+**Domains**.
 
 ![The Vercel Preview deployment with the Visit button and its domains](images/vercel-preview.png)
 
