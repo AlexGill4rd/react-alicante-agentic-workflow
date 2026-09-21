@@ -271,7 +271,15 @@ Ticket 2 adds a database column, so the plan has two new things:
 
    ![The agent's report after the quality gates](images/feature-builder-ticket2-gates.png)
 
-To do: the review and the merge of ticket 2.
+8. Wait. Phase 6 runs the accessibility audit, the security review and the code
+   review, and posts each result on the PR. Nothing is fixed yet. The agent asks
+   which findings to fix. You decide what to fix now, and what becomes a
+   follow-up ticket. Our advice: fix the high-severity security issues, some of
+   the accessibility recommendations, and anything else the agent suggests.
+
+   ![The review findings for ticket 2](images/feature-builder-ticket2-review.png)
+
+To do: your decision on the findings, and the merge of ticket 2.
 
 ## Done
 
