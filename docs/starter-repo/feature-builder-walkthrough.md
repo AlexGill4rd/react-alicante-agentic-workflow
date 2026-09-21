@@ -119,12 +119,24 @@ Use the number of that ticket in your fork's **Issues** tab. It is normally #1.
 13. The agent runs the i18n audit (Phase 3) and writes the tests (Phase 4).
     **Breakpoint 6: tests written and passing.** It lists the new test files and
     says whether the feature is a critical flow. A critical flow gets a follow-up
-    ticket for e2e tests. The Speakers page is not one. Type **confirm** to run
-    the quality gates (Phase 5).
+    ticket for e2e tests. The Speakers page is not one. The new tests are not
+    committed, so they are not in the draft PR yet.
 
     ![The agent's report after the i18n audit and the tests](images/feature-builder-breakpoint-tests.png)
 
-To do: the quality gates, the review and the pull request.
+14. Answer **yes** to commit the tests and go on. The agent commits them, then
+    runs the quality gates (Phase 5). **Breakpoint 7: quality gates clean.**
+    Lint, type-check and tests pass. The tests are committed but only on your
+    machine: the draft PR still shows the first commit. Push before the review,
+    so the review sees all the changes. Type **push first, confirm**.
+
+    ![The agent's report after the quality gates](images/feature-builder-breakpoint-gates.png)
+
+15. The agent asks to run `git push`. Choose **Yes**.
+
+    ![The push approval](images/feature-builder-push-approval.png)
+
+To do: the review (Phase 6) and the pull request.
 
 ## Merge the pull request
 
