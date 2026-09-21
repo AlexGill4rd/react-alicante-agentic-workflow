@@ -100,7 +100,16 @@ Use the number of that ticket in your fork's **Issues** tab. It is normally #1.
 
     ![The finished Speakers page on localhost](images/feature-builder-speakers-page.png)
 
-To do: what you answer here, then the next stops.
+11. Read the diff in **Source Control** in VS Code. When the page works, type
+    **commit this**. The agent commits on the feature branch. The pre-commit
+    hooks run lint, type-check and tests.
+
+    ![The agent's report after the commit](images/feature-builder-committed.png)
+
+    The agent then asks two things: push and open a draft PR, and go on with
+    Phase 3, the i18n audit.
+
+To do: what you answer to those two questions, then the next stops.
 
 ## Merge the pull request
 
