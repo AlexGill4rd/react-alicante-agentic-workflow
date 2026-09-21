@@ -279,7 +279,18 @@ Ticket 2 adds a database column, so the plan has two new things:
 
    ![The review findings for ticket 2](images/feature-builder-ticket2-review.png)
 
-To do: your decision on the findings, and the merge of ticket 2.
+9. The agent commits the fixes you chose. It asks to push, and then to post the
+   resolution comment on the PR. That comment lists each finding: fixed (with
+   the commit), or follow-up ticket (with the link). The commit exists on GitHub
+   only after the push, so it pushes first. Answer **yes**, and approve the push.
+
+   ![The agent's fix commit and the question about the resolution comment](images/feature-builder-ticket2-fix-commit.png)
+
+   Open the PR to read the comment. Each finding has its outcome.
+
+   ![The review resolution comment on the PR](images/feature-builder-ticket2-resolution.png)
+
+To do: the merge of ticket 2.
 
 ## Done
 
