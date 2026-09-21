@@ -100,7 +100,31 @@ The agent stops at each **Breakpoint**. Read the report, then answer.
 
     ![The push approval](images/feature-builder-push-approval.png)
 
-To do: the review (Phase 6) and the pull request.
+15. Wait, about 5 minutes. The accessibility audit fixes what is in its own
+    files. It asks what to do with problems in shared code: fix them in this PR,
+    or file a follow-up ticket. Type **commit the fix, file a follow-up ticket for the rest**.
+
+    ![The accessibility audit report](images/feature-builder-accessibility.png)
+
+16. The agent commits the fix and files a follow-up ticket for the rest. Find it
+    in the **Issues** tab, with the `accessibility` label. Fix what is yours, and
+    file the rest as tickets. Then it asks to run the code review. Type
+    **confirm**.
+
+    ![The agent's follow-up ticket and the question about the code review](images/feature-builder-followup-ticket.png)
+
+17. The code review runs with the project skill `/engineering-code-review`, which
+    checks this repo's rules. It posts its report on the PR as a comment. Here
+    the verdict is **Request changes**: the existing nav test has no case for the
+    new Speakers link.
+
+    ![The code review in the terminal](images/feature-builder-review-terminal.png)
+
+    Open the PR to read the report.
+
+    ![The code review posted on the PR](images/feature-builder-review-github.png)
+
+To do: what you answer to the review, then the pull request.
 
 ## Merge the pull request
 
