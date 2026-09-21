@@ -299,6 +299,13 @@ Ticket 2 adds a database column, so the plan has two new things:
 
     ![The agent's report at Breakpoint 8](images/feature-builder-ticket2-breakpoint8.png)
 
+11. Phase 7 runs. The agent writes the final PR description with the Production
+    Checklist, marks the PR ready, and says the PR now waits for a human to
+    review and merge. It does not review or merge it. The Screenshots table in
+    the description is empty: you can add before and after screenshots.
+
+    ![The agent's final report for ticket 2](images/feature-builder-ticket2-pr-ready.png)
+
 To do: the merge of ticket 2.
 
 ## Done
