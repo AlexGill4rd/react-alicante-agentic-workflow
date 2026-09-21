@@ -124,7 +124,26 @@ The agent stops at each **Breakpoint**. Read the report, then answer.
 
     ![The code review posted on the PR](images/feature-builder-review-github.png)
 
-To do: what you answer to the review, then the pull request.
+    Two reviews exist. You can also run the second one yourself, for another
+    opinion:
+
+    - `/engineering-code-review`: this repo's own skill. It uses this repo's
+      checklist and posts the report on the PR.
+    - `/code-review`: built into Claude Code, not written for this repo.
+      `/code-review ultra` is a bigger review in the cloud, and it is billed.
+
+18. Answer **yes** to fix the finding. The agent adds the missing nav tests and
+    checks that they fail without the nav link. Nothing is committed. Answer
+    **yes** to commit.
+
+    ![The agent adding the nav tests](images/feature-builder-fix-tests.png)
+
+19. The agent asks to push both fix commits and post the re-review. Type **push,
+    ready for re-review**, and approve the push.
+
+    ![The agent asking to push and re-review](images/feature-builder-push-rereview.png)
+
+To do: the re-review, then the pull request.
 
 ## Merge the pull request
 
