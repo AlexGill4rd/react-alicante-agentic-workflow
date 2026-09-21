@@ -198,6 +198,33 @@ Ticket 2 adds a database column, so the plan has two new things:
 
 ![The plan for ticket 2](images/feature-builder-ticket2-plan.png)
 
+1. Wait. The agent writes the migration file.
+
+   ![The agent writing the migration](images/feature-builder-ticket2-migration-agent.png)
+
+2. **Breakpoint 2: Phase 1 done.** Read the migration file. The agent cannot run
+   database commands. Run these yourself, from the repo root, one at a time:
+
+   ```bash
+   pnpm db:link:status
+   ```
+
+   ```bash
+   pnpm db:push:dry-run
+   ```
+
+   ```bash
+   pnpm db:push
+   ```
+
+   ```bash
+   pnpm db:types
+   ```
+
+   Then tell the agent that the push and types are done.
+
+   ![The agent's report after the migration](images/feature-builder-ticket2-phase1.png)
+
 To do: the next stops of ticket 2.
 
 ## Done
