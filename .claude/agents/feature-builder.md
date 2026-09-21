@@ -294,7 +294,7 @@ Compile the final "Production Checklist" from everything already surfaced at ear
 Invoke `/product-create-pr-description`:
 > "Generate PR description for feature #<number>"
 
-The PR description must include `Closes #<number>` in the summary. Update the existing PR's description (don't open a new one), then mark it ready for review.
+The PR description must include `Closes #<number>` in the summary. Update the existing PR's description (don't open a new one), then mark it ready for a human to review, and tell the user plainly that the PR now waits for a human review and merge — the agent does not review or merge it.
 
 User merges the PR manually. Tell them to use **Squash and merge** (the PR title becomes the commit message) and to delete the branch afterwards.
 
