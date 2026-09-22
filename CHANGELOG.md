@@ -1,5 +1,31 @@
 # Changelog
 
+## [0.3.0] — 2026-09-22
+
+### Refactoring
+
+- Extract SurfaceCard from SessionBlock
+- Button and Badge accept native attributes, not Chakra style props
+- MenuToggleButton with four props, owns its icons
+- Extract IconToggleButton and MobileMenu
+
+### Maintenance
+
+- Remove the concise-output rule
+- Check the linked project before the migrations list
+- Walkthrough, rules and setup docs updates for feature-builder and release-manager
+
+## Test Suite
+
+| Suite          | Status     |
+| -------------- | ---------- |
+| ESLint         | ⏳ pending |
+| Type-check     | ⏳ pending |
+| Unit tests     | ⏳ pending |
+| Build (Vercel) | ⏳ pending |
+
+CI: pending — will run once the release branch is pushed
+
 ## [0.2.2] — 2026-09-21
 
 ### Bug Fixes
