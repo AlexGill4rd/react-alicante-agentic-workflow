@@ -17,37 +17,44 @@ claude --agent release-manager "next minor"
 
 The agent stops after each phase. Read the report, then answer.
 
-1. Confirm the version. The agent shows the current version and the next one.
-   Type **yes**.
+1. **Phase 1, Code freeze.** The agent checks the version bump, CI status and
+   that all tickets are merged into `dev`. It may ask about these one by one
+   or grouped together — the wording changes each run, but it is the same
+   three checks. Answer each. Then it asks once more to confirm they are all
+   settled before it creates the release branch. Type **confirm**.
 
-   ![The agent asking to confirm the next version](images/release-manager-version.png)
+   ![The agent asking to confirm the version, CI status and merged tickets](images/release-manager-version.png)
 
-2. **Phase 1, Code freeze.** The agent checks that `gh` is logged in, the
-   working tree is clean and CI is green on `dev`. It asks if all tickets are
-   merged into `dev`. Type **yes**.
+   Zero CI runs on a fork usually means Actions is not enabled yet. Open your
+   fork on github.com, go to the **Actions** tab, and click enable if you see
+   a banner asking for it.
 
-   ![The code freeze question](images/release-manager-code-freeze.png)
-
-3. The agent creates the release branch. It is not pushed yet. Type **yes** to
-   go on to Phase 2.
+2. The agent creates the release branch and bumps the version in
+   `package.json`. It may stop after each one to ask **yes**, or report both
+   done at once — read the report either way. The branch and the commit are
+   not pushed yet.
 
    ![The release branch created](images/release-manager-branch.png)
-
-4. **Phase 2, version and changelog.** The agent shows the version change in
-   `package.json` and the commit. Type **yes** to confirm the write.
 
    ![The agent asking to confirm the version write](images/release-manager-bump-confirm.png)
 
    ![The version bump committed](images/release-manager-bump-done.png)
 
-5. The agent shows a draft of the changelog. Type **yes** to write it. Then it
-   reports two commits, not pushed yet. Type **yes** for Phase 3.
+3. **Phase 2, changelog.** The agent shows a draft of the changelog. Type
+   **yes** to write it. Then it reports two commits, not pushed yet. Type
+   **yes** for Phase 3.
+
+   The agent did ask to confirm the version bump — this screenshot is a status
+   catch-up after that, showing the branch, the version bump and the
+   changelog draft together.
+
+   ![The agent's status catch-up showing the branch, version bump and changelog draft](images/release-manager-changelog-combined.png)
 
    ![The changelog draft](images/release-manager-changelog.png)
 
    ![Phase 2 done](images/release-manager-phase2-done.png)
 
-6. **Phase 3, release PR.** The agent asks to push the branch and create a label
+4. **Phase 3, release PR.** The agent asks to push the branch and create a label
    and the QA milestone. Choose **Yes**.
 
    ![The push approval](images/release-manager-push-approval.png)
@@ -57,7 +64,7 @@ The agent stops after each phase. Read the report, then answer.
 
    ![The release PR is open](images/release-manager-pr-open.png)
 
-7. **Environment variables.** The agent compares `.env.example` with the code.
+5. **Environment variables.** The agent compares `.env.example` with the code.
    Here there are no new variables, so there is nothing to add to Vercel.
 
    ![No new environment variables](images/release-manager-env-none.png)
@@ -67,7 +74,7 @@ The agent stops after each phase. Read the report, then answer.
 
    ![New environment variables listed](images/release-manager-env-changes.png)
 
-8. **Database health check.** The agent does not run database commands. Open a
+6. **Database health check.** The agent does not run database commands. Open a
    second terminal next to the Claude one, and run them yourself, from the repo
    root.
 
