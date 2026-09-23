@@ -1,16 +1,5 @@
 # Changelog
 
-## Hotfix — 2026-09-23
-
-Merged directly to `main`, no version bump — a pre-workshop build fix, not a
-feature release.
-
-### Bug Fixes
-
-- Sessions detail page: survive an empty sessions table at build time (Cache
-  Components rejects an empty `generateStaticParams` array; a fresh
-  Production database has no rows until migrations are applied)
-
 ## [0.3.0] — 2026-09-22
 
 ### Refactoring
