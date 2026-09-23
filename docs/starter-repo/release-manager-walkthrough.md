@@ -13,6 +13,10 @@ Open a terminal in VS Code, not the Claude chat. Run it from the repo root:
 claude --agent release-manager "next minor"
 ```
 
+The agent first shows the current version and the next one. Type **confirm**.
+
+![The agent asking to confirm the next version](images/release-manager-start-version.png)
+
 ## Steps
 
 The agent stops after each phase. Read the report, then answer.
@@ -25,9 +29,12 @@ The agent stops after each phase. Read the report, then answer.
 
    ![The agent asking to confirm the version, CI status and merged tickets](images/release-manager-version.png)
 
-   Zero CI runs on a fork usually means Actions is not enabled yet. Open your
-   fork on github.com, go to the **Actions** tab, and click enable if you see
-   a banner asking for it.
+   Zero CI runs on a fork means Actions is not enabled yet. The agent stops
+   until CI is green on `dev`.
+
+   1. On github.com, open your fork's **Actions** tab and enable Actions.
+   2. Tell the agent to push an empty commit to `dev`. Approve the push.
+   3. Wait for the run to turn green. Then tell the agent CI is green.
 
 2. The agent creates the release branch and bumps the version in
    `package.json`. It may stop after each one to ask **yes**, or report both
@@ -56,8 +63,9 @@ The agent stops after each phase. Read the report, then answer.
 
    ![Phase 2 done](images/release-manager-phase2-done.png)
 
-4. **Phase 3, release PR.** The agent asks to push the branch and create a label
-   and the QA milestone. Choose **Yes**.
+4. **Phase 3, release PR.** The agent lists what it will push and asks for your
+   approval. "yes" does not count. Type **push**. Then it asks to push the
+   branch and create a label and the QA milestone. Choose **Yes**.
 
    ![The push approval](images/release-manager-push-approval.png)
 
@@ -89,7 +97,16 @@ The agent stops after each phase. Read the report, then answer.
       ![The linked project is ra-qa](images/release-manager-link-status.png)
 
    2. `pnpm db:migrations:list`. The **Local** and **Remote** columns must be
-      the same.
+      the same. If it fails or hangs, log in first with `pnpm supabase login`,
+      then run it again.
+
+      Still fails? In the terminal, set your database password, then run it with
+      the Session pooler connection string from the setup guide:
+
+      ```bash
+      export SUPABASE_DB_PASSWORD='your password'
+      pnpm supabase migration list --db-url '<connection-string>'
+      ```
 
       ![The migrations list](images/release-manager-migrations-list.png)
 
