@@ -1,5 +1,30 @@
 # Changelog
 
+## [0.3.1] — 2026-09-23
+
+### Bug Fixes
+
+- Sessions detail page: survive an empty sessions table at build time (Cache
+  Components rejects an empty `generateStaticParams` array; a fresh
+  Production database has no rows until migrations are applied)
+
+### Maintenance
+
+- Consistent qa-ref/prod-ref naming in the setup guide, fix the Vercel
+  first-deploy steps, add the Repository access screenshot
+- Walkthrough: non-deterministic phase reports, changelog diff step
+
+## Test Suite
+
+| Suite          | Status     |
+| -------------- | ---------- |
+| ESLint         | ⏳ pending |
+| Type-check     | ⏳ pending |
+| Unit tests     | ⏳ pending |
+| Build (Vercel) | ⏳ pending |
+
+CI: pending — will run once the release branch is pushed
+
 ## [0.3.0] — 2026-09-22
 
 ### Refactoring
