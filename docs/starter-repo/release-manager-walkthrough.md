@@ -41,8 +41,10 @@ The agent stops after each phase. Read the report, then answer.
    ![The version bump committed](images/release-manager-bump-done.png)
 
 3. **Phase 2, changelog.** The agent shows a draft of the changelog. Type
-   **yes** to write it. Then it reports two commits, not pushed yet. Type
-   **yes** for Phase 3.
+   **yes** to write it. It shows the diff written to `CHANGELOG.md`. Then it
+   reports two commits, not pushed yet. Type **yes** for Phase 3.
+
+   ![The diff written to CHANGELOG.md](images/release-manager-changelog-diff.png)
 
    The agent did ask to confirm the version bump — this screenshot is a status
    catch-up after that, showing the branch, the version bump and the
