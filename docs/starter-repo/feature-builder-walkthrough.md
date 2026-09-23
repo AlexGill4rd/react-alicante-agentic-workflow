@@ -5,31 +5,318 @@ Draft. The steps are written after the rehearsal.
 Goal: build tickets 1 and 2 with the `feature-builder` agent. Ticket 3 is
 optional, if there is time.
 
+## Before you start
+
+Stop any dev server that is still running, including old ones you forgot. The
+agent starts its own, and two servers can clash on the same port.
+
+- Press `Ctrl+C` in the terminal where `pnpm dev` runs.
+- Still running? Stop all Node programs (macOS and Linux). This also stops other
+  Node programs you have open.
+
+  ```bash
+  killall -9 node
+  ```
+
 ## Start
 
-Run it from the repo root, in a terminal. Add the ticket number in quotes:
+The first ticket is **Add a Speakers page**. Open a terminal in VS Code, not the
+Claude chat. Check that you are on `dev` and that `git status` is clean. Then run
+the agent from the repo root, with the ticket number in quotes:
 
 ```bash
 claude --agent feature-builder "#1"
 ```
 
-Always start the agent with `claude --agent`. Asking a normal session to "run
-feature-builder" does not work.
+Use the number of that ticket in your fork's **Issues** tab. It is normally #1.
 
 ## Steps
 
-To do: what the agent asks, where it stops, and what you answer.
+The agent stops at each **Breakpoint**. Read the report, then answer.
+
+The agent never commits on its own. Read the changes in **Source Control**. When
+a phase works, you tell it to commit (**commit this**), or answer **yes** when it
+asks. It pushes only when you say so.
+
+1. Choose **Yes, I trust this folder**.
+
+   ![Claude Code asking to trust the folder](images/feature-builder-trust.png)
+
+2. Choose **Use this MCP server**.
+
+   ![Claude Code asking to use the MCP server](images/feature-builder-mcp.png)
+
+3. The agent creates a branch and a progress file. No answer needed.
+
+   ![The agent creating the branch and the progress file](images/feature-builder-branch.png)
+
+4. Read the plan and type **confirm**. Ticket 1 is UI only, so the database
+   phase is skipped.
+
+   ![The agent's plan with the question Confirm to start](images/feature-builder-plan.png)
+
+5. Wait. The agent reads the code and creates the files.
+
+   ![The agent loading the page skill and reading the code](images/feature-builder-skills.png)
+
+   ![The agent creating the files](images/feature-builder-creating.png)
+
+6. **Breakpoint 3.** Type **confirm**. `/speakers` shows only the heading for now.
+
+   ![The agent's report after the UI scaffold](images/feature-builder-breakpoint-scaffold.png)
+
+   ![The Speakers page with only the heading](images/feature-builder-speakers-heading.png)
+
+7. **Breakpoint 4.** Type **confirm**.
+
+   ![The agent's report after the backend](images/feature-builder-breakpoint-backend.png)
+
+8. Wait. The agent wires the page and runs the build.
+
+   ![The agent wiring the page and running the build](images/feature-builder-wiring.png)
+
+9. **Breakpoint 5.** Run `pnpm dev` again if the agent stopped it. Open
+   `/speakers` and test the page.
+
+   ![The agent's report after the scaffold is complete](images/feature-builder-breakpoint-scaffold-complete.png)
+
+   ![The finished Speakers page on localhost](images/feature-builder-speakers-page.png)
+
+10. The page works. Type **commit this**.
+
+    ![The agent's report after the commit](images/feature-builder-committed.png)
+
+11. Answer **yes** to push and open a draft PR. Approve the push. Find the PR in
+    the **Pull requests** tab.
+
+    ![The draft pull request with the phase status table](images/feature-builder-draft-pr.png)
+
+12. **Breakpoint 6.** The agent wrote the tests. They are not committed yet.
+
+    ![The agent's report after the i18n audit and the tests](images/feature-builder-breakpoint-tests.png)
+
+13. Answer **yes** to commit the tests. **Breakpoint 7.** Type **push first,
+    confirm**, so the review sees all changes.
+
+    ![The agent's report after the quality gates](images/feature-builder-breakpoint-gates.png)
+
+14. Approve the push: **Yes**.
+
+    ![The push approval](images/feature-builder-push-approval.png)
+
+15. Wait, about 5 minutes. The accessibility audit fixes what is in its own
+    files. It asks what to do with problems in shared code: fix them in this PR,
+    or file a follow-up ticket. Type **commit the fix, file a follow-up ticket for the rest**.
+
+    ![The accessibility audit report](images/feature-builder-accessibility.png)
+
+16. The agent commits the fix and files a follow-up ticket for the rest. Find it
+    in the **Issues** tab, with the `accessibility` label. Fix what is yours, and
+    file the rest as tickets. Then it asks to run the code review. Type
+    **confirm**.
+
+    ![The agent's follow-up ticket and the question about the code review](images/feature-builder-followup-ticket.png)
+
+17. The code review runs with the project skill `/engineering-code-review`, which
+    checks this repo's rules. It posts its report on the PR as a comment. Here
+    the verdict is **Request changes**: the existing nav test has no case for the
+    new Speakers link.
+
+    ![The code review in the terminal](images/feature-builder-review-terminal.png)
+
+    Open the PR to read the report.
+
+    ![The code review posted on the PR](images/feature-builder-review-github.png)
+
+    Two reviews exist. You can also run the second one yourself, for another
+    opinion:
+
+    - `/engineering-code-review`: this repo's own skill. It uses this repo's
+      checklist and posts the report on the PR.
+    - `/code-review`: built into Claude Code, not written for this repo.
+      `/code-review ultra` is a bigger review in the cloud, and it is billed.
+
+18. Answer **yes** to fix the finding. The agent adds the missing nav tests and
+    checks that they fail without the nav link. Nothing is committed. Answer
+    **yes** to commit.
+
+    ![The agent adding the nav tests](images/feature-builder-fix-tests.png)
+
+19. The agent asks to push both fix commits, and offers a re-review. You choose:
+    type **push, ready for re-review**, or **push, skip re-review**. Approve the
+    push.
+
+    ![The agent asking to push and re-review](images/feature-builder-push-rereview.png)
+
+20. **Breakpoint 8: all audits done.** The agent lists what it did with each
+    audit. Phase 7 replaces the phase table with the real PR description, marks
+    the PR ready for a human to review (that is you), and deletes the progress
+    file. Answer **yes** to go on.
+
+    ![The agent's report after all audits](images/feature-builder-breakpoint-audits.png)
+
+21. Phase 7 runs. The agent writes the PR description (with `Closes #4`), marks
+    the PR ready for review and deletes the progress file. The agent is done.
+
+    ![The agent's final report](images/feature-builder-pr-ready.png)
+
+    Open the PR to read the description.
+
+    ![The final PR description](images/feature-builder-pr-description.png)
 
 ## Merge the pull request
 
-To do: merge with **Squash and merge**, then delete the branch.
+You are the human reviewer now. Before you merge:
+
+1. Read the code in the **Files changed** tab.
+2. Open the preview with **View deployment**, and check the Speakers page there.
+3. Check that all checks have passed. The green button must say **Squash and
+   merge**. If it says **Merge pull request**, open the arrow next to it and
+   choose **Squash and merge**.
+
+   ![The deployment, the checks and the Squash and merge button](images/feature-builder-merge.png)
+
+4. Confirm, then delete the branch. The ticket closes on merge.
 
 ## Repeat for ticket 2
+
+Update `dev` first (`git checkout dev`, then `git pull`), and check that `git
+status` is clean. Then start the agent for ticket 2:
 
 ```bash
 claude --agent feature-builder "#2"
 ```
 
+Ticket 2 adds a database column, so the plan has two new things:
+
+- A question: should the level also show on the home page? The default is no.
+  Type **confirm**.
+- A manual step: after Phase 1 you run the database commands yourself. The agent
+  only writes the migration file.
+
+![The plan for ticket 2](images/feature-builder-ticket2-plan.png)
+
+1. Wait. The agent writes the migration file.
+
+   ![The agent writing the migration](images/feature-builder-ticket2-migration-agent.png)
+
+2. **Breakpoint 2: Phase 1 done.** Read the migration file. The agent cannot run
+   database commands. Run these yourself, from the repo root, one at a time:
+
+   ```bash
+   pnpm db:link:status
+   ```
+
+   ```bash
+   pnpm db:push:dry-run
+   ```
+
+   ```bash
+   pnpm db:push
+   ```
+
+   ```bash
+   pnpm db:types
+   ```
+
+   Then tell the agent that the push and types are done.
+
+   ![The agent's report after the migration](images/feature-builder-ticket2-phase1.png)
+
+3. Wait. The agent adds the level to the types, the service, the badge and the
+   timeline block. It does the UI and the backend together, so Breakpoints 3 and
+   4 are combined. Nothing is committed.
+
+   ![The agent's report after the UI and the backend](images/feature-builder-ticket2-ui-backend.png)
+
+   The report ends with the checks and a question. The agent could not check the
+   look in a browser, so you do it: open `/sessions` and look at the timeline
+   blocks. Answer the question, and confirm to start Phase 3 (i18n).
+
+   ![The agent's checks and its question](images/feature-builder-ticket2-checks.png)
+
+   The session page shows the level as a second badge next to the track. The
+   schedule blocks show it as text.
+
+   ![The session page with the level badge](images/feature-builder-ticket2-session-page.png)
+
+   ![The schedule with the level in each block](images/feature-builder-ticket2-schedule.png)
+
+4. The agent commits in two parts: the database, and the sessions. Then it does
+   Phase 3 (i18n) and translates the level labels only. It asks to push and open
+   a draft PR. Answer **yes**.
+
+   ![The agent's commits and the i18n phase](images/feature-builder-ticket2-commits-i18n.png)
+
+5. The agent pushes and opens a draft PR that closes the ticket. Approve the
+   push. The i18n changes are not committed yet. Answer **yes, start Phase 4**.
+
+   ![The draft pull request for ticket 2](images/feature-builder-ticket2-draft-pr.png)
+
+6. **Breakpoint 6.** The agent commits the i18n changes and writes the tests. It
+   says whether the feature is a critical flow, and where it wrote no test and
+   why. Nothing is pushed yet. Type **confirm** to run the quality gates.
+
+   ![The agent's report after the tests](images/feature-builder-ticket2-tests.png)
+
+7. **Breakpoint 7.** The agent committed the tests, and the quality gates pass,
+   with the build too. This time the security review runs in Phase 6, because
+   the ticket has a database migration. Type **confirm** to start Phase 6.
+
+   ![The agent's report after the quality gates](images/feature-builder-ticket2-gates.png)
+
+8. Wait. Phase 6 runs the accessibility audit, the security review and the code
+   review, and posts each result on the PR. Nothing is fixed yet. The agent asks
+   which findings to fix. You decide what to fix now, and what becomes a
+   follow-up ticket. Our advice: fix the high-severity security issues, some of
+   the accessibility recommendations, and anything else the agent suggests.
+
+   ![The review findings for ticket 2](images/feature-builder-ticket2-review.png)
+
+9. The agent commits the fixes you chose. It asks to push, and then to post the
+   resolution comment on the PR. That comment lists each finding: fixed (with
+   the commit), or follow-up ticket (with the link). The commit exists on GitHub
+   only after the push, so it pushes first. Answer **yes**, and approve the push.
+
+   ![The agent's fix commit and the question about the resolution comment](images/feature-builder-ticket2-fix-commit.png)
+
+   Open the PR to read the comment. Each finding has its outcome.
+
+   ![The review resolution comment on the PR](images/feature-builder-ticket2-resolution.png)
+
+10. **Breakpoint 8.** The agent pushed the fix and posted the resolution comment.
+    Every finding has an outcome: fixed, follow-up ticket, or accepted with a
+    reason. Phase 7 has one more step than ticket 1: a Production Checklist,
+    because the ticket has a migration. It lists that the migration must be
+    applied to Production at release time. Then the agent writes the final PR
+    description and marks the PR ready. Answer **yes** to go on.
+
+    ![The agent's report at Breakpoint 8](images/feature-builder-ticket2-breakpoint8.png)
+
+11. Phase 7 runs. The agent writes the final PR description with the Production
+    Checklist, marks the PR ready, and says the PR now waits for a human to
+    review and merge. It does not review or merge it. The Screenshots table in
+    the description is empty: you can add before and after screenshots.
+
+    ![The agent's final report for ticket 2](images/feature-builder-ticket2-pr-ready.png)
+
+12. You are the human reviewer. Read the code in the **Files changed** tab. Open
+    the preview with **View deployment**, and check that the session pages show
+    the level. Then open the arrow next to the green button and choose
+    **Squash and merge**.
+
+    ![The deployment, the checks and the Squash and merge button](images/feature-builder-merge.png)
+
 ## Done
 
-To do: what you should see when both tickets are merged into `dev`.
+Both tickets are merged into `dev`. You should see:
+
+- The two tickets are **closed** in the **Issues** tab.
+- `dev` has one new commit per ticket, with the PR number in its title.
+- The follow-up tickets from the reviews are still **open**.
+- The app has the Speakers page, and the level on the schedule and on the session
+  pages.
+
+![A session page with the level badge, after the merge](images/feature-builder-done.png)
+
+Ticket 3 is optional. Next: release it to Production with the `release-manager`.

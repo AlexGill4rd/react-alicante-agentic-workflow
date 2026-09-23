@@ -4,6 +4,14 @@
 
 A "👍 Like" button on each session page. Clicking it sends the session id to the webhook URL stored in `FEEDBACK_WEBHOOK_URL` and shows "Thanks!".
 
+## Expected result
+
+The session page has a "👍 Like" button under the description. After a click, the button shows "Thanks!".
+
+![The session page with the Like button](https://raw.githubusercontent.com/engineering-workshops/react-alicante-agentic-workflow/dev/docs/starter-repo/tickets/images/like-button.png)
+
+It should look similar. The details are yours.
+
 ## Why
 
 Organizers get a quick signal of which talks landed, with no database and no login.

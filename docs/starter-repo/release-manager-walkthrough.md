@@ -7,18 +7,100 @@ Both tickets must be merged into `dev` first.
 
 ## Start
 
-Run it from the repo root, in a terminal:
+Open a terminal in VS Code, not the Claude chat. Run it from the repo root:
 
 ```bash
 claude --agent release-manager "next minor"
 ```
 
-Always start the agent with `claude --agent`. Asking a normal session to "run
-release-manager" does not work.
-
 ## Steps
 
-To do: each phase, what the agent asks, and what you answer.
+The agent stops after each phase. Read the report, then answer.
+
+1. **Phase 1, Code freeze.** The agent checks the version bump, CI status and
+   that all tickets are merged into `dev`. It may ask about these one by one
+   or grouped together — the wording changes each run, but it is the same
+   three checks. Answer each. Then it asks once more to confirm they are all
+   settled before it creates the release branch. Type **confirm**.
+
+   ![The agent asking to confirm the version, CI status and merged tickets](images/release-manager-version.png)
+
+   Zero CI runs on a fork usually means Actions is not enabled yet. Open your
+   fork on github.com, go to the **Actions** tab, and click enable if you see
+   a banner asking for it.
+
+2. The agent creates the release branch and bumps the version in
+   `package.json`. It may stop after each one to ask **yes**, or report both
+   done at once — read the report either way. The branch and the commit are
+   not pushed yet.
+
+   ![The release branch created](images/release-manager-branch.png)
+
+   ![The agent asking to confirm the version write](images/release-manager-bump-confirm.png)
+
+   ![The version bump committed](images/release-manager-bump-done.png)
+
+3. **Phase 2, changelog.** The agent shows a draft of the changelog. Type
+   **yes** to write it. Then it reports two commits, not pushed yet. Type
+   **yes** for Phase 3.
+
+   The agent did ask to confirm the version bump — this screenshot is a status
+   catch-up after that, showing the branch, the version bump and the
+   changelog draft together.
+
+   ![The agent's status catch-up showing the branch, version bump and changelog draft](images/release-manager-changelog-combined.png)
+
+   ![The changelog draft](images/release-manager-changelog.png)
+
+   ![Phase 2 done](images/release-manager-phase2-done.png)
+
+4. **Phase 3, release PR.** The agent asks to push the branch and create a label
+   and the QA milestone. Choose **Yes**.
+
+   ![The push approval](images/release-manager-push-approval.png)
+
+   It opens the release PR to `main`. Vercel is still building the preview, so
+   do not test yet. Type **next**.
+
+   ![The release PR is open](images/release-manager-pr-open.png)
+
+5. **Environment variables.** The agent compares `.env.example` with the code.
+   Here there are no new variables, so there is nothing to add to Vercel.
+
+   ![No new environment variables](images/release-manager-env-none.png)
+
+   If there were new ones, the agent lists them. You add them in Vercel, under
+   **Project → Settings → Environment Variables**, and then type **done**.
+
+   ![New environment variables listed](images/release-manager-env-changes.png)
+
+6. **Database health check.** The agent does not run database commands. Open a
+   second terminal next to the Claude one, and run them yourself, from the repo
+   root.
+
+   ![The agent asking for your help](images/release-manager-db-help.png)
+
+   ![A second terminal next to the Claude terminal](images/release-manager-db-terminal.png)
+
+   1. `pnpm db:link:status`. The dot must be on `ra-qa`.
+
+      ![The linked project is ra-qa](images/release-manager-link-status.png)
+
+   2. `pnpm db:migrations:list`. The **Local** and **Remote** columns must be
+      the same.
+
+      ![The migrations list](images/release-manager-migrations-list.png)
+
+   3. In the Supabase dashboard, open the **SQL Editor** and run the two queries
+      from the agent. Both must return no rows.
+
+      ![The first SQL query, no rows](images/release-manager-sql-1.png)
+
+      ![The second SQL query, no rows](images/release-manager-sql-2.png)
+
+   Then tell the agent what you saw.
+
+To do: the next phases, from the QA test to the tag.
 
 ## Merge the release pull request
 

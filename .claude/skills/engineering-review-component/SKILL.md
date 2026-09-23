@@ -44,6 +44,8 @@ argument-hint: "[filepath]"
    14. **Tests** — Co-located `.test.tsx`/`.test.ts` exists? Components have a snapshot + at least one behavioral test? Edge cases covered (empty state, error state, missing props)?
    15. **Guard clauses** — Deeply nested conditionals that early returns would flatten?
    16. **Inline data** — Static data defined inside the file that belongs in `data/`?
+   17. **Layers** — Read `.claude/rules/layers.md`. Does the component hold only rendering and event handlers, with business logic and state in a hook, API calls only in services, and pure functions in utils? Does a hook call `fetch`, Supabase or an SDK directly, or decide view reactions?
+   18. **Encapsulation** — Do atoms (any smallest UI unit, in whichever tier folder: `atoms/`, `primitives/`, `ui/`) and molecules (units that combine atoms) own their look? Judge by the design concept, not the folder name. Fail if a call site passes style props (`color`, `size`, `display`, spacing) to an atom or molecule, if a props interface extends Chakra style props (`extends ButtonProps`, `...rest` onto the root), or if a molecule exposes props that reach into the atoms inside it. Allow a named `variant` and `children`. A parent may position a component with its own wrapper.
 
 ## Constraints
 - Do NOT suggest changes that alter external behavior — this is a convention review, not a refactor.

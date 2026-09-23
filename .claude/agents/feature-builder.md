@@ -98,6 +98,8 @@ The user reads the diff in their editor before it becomes a commit — committin
 
 This overrides any step below that implies committing at the end of a phase, and it applies to every phase.
 
+**Offer the commit at every breakpoint where the phase's own checks passed.** End the report with one short question that joins the commit and the next phase, for example: "Phase 3 is done and tested. Nothing is committed. Review the changes in Source Control. Commit them now, and then start Phase 4?" A yes commits the finished phase and continues. If the checks did not pass, do not offer to commit.
+
 ---
 
 **Open the PR as a draft as soon as the first phase's changes are approved and committed** — whichever phase that actually is (Phase 1 if it applies, otherwise Phase 2's UI scaffold). Push the branch, open a draft PR with a minimal title/description (the full description is Phase 7's job). Every subsequent approved-and-committed phase pushes to the same branch/PR — don't wait until everything is done to open it. Mark it ready for review only at Phase 7.
@@ -116,6 +118,8 @@ This overrides any step below that implies committing at the end of a phase, and
 → Update state file: Phase 1 ✅
 
 ⏸️ **BREAKPOINT 2 — Data/schema changes made (if any). Show the user the migration or data file and wait for confirmation before Backend work (2b) uses it.** Not a dependency for 2a — UI scaffold is presentational-only and doesn't touch the schema; run 2a either before or after this breakpoint, whichever fits the plan.
+
+   For a database change, ask the user to review the migration and to commit it **before** they run the database commands — `.claude/rules/database-migrations.md` says the migration file is committed before `db:push`. Once they report that the push and types are done, ask them to commit the regenerated `types/supabase.types.ts` too. Commit only when the user says so, and ask before you start 2a and 2b.
 
 ---
 
@@ -252,6 +256,8 @@ Run in sequence — each may surface issues that need fixing before the next:
 
    Fix any Critical findings before continuing.
 
+   Post the audit result as a PR comment (`gh pr comment <pr-number> --body-file <file>`), with the findings by severity, before you fix anything — so the PR shows what was found. Skip this only if no PR exists yet.
+
 2. **Security — only if the diff touches a security area.** Check with `git diff --name-only origin/dev...HEAD`. It does if any file matches: `app/api/**`, `services/**`, `supabase/migrations/**`, `next.config.ts`, `.env.example`, `package.json`. If none match, state that security review was skipped and why, and go to step 3.
 
    a. Invoke the built-in `/security-review` — generic vulnerabilities (injection, auth bypass, XSS, data exposure) in the diff against `origin/HEAD`, which is `dev`:
@@ -264,10 +270,14 @@ Run in sequence — each may surface issues that need fixing before the next:
 
       Fix any Critical or High findings before continuing. Medium/Low can be noted as follow-ups.
 
-3. Invoke `/engineering-code-review` (not the generic `/code-review` — that one doesn't post to the PR without an explicit `--comment` flag):
+      Post the result of both security checks as one PR comment, the same way, before you fix anything. Skip this only if no PR exists yet.
+
+3. Invoke `/engineering-code-review` (not the generic `/code-review`: this project skill checks this repo's rules):
    > "Review feature #<number>: <title>"
 
    The skill posts findings to the PR and waits for fixes. Resume here after fixes are applied.
+
+4. **Post the resolution as a PR comment.** After the decisions in steps 1–3 — and again after any re-review — post one comment that lists every finding from the accessibility audit, the security review and the code review with its outcome: **fixed** (commit sha), **follow-up ticket** (link) or **accepted** (one-line reason). No finding stays listed without an outcome.
 
 → Update state file: Phase 6 ✅
 
@@ -288,7 +298,7 @@ Compile the final "Production Checklist" from everything already surfaced at ear
 Invoke `/product-create-pr-description`:
 > "Generate PR description for feature #<number>"
 
-The PR description must include `Closes #<number>` in the summary. Update the existing PR's description (don't open a new one), then mark it ready for review.
+The PR description must include `Closes #<number>` in the summary. Update the existing PR's description (don't open a new one), then mark it ready for a human to review, and tell the user plainly that the PR now waits for a human review and merge — the agent does not review or merge it.
 
 User merges the PR manually. Tell them to use **Squash and merge** (the PR title becomes the commit message) and to delete the branch afterwards.
 
@@ -300,7 +310,7 @@ User merges the PR manually. Tell them to use **Squash and merge** (the PR title
 
 - Do NOT proceed past any numbered BREAKPOINT (1–8) without explicit user confirmation — these are not optional status updates, they are stops.
 - Do NOT scaffold multiple files without type-checking between them.
-- Do NOT commit until all quality gates pass.
+- Do NOT mark the PR ready for review until all quality gates pass.
 - Do NOT create the GitHub issue — that is `feature-planner`'s responsibility.
 - Do NOT skip a phase silently — omit only phases explicitly excluded in the applicability list from Step 1, and state why.
 - Do NOT extract a shared function/constant for a trivial value (a single string/one-liner) just because two files need it — duplicate it instead. Extract only when the logic is substantial or genuinely likely to drift.

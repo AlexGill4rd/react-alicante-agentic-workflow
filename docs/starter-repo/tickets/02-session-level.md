@@ -4,6 +4,14 @@
 
 Every session gets a level (beginner, intermediate or advanced), stored in the database and shown as a badge on the schedule and on the session page.
 
+## Expected result
+
+The session page shows the level as a second badge next to the track:
+
+![The session page with the level badge](https://raw.githubusercontent.com/engineering-workshops/react-alicante-agentic-workflow/dev/docs/starter-repo/tickets/images/session-level.png)
+
+It should look similar. The details are yours.
+
 ## Why
 
 Attendees pick sessions that match their experience. A beginner shouldn't walk into an advanced deep dive by accident.

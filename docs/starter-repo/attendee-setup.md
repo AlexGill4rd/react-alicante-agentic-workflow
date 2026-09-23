@@ -133,12 +133,18 @@ branch. Then clone your fork:
 git clone https://github.com/<your-username>/react-alicante-agentic-workflow.git
 ```
 
-Then, inside the folder:
+Then, inside the folder, install the project's dependencies. This also installs
+the Supabase CLI, so you do not need a separate install:
 
 ```bash
 cd react-alicante-agentic-workflow
 pnpm install
-claude   # log in, approve the Playwright server, then exit
+```
+
+Then start Claude Code once. Log in, approve the Playwright server, then exit:
+
+```bash
+claude
 ```
 
 Check:
@@ -269,6 +275,10 @@ that table. You apply them to your QA project in five steps:
 
    ![The terminal asking for the verification code](images/supabase-login-terminal.png)
 
+   Before you log in, keep only one browser open: the one where you are logged
+   in to the Supabase account you just created. The login opens in it. If another
+   account opens, run `pnpm supabase logout` and log in again.
+
    Check that you are logged in. This lists your projects, and you see `ra-qa`
    and `ra-prod`:
 
@@ -350,13 +360,35 @@ again. It only reads the file when it starts.
 1. Create a Vercel account at [vercel.com/signup](https://vercel.com/signup), if
    you don't have one. Signing up with GitHub is the fastest.
 2. Go to [vercel.com/new](https://vercel.com/new). Choose the GitHub account that
-   owns your fork, find your fork, and click **Import**. Fork missing? Click
-   **Adjust GitHub App Permissions**.
+   owns your fork, find your fork, and click **Import**.
 
-   ![The Vercel Import Git Repository list](images/vercel-import.png)
+   ![The Vercel Import Git Repository list, with your fork](images/vercel-fork-visible.png)
 
-3. Add these environment variables. The same variable can have a different value
-   in Production and in Preview: Preview uses `ra-qa`, Production uses `ra-prod`.
+   **Fork missing?** Vercel may not have access to it yet. Below the list, click
+   **Adjust GitHub App Permissions**:
+
+   ![The Missing Git repository hint](images/vercel-missing-repo.png)
+
+   On the GitHub page, click **Configure** next to your account:
+
+   ![The GitHub page Install Vercel](images/vercel-github-install.png)
+
+   Under **Repository access**, add your fork (or choose **All repositories**)
+   and save. Then reload the Vercel page. Your fork now shows in the list, as in
+   the first picture.
+
+   After you click **Import**, you see the **New Project** page. Leave the
+   settings as they are. The name is yours to choose.
+
+   ![The Vercel New Project page](images/vercel-new-project.png)
+
+3. Open **Environment Variables**. Vercel found the names from `.env.example`.
+   Each one has a **Value** and an **Environments** dropdown.
+
+   ![The Vercel environment variables on the New Project page](images/vercel-new-project-env-vars.png)
+
+   The same variable can have a different value in Production and in Preview:
+   Preview uses `ra-qa`, Production uses `ra-prod`.
 
    | Variable                               | Preview                 | Production                                     |
    | -------------------------------------- | ----------------------- | ---------------------------------------------- |
@@ -364,24 +396,20 @@ again. It only reads the file when it starts.
    | `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | same as in `.env.local` | `ra-prod` → **Settings → API Keys**, copy icon |
    | `NEWS_API_URL`                         | same in both            | same in both                                   |
    | `NEXT_PUBLIC_ENABLE_STATS`             | `true`                  | `false`                                        |
+   - **Same value in both** (`NEWS_API_URL`): keep **Production and Preview**.
+   - **Different values** (the URL, the key and the stats flag): add each variable
+     twice. Set the first one to **Production** only, with the `ra-prod` value.
+     Add it again, set to **Preview** only, with the `ra-qa` value.
+   - `SUPABASE_PRODUCTION_PROJECT_REF`: not needed in Vercel. Remove it with the
+     minus button.
 
-   Each variable is created in a form. Its **Environments** dropdown chooses
-   where the value applies:
+4. Click **Create Project**, the button at the bottom of the New Project page.
+   This creates the project, but nothing is deployed yet.
 
-   - **Same value in both** (`NEWS_API_URL`): tick **Production** and
-     **Preview**, as in the picture. You create it once.
-   - **Different values** (the other three): create the variable twice. Tick only
-     **Preview** for the first one, and only **Production** for the second one.
+Check: the project **Overview** says **No Production Deployment**. That is
+expected: your first push deploys it.
 
-   Keep the type **Config**.
-
-   ![The Vercel form for NEWS_API_URL, with Production and Preview ticked](images/vercel-env-var-form.png)
-
-4. Click **Deploy**, the button at the bottom of the Configure Project page.
-   The first deployment is a **Production** deployment, so your site goes live
-   right away.
-
-Check: the deployment shows **Ready**.
+![The Vercel Overview with No Production Deployment](images/vercel-no-production.png)
 
 Then check the Production branch. Open **Settings → Environments**.
 **Production** must track `main`. `dev` and feature branches get Preview
@@ -396,22 +424,34 @@ If Production says `dev`, click **Production**, change **Branch Tracking** to
 
 ## 6. Check both environments
 
-**Production:** in your Vercel project, open **Overview** and click **Visit**.
-The site loads. `/en/sessions` is empty for now, because `ra-prod` has no tables
-yet.
+The first deployment of a new Vercel project is always a **Production**
+deployment, from whatever branch you push. The next ones are Previews.
 
-![The Vercel Production Deployment with the Visit button](images/vercel-production.png)
-
-**Preview (QA):** push an empty commit to `dev`:
+**Production:** push an empty commit to `dev`:
 
 ```bash
 git commit --allow-empty -m "Trigger a preview"
 git push origin dev
 ```
 
-In Vercel → **Deployments**, click the newest row with the **Preview** badge and
-the branch `dev`. When it shows **Ready**, click **Visit**. The preview URL is
-under **Domains**.
+In Vercel → **Deployments**, the new row has the **Production** badge. When it
+shows **Ready**, open the project **Overview** and click **Visit**. The
+site loads. `/en/sessions` is empty for now, because `ra-prod` has no tables
+yet.
+
+**Preview (QA):** push a second empty commit:
+
+```bash
+git commit --allow-empty -m "Trigger a second preview"
+git push origin dev
+```
+
+This row has the **Preview** badge, because Production now exists:
+
+![Two deployments: the second one is a Preview, the first one is Production](images/vercel-two-deployments.png)
+
+When it shows **Ready**, click it, then click **Visit**. The preview URL is under
+**Domains**.
 
 ![The Vercel Preview deployment with the Visit button and its domains](images/vercel-preview.png)
 
@@ -431,6 +471,8 @@ exist are skipped.
 
 Check: your fork's **Issues** tab shows 3 open issues: a Speakers page, the
 session level, and a Like button.
+
+![The Issues tab of the fork with the three workshop tickets](images/github-issues.png)
 
 ## Next
 

@@ -363,6 +363,8 @@ Phase 5 — Review: code-reviewer, accessibility-auditor, /check-quality
 Phase 6 — PR: /create-pr-description
 ```
 
+**End-to-end tests:** Phase 4 writes unit tests. If the feature touches a critical flow (auth, payment, checkout, anything security-related), `feature-builder` files a **separate follow-up ticket** for regression and e2e tests. It does not add e2e tests to the feature PR, and the PR does not wait for that ticket. Ordinary features get no e2e ticket.
+
 **Critical constraint:** The agent presents the plan. The user approves. Only then does execution begin. The agent itself never calls a skill — it hands off to the user or a downstream agent.
 
 ### Deep dive: release-manager
@@ -454,8 +456,10 @@ Agent workflows are never finished. Every real release shows a small gap, and th
 - **Clean up the release branch.** After the tag and the merge back to `dev`, `release-post-merge` could offer to delete the release branch, locally and on origin. It deletes a remote branch, so it needs its own confirmation step.
 - **Check the merge method.** Today the skill only tells the user which button to click. A later version could check the result, for example that the tag commit has two parents, and warn if not.
 - **Changelog range.** `release-generate-changelog` could start from the merge-back commit and not only from the last tag, so a squash never repeats old commits.
-- **Ignore the working files.** The state files of the agents (`release-state.md`, `feature-state.md`) belong in `.gitignore`. We found this only when a skill stopped on a dirty tree.
+- **Ignore the working files.** The state files of the agents (`release-state.md`, `feature-state.md`) belong in `.gitignore`. We found this only when a skill stopped on a dirty tree. Done.
+- **Skip the steps a release does not need.** A release with only docs has no migration, no new environment variable and no feature to test. The agent could compare the changed files since the last tag and offer to skip: the database step if nothing in `supabase/migrations/` changed, the env variable check if `.env.example` did not change, and the preview testing if only docs changed. It should always ask first, and it must never skip the merge and the tag. Git shows that files did not change, not that Production is up to date, so the dry run is still the safe choice.
 - **A verifier agent.** Today an agent checks its own work with a checklist. A separate, read-only agent could check that the process was followed, starting fresh and looking only at git and GitHub: the release PR used a merge commit, the tag is on `main`, `dev` and `main` have the same content, the state file is gone, the QA milestone is closed. It cannot check human steps, such as testing the preview.
+- **Report the git state at each stop.** `feature-builder` leaves work uncommitted until you say so, then pushes each approved phase to the same draft PR. The stop reports do not say what is committed and pushed and what is not, so "I did not push" sounded wrong while the draft PR was open. One line per stop would fix it: committed and pushed, and uncommitted.
 
 The lesson for the workshop: the tooling is part of the codebase. You read it, run it, and change it with normal PRs. Each release is a test of the skills.
 

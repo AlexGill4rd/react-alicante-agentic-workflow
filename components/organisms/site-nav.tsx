@@ -1,11 +1,12 @@
 "use client";
 
+import { MenuToggleButton } from "@/components/atoms/menu-toggle-button";
 import { LanguageToggle } from "@/components/molecules/language-toggle";
+import { MobileMenu } from "@/components/molecules/mobile-menu";
 import { NavLinks, type NavLink } from "@/components/molecules/nav-links";
 import { Link, usePathname } from "@/i18n/navigation";
 import { isStatsEnabled } from "@/utils/feature-flags";
-import { Box, Flex, IconButton } from "@chakra-ui/react";
-import { Menu as MenuIcon, X } from "lucide-react";
+import { Box, Flex } from "@chakra-ui/react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 
@@ -44,26 +45,18 @@ export function SiteNav() {
             <LanguageToggle />
           </Flex>
 
-          <IconButton
-            display={{ base: "inline-flex", md: "none" }}
-            variant="plain"
-            size="sm"
-            color="var(--text-primary)"
-            aria-label={open ? t("closeMenu") : t("openMenu")}
-            aria-expanded={open}
-            onClick={() => setOpen((previous) => !previous)}
-          >
-            {open ? <X size={20} /> : <MenuIcon size={20} />}
-          </IconButton>
+          <Box display={{ base: "inline-flex", md: "none" }}>
+            <MenuToggleButton
+              isOpen={open}
+              onToggle={() => setOpen((previous) => !previous)}
+              openLabel={t("openMenu")}
+              closeLabel={t("closeMenu")}
+            />
+          </Box>
         </Flex>
 
         {open && (
-          <Flex
-            display={{ base: "flex", md: "none" }}
-            direction="column"
-            gap="4"
-            paddingTop="4"
-          >
+          <MobileMenu>
             <NavLinks
               links={links}
               pathname={pathname}
@@ -71,7 +64,7 @@ export function SiteNav() {
               onNavigate={() => setOpen(false)}
             />
             <LanguageToggle />
-          </Flex>
+          </MobileMenu>
         )}
       </Box>
     </Flex>
