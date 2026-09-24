@@ -2,6 +2,7 @@
   "Nav": {
     "home": "React Alicante Companion",
     "schedule": "Horario",
+    "plan": "Mi plan",
     "speakers": "Ponentes",
     "stats": "Estadísticas",
     "news": "Noticias",
@@ -22,11 +23,117 @@
       "button": "👍 Me gusta",
       "thanks": "¡Gracias!",
       "error": "Algo salió mal"
+    },
+    "bookmark": {
+      "save": "Guardar en mi plan",
+      "saved": "Guardado en mi plan"
+    }
+  },
+  "Schedule": {
+    "filters": {
+      "searchPlaceholder": "Buscar sesiones, ponentes, salas…",
+      "allTracks": "Todos los tracks",
+      "allLevels": "Todos los niveles",
+      "results": "{count} de {total} sesiones",
+      "empty": "Ninguna sesión coincide. Prueba a limpiar la búsqueda o los filtros."
+    }
+  },
+  "Plan": {
+    "title": "Mi plan",
+    "description": "Sesiones guardadas en este dispositivo. Márcalas desde la página de cada sesión.",
+    "empty": "Aún no has guardado nada. Abre una sesión y pulsa «Guardar en mi plan»."
+  },
+  "Stats": {
+    "title": "Estadísticas",
+    "description": "Cómo se reparte el día por track, nivel y hora.",
+    "kpi": {
+      "sessions": "Sesiones",
+      "tracks": "Tracks",
+      "speakers": "Ponentes",
+      "rooms": "Salas"
+    },
+    "charts": {
+      "tracks": "Sesiones por track",
+      "levels": "Sesiones por nivel",
+      "hours": "Sesiones por hora"
+    }
+  },
+  "Landing": {
+    "hero": {
+      "eyebrow": "React Alicante 2026",
+      "title": "Tu compañero de conferencia, hecho para el día",
+      "subtitle": "Consulta el horario, guarda tu plan, explora ponentes y sigue los anuncios en vivo — todo en un solo lugar.",
+      "ctaPrimary": "Ver horario",
+      "ctaSecondary": "Crear mi plan"
+    },
+    "features": {
+      "heading": "Todo lo que necesitas en el evento",
+      "schedule": {
+        "title": "Horario inteligente",
+        "body": "Línea de tiempo por sala con búsqueda y filtros por track y nivel."
+      },
+      "plan": {
+        "title": "Mi plan",
+        "body": "Guarda charlas en tu dispositivo y revísalas en una lista."
+      },
+      "speakers": {
+        "title": "Ponentes",
+        "body": "Quién presenta y en qué sesiones participa."
+      },
+      "stats": {
+        "title": "Estadísticas",
+        "body": "Cómo se reparte el día por track, nivel y hora."
+      },
+      "news": {
+        "title": "Noticias",
+        "body": "Titulares seleccionados del ecosistema React."
+      },
+      "likes": {
+        "title": "Feedback de sesiones",
+        "body": "Marca las charlas que más te gustan para los organizadores."
+      }
+    },
+    "how": {
+      "heading": "Cómo funciona",
+      "step1": {
+        "title": "Explora",
+        "body": "Abre el horario y filtra lo que te interesa."
+      },
+      "step2": {
+        "title": "Guarda",
+        "body": "Añade sesiones a Mi plan mientras organizas el día."
+      },
+      "step3": {
+        "title": "Disfruta",
+        "body": "Llega a tiempo, sigue los anuncios y valora las charlas."
+      }
+    },
+    "cta": {
+      "title": "¿Listo para la conferencia?",
+      "body": "Entra al horario y aprovecha React Alicante al máximo.",
+      "button": "Abrir horario"
     }
   },
   "Hero": {
     "heading": "Guía de la conferencia React Alicante",
     "line1": "Tu agenda, tus sesiones —",
     "line2": "en un solo lugar"
+  },
+  "Home": {
+    "featured": {
+      "eyebrow": "Horario",
+      "title": "Sesiones destacadas",
+      "viewAll": "Ver horario completo →"
+    },
+    "overview": {
+      "sessions": "Sesiones",
+      "tracks": "Tracks",
+      "speakers": "Ponentes",
+      "rooms": "Salas"
+    },
+    "announcements": {
+      "eyebrow": "En directo",
+      "title": "Anuncios"
+    }
   }
 }

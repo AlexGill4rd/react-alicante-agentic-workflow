@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist } from "next/font/google";
+import { Roboto } from "next/font/google";
 import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
@@ -18,10 +18,11 @@ export const metadata: Metadata = {
   description: "Sessions, speakers, and your schedule for React Alicante",
 };
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const roboto = Roboto({
+  variable: "--font-roboto",
   display: "swap",
   subsets: ["latin"],
+  weight: ["400", "500", "700"],
 });
 
 export function generateStaticParams() {
@@ -46,7 +47,7 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} suppressHydrationWarning>
-      <body className={`${geistSans.className} antialiased`}>
+      <body className={`${roboto.variable} ${roboto.className}`}>
         <NextIntlClientProvider>
           <EmotionRegistry>
             <Provider>{children}</Provider>

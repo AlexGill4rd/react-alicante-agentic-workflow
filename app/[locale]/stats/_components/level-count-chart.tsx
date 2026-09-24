@@ -15,27 +15,34 @@ import {
   CHART_TOOLTIP_STYLE,
   ChartPanel,
 } from "@/components/molecules/chart-panel";
-import type { HourlySessionCount } from "@/utils/session-stats";
+import type { LevelSessionCount } from "@/utils/session-stats";
 
-interface HourlyCountChartProps {
-  data: HourlySessionCount[];
+interface LevelCountChartProps {
+  data: LevelSessionCount[];
   title: string;
+  levelLabels: Record<string, string>;
 }
 
-export function HourlyCountChart({ data, title }: HourlyCountChartProps) {
+export function LevelCountChart({
+  data,
+  title,
+  levelLabels,
+}: LevelCountChartProps) {
+  const chartData = data.map((row) => ({
+    ...row,
+    label: levelLabels[row.level] ?? row.level,
+  }));
+
   return (
     <ChartPanel title={title}>
       <ResponsiveContainer width="100%" height="100%">
         <BarChart
-          data={data}
-          margin={{ top: 16, right: 8, left: 0, bottom: 8 }}
+          data={chartData}
+          margin={{ top: 16, right: 8, left: 0, bottom: 0 }}
         >
           <CartesianGrid vertical={false} stroke="var(--card-border-hex)" />
           <XAxis
-            dataKey="hour"
-            angle={-30}
-            textAnchor="end"
-            height={44}
+            dataKey="label"
             tick={{ fill: "var(--text-muted)", fontSize: 12 }}
             axisLine={{ stroke: "var(--card-border-hex)" }}
             tickLine={false}
@@ -55,9 +62,9 @@ export function HourlyCountChart({ data, title }: HourlyCountChartProps) {
           <Bar
             dataKey="count"
             name="Sessions"
-            fill="var(--accent-muted)"
+            fill="var(--accent-hex)"
             radius={[4, 4, 0, 0]}
-            maxBarSize={40}
+            maxBarSize={48}
           >
             <LabelList
               dataKey="count"

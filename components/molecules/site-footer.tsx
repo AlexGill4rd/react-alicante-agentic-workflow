@@ -9,10 +9,15 @@ export function SiteFooter() {
       align="center"
       justify="center"
       gap="8"
-      paddingY="16"
+      paddingY="20"
       fontSize="xs"
+      color="var(--text-muted)"
       borderTopWidth="1px"
       borderColor="var(--card-border-hex)"
+      backgroundImage="linear-gradient(to right, transparent, var(--card-border-hex), transparent)"
+      backgroundSize="100% 1px"
+      backgroundRepeat="no-repeat"
+      backgroundPosition="top"
     >
       <Text>
         Powered by{" "}

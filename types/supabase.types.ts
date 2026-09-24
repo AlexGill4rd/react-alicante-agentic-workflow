@@ -39,6 +39,27 @@ export type Database = {
   }
   public: {
     Tables: {
+      announcements: {
+        Row: {
+          body: string
+          id: string
+          published_at: string
+          title: string
+        }
+        Insert: {
+          body: string
+          id: string
+          published_at?: string
+          title: string
+        }
+        Update: {
+          body?: string
+          id?: string
+          published_at?: string
+          title?: string
+        }
+        Relationships: []
+      }
       sessions: {
         Row: {
           created_at: string
