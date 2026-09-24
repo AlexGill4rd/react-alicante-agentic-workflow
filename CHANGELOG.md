@@ -1,5 +1,29 @@
 # Changelog
 
+## [0.7.0] — 2026-09-24
+
+### Features
+
+- Conference schedule calendar: two-day React Alicante 2026 agenda (Fri/Sat),
+  shared breaks, search, legend, and Wi‑Fi hint; **By room** view kept for
+  workshop session data
+- Live **now** line on agenda and room timeline during conference days (CET)
+
+### Bug Fixes
+
+- Fix `/sessions` prerender: defer `Date` to client hydration (Next.js build)
+
+## Test Suite
+
+| Suite          | Status       |
+| -------------- | ------------ |
+| ESLint         | ⏳ pending   |
+| Type-check     | ⏳ pending   |
+| Unit tests     | ✅ 32 passed |
+| Build (Vercel) | ⏳ pending   |
+
+CI: pending — runs on the release PR
+
 ## [0.6.0] — 2026-09-24
 
 ### Features
