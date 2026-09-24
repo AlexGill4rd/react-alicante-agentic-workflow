@@ -1,3 +1,4 @@
+import { RoomTimelineShell } from "@/app/[locale]/sessions/_components/room-timeline-shell";
 import { SessionBlock } from "@/app/[locale]/sessions/_components/session-block";
 import type { Session } from "@/types/session";
 import { minutesToTime, timeToMinutes } from "@/utils/schedule-time";
@@ -58,61 +59,67 @@ export function SessionTimeline({
           ))}
         </Flex>
 
-        <Flex gap="2" height={`${timelineHeight}px`}>
-          <Box
-            position="relative"
-            flexShrink="0"
-            width={`${TIME_COLUMN_WIDTH}px`}
-            fontSize="xs"
-            color="var(--text-muted)"
-          >
-            {hourMarks.map((minute) => (
-              <Text
-                key={minute}
-                as="span"
-                position="absolute"
-                right="2"
-                top={`${offsetOf(minute)}px`}
-                transform="translateY(-50%)"
-              >
-                {minutesToTime(minute)}
-              </Text>
-            ))}
-          </Box>
-
-          {TIMELINE_ROOMS.map((room) => (
+        <RoomTimelineShell
+          startMinutes={startMinutes}
+          pxPerMinute={PX_PER_MINUTE}
+          timeColumnWidth={TIME_COLUMN_WIDTH}
+        >
+          <Flex gap="2" height={`${timelineHeight}px`} position="relative">
             <Box
-              key={room}
               position="relative"
-              flex="1"
-              minWidth={`${ROOM_COLUMN_MIN_WIDTH}px`}
-              borderLeftWidth="1px"
-              borderColor="var(--card-border-hex)"
+              flexShrink="0"
+              width={`${TIME_COLUMN_WIDTH}px`}
+              fontSize="xs"
+              color="var(--text-muted)"
             >
               {hourMarks.map((minute) => (
-                <Box
+                <Text
                   key={minute}
+                  as="span"
                   position="absolute"
-                  left="0"
-                  right="0"
+                  right="2"
                   top={`${offsetOf(minute)}px`}
-                  borderTopWidth="1px"
-                  borderColor="var(--card-border-hex)"
-                />
-              ))}
-
-              {sessionsByRoom[room].map((session) => (
-                <SessionBlock
-                  key={session.id}
-                  session={session}
-                  levelLabel={levelLabels[session.level]}
-                  top={offsetOf(timeToMinutes(session.startTime))}
-                  height={session.durationMinutes * PX_PER_MINUTE}
-                />
+                  transform="translateY(-50%)"
+                >
+                  {minutesToTime(minute)}
+                </Text>
               ))}
             </Box>
-          ))}
-        </Flex>
+
+            {TIMELINE_ROOMS.map((room) => (
+              <Box
+                key={room}
+                position="relative"
+                flex="1"
+                minWidth={`${ROOM_COLUMN_MIN_WIDTH}px`}
+                borderLeftWidth="1px"
+                borderColor="var(--card-border-hex)"
+              >
+                {hourMarks.map((minute) => (
+                  <Box
+                    key={minute}
+                    position="absolute"
+                    left="0"
+                    right="0"
+                    top={`${offsetOf(minute)}px`}
+                    borderTopWidth="1px"
+                    borderColor="var(--card-border-hex)"
+                  />
+                ))}
+
+                {sessionsByRoom[room].map((session) => (
+                  <SessionBlock
+                    key={session.id}
+                    session={session}
+                    levelLabel={levelLabels[session.level]}
+                    top={offsetOf(timeToMinutes(session.startTime))}
+                    height={session.durationMinutes * PX_PER_MINUTE}
+                  />
+                ))}
+              </Box>
+            ))}
+          </Flex>
+        </RoomTimelineShell>
       </Flex>
     </Box>
   );

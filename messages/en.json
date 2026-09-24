@@ -30,12 +30,58 @@
     }
   },
   "Schedule": {
+    "title": "Schedule",
+    "description": "React Alicante 2026 — Friday & Saturday in CET. The live red line appears during the conference.",
     "filters": {
-      "searchPlaceholder": "Search sessions, speakers, rooms…",
+      "searchPlaceholder": "Search talks and breaks…",
       "allTracks": "All tracks",
       "allLevels": "All levels",
       "results": "{count} of {total} sessions",
       "empty": "No sessions match your filters. Try clearing search or filters."
+    },
+    "agenda": {
+      "viewAgenda": "Conference days",
+      "viewRooms": "By room",
+      "dayFriday": "Friday · 25 Sep",
+      "daySaturday": "Saturday · 26 Sep",
+      "dayFridayShort": "Fri 25",
+      "daySaturdayShort": "Sat 26",
+      "now": "Now",
+      "wifi": "Wi‑Fi: {ssid} · Password: {password}",
+      "legend": {
+        "session": "Talk",
+        "break": "Break",
+        "lunch": "Lunch",
+        "lightning": "Lightning",
+        "social": "Networking"
+      },
+      "slots": {
+        "welcome": "Welcome",
+        "coffeeBreak": "Coffee break",
+        "lunch": "Lunch",
+        "lightning": "Lightning talks",
+        "networking": "Refreshments & networking",
+        "fri0900": "React-Driven Development: Career Lessons from the Framework Wars",
+        "fri0930": "The New Node.js: Built-in Batteries and the Road Ahead",
+        "fri1000": "Making your codebase AI-ready",
+        "fri1100": "Native o'clock: time to use the platform",
+        "fri1130": "What RSCs can do in Next.js today",
+        "fri1200": "Your simple frontend shares backend challenges",
+        "fri1230": "Breakout Session: Building 3D Games in React",
+        "fri1640": "Fun with streams",
+        "fri1710": "Ripple: the Good Parts of React, Svelte, and Solid",
+        "fri1740": "Beyond Client-Side State: React Meets Durable Execution",
+        "sat0900": "Dead Code Shouldn't Exist: How We Removed 28k Lines of Code, One Knip at a Time",
+        "sat0930": "Build. Scale. Teach: Architecting and Scaling a Production-Ready Modern Course Platform",
+        "sat1000": "How I Made Immer Twice as Fast: Performance Optimization in Practice",
+        "sat1100": "Visual Continuity on the Web: My Journey With View Transitions",
+        "sat1130": "Building Resilient UIs with React",
+        "sat1200": "My AI-Driven React Workflow: Building Faster with Agent",
+        "sat1230": "React Native is Native — Back at React Alicante, 8 Years Later",
+        "sat1640": "Controlling Async Chaos in React with Effect-TS",
+        "sat1710": "React Security Odyssey: Sailing with CSP to Ithaca",
+        "sat1740": "Kitze Time"
+      }
     }
   },
   "Plan": {

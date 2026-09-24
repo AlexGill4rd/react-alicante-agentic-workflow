@@ -1,6 +1,8 @@
 "use client";
 
+import { ConferenceAgendaCalendar } from "@/app/[locale]/sessions/_components/conference-agenda-calendar";
 import { SessionTimeline } from "@/app/[locale]/sessions/_components/session-timeline";
+import { Button } from "@/components/atoms/button";
 import type { SessionLevelLabels } from "@/app/[locale]/sessions/_components/session-timeline";
 import { filterSessions } from "@/utils/filter-sessions";
 import type { Session, SessionLevel, Track } from "@/types/session";
@@ -16,11 +18,15 @@ interface SessionScheduleExplorerProps {
   levelLabels: SessionLevelLabels;
 }
 
+type ScheduleView = "agenda" | "rooms";
+
 export function SessionScheduleExplorer({
   sessions,
   levelLabels,
 }: SessionScheduleExplorerProps) {
   const t = useTranslations("Schedule.filters");
+  const tView = useTranslations("Schedule.agenda");
+  const [view, setView] = useState<ScheduleView>("agenda");
   const [query, setQuery] = useState("");
   const [track, setTrack] = useState<Track | "all">("all");
   const [level, setLevel] = useState<SessionLevel | "all">("all");
@@ -46,8 +52,29 @@ export function SessionScheduleExplorer({
     },
   };
 
+  const showRoomFilters = view === "rooms";
+
   return (
     <Flex direction="column" gap="6" width="full" minWidth="0">
+      <Flex gap="2" wrap="wrap">
+        <Button
+          type="button"
+          size="sm"
+          variant={view === "agenda" ? "default" : "outline"}
+          onClick={() => setView("agenda")}
+        >
+          {tView("viewAgenda")}
+        </Button>
+        <Button
+          type="button"
+          size="sm"
+          variant={view === "rooms" ? "default" : "outline"}
+          onClick={() => setView("rooms")}
+        >
+          {tView("viewRooms")}
+        </Button>
+      </Flex>
+
       <Flex
         direction={{ base: "column", md: "row" }}
         gap="3"
@@ -62,48 +89,56 @@ export function SessionScheduleExplorer({
           onChange={(event) => setQuery(event.target.value)}
           css={fieldStyles}
         />
-        <NativeSelect.Root width={{ base: "full", md: "180px" }}>
-          <NativeSelect.Field
-            value={track}
-            onChange={(event) =>
-              setTrack(event.currentTarget.value as Track | "all")
-            }
-            css={fieldStyles}
+        {showRoomFilters && (
+          <>
+            <NativeSelect.Root width={{ base: "full", md: "180px" }}>
+              <NativeSelect.Field
+                value={track}
+                onChange={(event) =>
+                  setTrack(event.currentTarget.value as Track | "all")
+                }
+                css={fieldStyles}
+              >
+                <option value="all">{t("allTracks")}</option>
+                {TRACKS.map((value) => (
+                  <option key={value} value={value}>
+                    {value}
+                  </option>
+                ))}
+              </NativeSelect.Field>
+            </NativeSelect.Root>
+            <NativeSelect.Root width={{ base: "full", md: "180px" }}>
+              <NativeSelect.Field
+                value={level}
+                onChange={(event) =>
+                  setLevel(event.currentTarget.value as SessionLevel | "all")
+                }
+                css={fieldStyles}
+              >
+                <option value="all">{t("allLevels")}</option>
+                {LEVELS.map((value) => (
+                  <option key={value} value={value}>
+                    {levelLabels[value]}
+                  </option>
+                ))}
+              </NativeSelect.Field>
+            </NativeSelect.Root>
+          </>
+        )}
+        {showRoomFilters && (
+          <Text
+            fontSize="sm"
+            color="var(--text-muted)"
+            marginLeft={{ md: "auto" }}
           >
-            <option value="all">{t("allTracks")}</option>
-            {TRACKS.map((value) => (
-              <option key={value} value={value}>
-                {value}
-              </option>
-            ))}
-          </NativeSelect.Field>
-        </NativeSelect.Root>
-        <NativeSelect.Root width={{ base: "full", md: "180px" }}>
-          <NativeSelect.Field
-            value={level}
-            onChange={(event) =>
-              setLevel(event.currentTarget.value as SessionLevel | "all")
-            }
-            css={fieldStyles}
-          >
-            <option value="all">{t("allLevels")}</option>
-            {LEVELS.map((value) => (
-              <option key={value} value={value}>
-                {levelLabels[value]}
-              </option>
-            ))}
-          </NativeSelect.Field>
-        </NativeSelect.Root>
-        <Text
-          fontSize="sm"
-          color="var(--text-muted)"
-          marginLeft={{ md: "auto" }}
-        >
-          {t("results", { count: filtered.length, total: sessions.length })}
-        </Text>
+            {t("results", { count: filtered.length, total: sessions.length })}
+          </Text>
+        )}
       </Flex>
 
-      {filtered.length === 0 ? (
+      {view === "agenda" ? (
+        <ConferenceAgendaCalendar searchQuery={query} />
+      ) : filtered.length === 0 ? (
         <Text color="var(--text-muted)" textAlign="center" paddingY="12">
           {t("empty")}
         </Text>

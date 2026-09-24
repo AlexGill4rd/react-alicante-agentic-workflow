@@ -14,6 +14,7 @@ export default async function SessionsPage({ params }: SessionsPageProps) {
   setRequestLocale(locale);
 
   const sessions = await fetchSessions();
+  const t = await getTranslations("Schedule");
   const tLevel = await getTranslations("Session.level");
   const levelLabels: Record<SessionLevel, string> = {
     beginner: tLevel("beginner"),
@@ -23,9 +24,7 @@ export default async function SessionsPage({ params }: SessionsPageProps) {
 
   return (
     <Flex direction="column" gap="8" flex="1" width="full" minWidth="0">
-      <PageHeading title="Schedule">
-        All sessions, by room and time. Times are local (CET).
-      </PageHeading>
+      <PageHeading title={t("title")}>{t("description")}</PageHeading>
 
       <SessionScheduleExplorer sessions={sessions} levelLabels={levelLabels} />
     </Flex>
