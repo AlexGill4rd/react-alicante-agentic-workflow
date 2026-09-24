@@ -1,7 +1,5 @@
 # Release-manager walkthrough
 
-Draft. The steps are written after the rehearsal.
-
 Goal: release tickets 1 and 2 to Production with the `release-manager` agent.
 Both tickets must be merged into `dev` first.
 
