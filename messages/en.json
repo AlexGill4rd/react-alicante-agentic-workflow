@@ -2,6 +2,7 @@
   "Nav": {
     "home": "React Alicante Companion",
     "schedule": "Schedule",
+    "plan": "My plan",
     "speakers": "Speakers",
     "stats": "Stats",
     "news": "News",
@@ -22,11 +23,61 @@
       "button": "👍 Like",
       "thanks": "Thanks!",
       "error": "Something went wrong"
+    },
+    "bookmark": {
+      "save": "Save to my plan",
+      "saved": "Saved to my plan"
+    }
+  },
+  "Schedule": {
+    "filters": {
+      "searchPlaceholder": "Search sessions, speakers, rooms…",
+      "allTracks": "All tracks",
+      "allLevels": "All levels",
+      "results": "{count} of {total} sessions",
+      "empty": "No sessions match your filters. Try clearing search or filters."
+    }
+  },
+  "Plan": {
+    "title": "My plan",
+    "description": "Sessions you saved on this device. Bookmark talks from any session page.",
+    "empty": "Nothing saved yet. Open a session and tap “Save to my plan”."
+  },
+  "Stats": {
+    "title": "Conference stats",
+    "description": "How the day breaks down by track, level, and hour.",
+    "kpi": {
+      "sessions": "Sessions",
+      "tracks": "Tracks",
+      "speakers": "Speakers",
+      "rooms": "Rooms"
+    },
+    "charts": {
+      "tracks": "Sessions per track",
+      "levels": "Sessions per level",
+      "hours": "Sessions per hour"
     }
   },
   "Hero": {
     "heading": "React Alicante Conference Companion",
     "line1": "Your schedule, your sessions —",
     "line2": "one place"
+  },
+  "Home": {
+    "featured": {
+      "eyebrow": "Schedule",
+      "title": "Featured sessions",
+      "viewAll": "View full schedule →"
+    },
+    "overview": {
+      "sessions": "Sessions",
+      "tracks": "Tracks",
+      "speakers": "Speakers",
+      "rooms": "Rooms"
+    },
+    "announcements": {
+      "eyebrow": "Live",
+      "title": "Announcements"
+    }
   }
 }

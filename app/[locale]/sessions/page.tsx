@@ -1,4 +1,4 @@
-import { SessionTimeline } from "@/app/[locale]/sessions/_components/session-timeline";
+import { SessionScheduleExplorer } from "@/app/[locale]/sessions/_components/session-schedule-explorer";
 import { PageHeading } from "@/components/atoms/page-heading";
 import { fetchSessions } from "@/services/sessions";
 import type { SessionLevel } from "@/types/session";
@@ -27,7 +27,7 @@ export default async function SessionsPage({ params }: SessionsPageProps) {
         All sessions, by room and time. Times are local (CET).
       </PageHeading>
 
-      <SessionTimeline sessions={sessions} levelLabels={levelLabels} />
+      <SessionScheduleExplorer sessions={sessions} levelLabels={levelLabels} />
     </Flex>
   );
 }

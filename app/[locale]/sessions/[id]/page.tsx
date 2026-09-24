@@ -1,4 +1,5 @@
 import { Badge } from "@/components/atoms/badge";
+import { SessionBookmarkButton } from "@/components/molecules/session-bookmark-button";
 import { SessionLikeButton } from "@/components/molecules/session-like-button";
 import { Link } from "@/i18n/navigation";
 import { fetchSessionById, fetchSessions } from "@/services/sessions";
@@ -64,7 +65,10 @@ export default async function SessionDetailPage({
         {session.description}
       </Text>
 
-      <SessionLikeButton sessionId={session.id} />
+      <Flex gap="3" flexWrap="wrap">
+        <SessionBookmarkButton sessionId={session.id} />
+        <SessionLikeButton sessionId={session.id} />
+      </Flex>
     </Flex>
   );
 }

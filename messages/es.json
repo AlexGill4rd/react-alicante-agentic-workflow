@@ -2,6 +2,7 @@
   "Nav": {
     "home": "React Alicante Companion",
     "schedule": "Horario",
+    "plan": "Mi plan",
     "speakers": "Ponentes",
     "stats": "Estadísticas",
     "news": "Noticias",
@@ -22,11 +23,61 @@
       "button": "👍 Me gusta",
       "thanks": "¡Gracias!",
       "error": "Algo salió mal"
+    },
+    "bookmark": {
+      "save": "Guardar en mi plan",
+      "saved": "Guardado en mi plan"
+    }
+  },
+  "Schedule": {
+    "filters": {
+      "searchPlaceholder": "Buscar sesiones, ponentes, salas…",
+      "allTracks": "Todos los tracks",
+      "allLevels": "Todos los niveles",
+      "results": "{count} de {total} sesiones",
+      "empty": "Ninguna sesión coincide. Prueba a limpiar la búsqueda o los filtros."
+    }
+  },
+  "Plan": {
+    "title": "Mi plan",
+    "description": "Sesiones guardadas en este dispositivo. Márcalas desde la página de cada sesión.",
+    "empty": "Aún no has guardado nada. Abre una sesión y pulsa «Guardar en mi plan»."
+  },
+  "Stats": {
+    "title": "Estadísticas",
+    "description": "Cómo se reparte el día por track, nivel y hora.",
+    "kpi": {
+      "sessions": "Sesiones",
+      "tracks": "Tracks",
+      "speakers": "Ponentes",
+      "rooms": "Salas"
+    },
+    "charts": {
+      "tracks": "Sesiones por track",
+      "levels": "Sesiones por nivel",
+      "hours": "Sesiones por hora"
     }
   },
   "Hero": {
     "heading": "Guía de la conferencia React Alicante",
     "line1": "Tu agenda, tus sesiones —",
     "line2": "en un solo lugar"
+  },
+  "Home": {
+    "featured": {
+      "eyebrow": "Horario",
+      "title": "Sesiones destacadas",
+      "viewAll": "Ver horario completo →"
+    },
+    "overview": {
+      "sessions": "Sesiones",
+      "tracks": "Tracks",
+      "speakers": "Ponentes",
+      "rooms": "Salas"
+    },
+    "announcements": {
+      "eyebrow": "En directo",
+      "title": "Anuncios"
+    }
   }
 }

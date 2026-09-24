@@ -17,6 +17,7 @@ export function SiteNav() {
 
   const links: NavLink[] = [
     { href: "/sessions", label: t("schedule") },
+    { href: "/plan", label: t("plan") },
     { href: "/speakers", label: t("speakers") },
     ...(isStatsEnabled ? [{ href: "/stats", label: t("stats") }] : []),
     { href: "/news", label: t("news") },
@@ -25,20 +26,40 @@ export function SiteNav() {
   return (
     <Flex
       as="nav"
+      position="sticky"
+      top="0"
+      zIndex="10"
       width="full"
       justify="center"
       borderBottomWidth="1px"
       borderColor="var(--card-border-hex)"
+      background="var(--nav-bg)"
+      css={{
+        backdropFilter: "blur(16px)",
+        WebkitBackdropFilter: "blur(16px)",
+      }}
     >
-      <Box width="full" maxWidth="5xl" paddingX="5" paddingY="3" fontSize="sm">
+      <Box
+        width="full"
+        maxWidth="6xl"
+        paddingX={{ base: "5", md: "8" }}
+        paddingY="3"
+      >
         <Flex align="center" justify="space-between" gap="4">
           <Link href="/">
-            <Box as="span" fontWeight="semibold" flexShrink="0">
+            <Box
+              as="span"
+              fontWeight="semibold"
+              flexShrink="0"
+              letterSpacing="-0.02em"
+              transition="color var(--transition-fast)"
+              _hover={{ color: "var(--accent-hex)" }}
+            >
               {t("home")}
             </Box>
           </Link>
 
-          <Flex display={{ base: "none", md: "flex" }} align="center" gap="5">
+          <Flex display={{ base: "none", md: "flex" }} align="center" gap="6">
             <NavLinks links={links} pathname={pathname} />
           </Flex>
 
