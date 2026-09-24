@@ -6,6 +6,13 @@ import { notFound } from "next/navigation";
 
 export async function generateStaticParams() {
   const sessions = await fetchSessions();
+
+  // Cache Components rejects an empty array here — a fresh environment with
+  // no rows yet (or no table at all) would otherwise fail the build. The
+  // placeholder id never matches a real session, so the page below falls
+  // through to notFound() for it, same as any other unknown id.
+  if (sessions.length === 0) return [{ id: "__placeholder__" }];
+
   return sessions.map((session) => ({ id: session.id }));
 }
 

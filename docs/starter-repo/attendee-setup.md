@@ -126,8 +126,9 @@ gh repo fork engineering-workshops/react-alicante-agentic-workflow --clone
 
 Or click **Fork** on
 [github.com/engineering-workshops/react-alicante-agentic-workflow](https://github.com/engineering-workshops/react-alicante-agentic-workflow).
-Untick **Copy the `dev` branch only**, so your fork also gets the `main`
-branch. Then clone your fork:
+If the **Owner** dropdown shows more than one option, pick your personal
+account, not an organization. Untick **Copy the `dev` branch only**, so your
+fork also gets the `main` branch. Then clone your fork:
 
 ```bash
 git clone https://github.com/<your-username>/react-alicante-agentic-workflow.git
@@ -204,7 +205,7 @@ site (Production). Start with QA.
 
 4. Click **Create new project**. When it is ready, open **Settings → General**.
    The **Project ID** is the **QA project ref**. Click **Copy** and save it in
-   your note as `qa ref`, next to the password.
+   your note as `qa-ref`, next to the password.
 
    ![The Supabase General settings with the Project ID](images/supabase-project-id.png)
 
@@ -217,7 +218,7 @@ Repeat the same steps:
 3. Leave the other options as they are.
 4. Click **Create new project**. Open **Settings → General**. The **Project
    ID** is the **Production project ref**. Copy it and save it in your note as
-   `prod ref`.
+   `prod-ref`.
 
 ### Wire up environment variables
 
@@ -248,7 +249,7 @@ page is cut off.
 
 ![The Supabase API Keys page with the publishable key](images/supabase-api-keys.png)
 
-**`SUPABASE_PRODUCTION_PROJECT_REF`**: the `prod ref` from your note. To find it
+**`SUPABASE_PRODUCTION_PROJECT_REF`**: the `prod-ref` from your note. To find it
 again, open `ra-prod` → **Settings → General** and copy the **Project ID**.
 
 Check: the ref in `NEXT_PUBLIC_SUPABASE_URL` is the Project ID of `ra-qa`, not
@@ -286,8 +287,9 @@ that table. You apply them to your QA project in five steps:
    pnpm db:link:status
    ```
 
-2. Link the repo to `ra-qa`. Use the `qa ref` from your note. It asks for the
-   `ra-qa` database password from your note:
+2. Link the repo to `ra-qa`. Use the `qa-ref` from your note. It may prompt
+   for the `ra-qa` database password from your note — you can leave it blank
+   and press enter to skip:
 
    ```bash
    pnpm supabase link --project-ref <qa-ref>
@@ -377,6 +379,8 @@ again. It only reads the file when it starts.
    and save. Then reload the Vercel page. Your fork now shows in the list, as in
    the first picture.
 
+   ![The GitHub Repository access page with the fork added under Only select repositories](images/vercel-repository-access.png)
+
    After you click **Import**, you see the **New Project** page. Leave the
    settings as they are. The name is yours to choose.
 
@@ -392,7 +396,7 @@ again. It only reads the file when it starts.
 
    | Variable                               | Preview                 | Production                                     |
    | -------------------------------------- | ----------------------- | ---------------------------------------------- |
-   | `NEXT_PUBLIC_SUPABASE_URL`             | same as in `.env.local` | `https://<prod ref>.supabase.co`               |
+   | `NEXT_PUBLIC_SUPABASE_URL`             | same as in `.env.local` | `https://<prod-ref>.supabase.co`               |
    | `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | same as in `.env.local` | `ra-prod` → **Settings → API Keys**, copy icon |
    | `NEWS_API_URL`                         | same in both            | same in both                                   |
    | `NEXT_PUBLIC_ENABLE_STATS`             | `true`                  | `false`                                        |
@@ -424,25 +428,24 @@ If Production says `dev`, click **Production**, change **Branch Tracking** to
 
 ## 6. Check both environments
 
-The first deployment of a new Vercel project is always a **Production**
-deployment, from whatever branch you push. The next ones are Previews.
+Vercel deployed once already, automatically, the moment you clicked **Import**
+in step 5 — before the environment variables above were set. That deployment
+is broken or empty; ignore it.
 
-**Production:** push an empty commit to `dev`:
+**Production:** go to **Deployments**, open the **⋯** menu on the latest
+deployment, and click **Redeploy**. This is the reliable way to get a fresh
+Production build with the env vars now in place — pushing a new commit to
+`dev` only creates a Preview from here on, since Production tracks `main`, not
+`dev`.
+
+When the redeploy shows **Ready**, open the project **Overview** and click
+**Visit**. The site loads. `/en/sessions` is empty for now, because `ra-prod`
+has no tables yet.
+
+**Preview (QA):** push an empty commit to `dev`:
 
 ```bash
 git commit --allow-empty -m "Trigger a preview"
-git push origin dev
-```
-
-In Vercel → **Deployments**, the new row has the **Production** badge. When it
-shows **Ready**, open the project **Overview** and click **Visit**. The
-site loads. `/en/sessions` is empty for now, because `ra-prod` has no tables
-yet.
-
-**Preview (QA):** push a second empty commit:
-
-```bash
-git commit --allow-empty -m "Trigger a second preview"
 git push origin dev
 ```
 

@@ -1,4 +1,6 @@
-# React Alicante App
+# Build Your Agentic Workflow
+
+Markdown-driven AI for real projects. React Alicante workshop.
 
 A small app for the React Alicante workshop: the conference schedule, stats and tech news.
 
@@ -37,3 +39,7 @@ Schema changes live in `supabase/migrations/`. Add a new file for each change an
 Start each agent in a terminal, from the repo root: `claude --agent <name>`. The walkthroughs above show how.
 
 `.claude/settings.json` stops Claude from reading `.env` files, from applying migrations (`db:push`) and from force-pushing, and asks before every `git push`. You run the blocked commands yourself.
+
+## License
+
+The source code is under the [MIT license](LICENSE). The `docs/` folder (walkthroughs, setup guide and slides) and the `.claude/` folder (agents, skills, rules) are under [CC BY-NC-SA 4.0](LICENSE-DOCS.md). Commercial use needs written permission: contact@evangelia.me or [philomath-academy.com](https://philomath-academy.com).
