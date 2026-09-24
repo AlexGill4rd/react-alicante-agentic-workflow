@@ -2,10 +2,15 @@
   "Nav": {
     "home": "React Alicante Companion",
     "schedule": "Schedule",
+    "speakers": "Speakers",
     "stats": "Stats",
     "news": "News",
     "openMenu": "Open menu",
     "closeMenu": "Close menu"
+  },
+  "Speakers": {
+    "title": "Speakers",
+    "description": "Who is presenting, and which sessions they lead."
   },
   "Hero": {
     "heading": "React Alicante Conference Companion",

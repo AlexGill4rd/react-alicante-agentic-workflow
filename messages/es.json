@@ -2,10 +2,15 @@
   "Nav": {
     "home": "React Alicante Companion",
     "schedule": "Horario",
+    "speakers": "Ponentes",
     "stats": "Estadísticas",
     "news": "Noticias",
     "openMenu": "Abrir menú",
     "closeMenu": "Cerrar menú"
+  },
+  "Speakers": {
+    "title": "Ponentes",
+    "description": "Quién presenta y en qué sesiones participa."
   },
   "Hero": {
     "heading": "Guía de la conferencia React Alicante",
