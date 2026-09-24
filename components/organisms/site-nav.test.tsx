@@ -52,6 +52,19 @@ describe("SiteNav", () => {
     ).not.toHaveAttribute("aria-current");
   });
 
+  it("links to speakers and marks it active on the speakers page", () => {
+    usePathname.mockReturnValue("/speakers");
+
+    render(<SiteNav />);
+
+    const speakers = screen.getAllByRole("link", {
+      name: "Speakers",
+      hidden: true,
+    });
+    expect(speakers[0]).toHaveAttribute("href", "/en/speakers");
+    expect(speakers[0]).toHaveAttribute("aria-current", "page");
+  });
+
   it("switches locale by navigating to the same route", async () => {
     usePathname.mockReturnValue("/sessions");
 
