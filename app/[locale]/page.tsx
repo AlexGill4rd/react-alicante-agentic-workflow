@@ -1,7 +1,7 @@
 import { AnnouncementsFeed } from "@/app/[locale]/_components/announcements-feed";
 import { ConferenceOverview } from "@/app/[locale]/_components/conference-overview";
 import { FeaturedSessions } from "@/app/[locale]/_components/featured-sessions";
-import { Hero } from "@/app/[locale]/_components/hero";
+import { LandingPage } from "@/components/organisms/landing-page";
 import { PageShell } from "@/components/templates/page-shell";
 import { fetchAnnouncements } from "@/services/announcements";
 import { fetchSessions } from "@/services/sessions";
@@ -26,7 +26,7 @@ export default async function Home({ params }: HomePageProps) {
   return (
     <PageShell>
       <Flex direction="column" gap="16" width="full">
-        <Hero />
+        <LandingPage />
         <ConferenceOverview sessions={sessions} />
         <AnnouncementsFeed announcements={announcements} />
         <FeaturedSessions

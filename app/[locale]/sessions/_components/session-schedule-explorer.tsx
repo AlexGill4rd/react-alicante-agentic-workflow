@@ -31,13 +31,18 @@ export function SessionScheduleExplorer({
   );
 
   const fieldStyles = {
-    background: "var(--card-fill)",
-    borderColor: "var(--card-border-hex)",
+    background: "var(--md-surface-container-low)",
     color: "var(--text-primary)",
-    borderRadius: "var(--radius-lg)",
+    borderWidth: "0",
+    borderBottomWidth: "2px",
+    borderBottomColor: "var(--md-outline)",
+    borderRadius: "0",
+    borderTopRadius: "var(--radius-sm)",
+    height: "14",
     _focusVisible: {
-      borderColor: "var(--accent-hex)",
-      boxShadow: "0 0 0 2px var(--accent-glow-soft)",
+      borderBottomColor: "var(--md-primary)",
+      outline: "2px solid var(--md-primary)",
+      outlineOffset: "2px",
     },
   };
 

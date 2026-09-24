@@ -17,85 +17,81 @@ export interface ButtonProps extends Omit<
   size?: ButtonSize;
 }
 
-const TRANSITION =
-  "background var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast)";
+const TRANSITION = "all var(--transition-standard) var(--ease-md)";
+const PILL = "var(--radius-pill)";
 
 const VARIANT_CSS: Record<ButtonVariant, ChakraButtonProps["css"]> = {
   default: {
-    background: "var(--accent-hex)",
-    color: "#ffffff",
-    border: "1px solid transparent",
-    boxShadow: "var(--shadow-button-accent)",
+    background: "var(--md-primary)",
+    color: "var(--md-on-primary)",
+    border: "none",
+    borderRadius: PILL,
+    fontWeight: "500",
     transition: TRANSITION,
-    _hover: {
-      background: "var(--accent-muted)",
-      boxShadow:
-        "0 0 0 1px rgba(94, 106, 210, 0.6), 0 6px 20px rgba(94, 106, 210, 0.35), inset 0 1px 0 0 rgba(255, 255, 255, 0.25)",
+    _hover: { background: "var(--md-primary-hover)" },
+    _active: {
+      background: "var(--md-primary-pressed)",
+      transform: "scale(0.95)",
     },
-    _active: { transform: "scale(0.98)" },
+    _focusVisible: {
+      outline: "2px solid var(--md-primary)",
+      outlineOffset: "2px",
+    },
+  },
+  secondary: {
+    background: "var(--md-secondary-container)",
+    color: "var(--md-on-secondary-container)",
+    border: "none",
+    borderRadius: PILL,
+    fontWeight: "500",
+    transition: TRANSITION,
+    _hover: { filter: "brightness(0.97)" },
+    _active: { transform: "scale(0.95)" },
+  },
+  outline: {
+    background: "transparent",
+    color: "var(--md-primary)",
+    border: "1px solid var(--md-outline)",
+    borderRadius: PILL,
+    fontWeight: "500",
+    transition: TRANSITION,
+    _hover: { background: "var(--surface)" },
+    _active: { transform: "scale(0.95)" },
+  },
+  ghost: {
+    background: "transparent",
+    color: "var(--md-primary)",
+    border: "none",
+    borderRadius: PILL,
+    fontWeight: "500",
+    transition: TRANSITION,
+    _hover: { background: "var(--surface)" },
+    _active: { transform: "scale(0.95)" },
   },
   destructive: {
     background: "transparent",
     color: "var(--error-hex)",
     border: "1px solid var(--error-hex)",
+    borderRadius: PILL,
     transition: TRANSITION,
-    _hover: { background: "var(--surface)" },
-    _active: { transform: "scale(0.98)" },
-  },
-  outline: {
-    background: "transparent",
-    color: "var(--accent-hex)",
-    border: "1px solid var(--card-border-accent)",
-    transition: TRANSITION,
-    _hover: { background: "var(--surface)" },
-    _active: { transform: "scale(0.98)" },
-  },
-  secondary: {
-    background: "var(--surface)",
-    color: "var(--text-primary)",
-    border: "1px solid var(--card-border-hex)",
-    boxShadow: "inset 0 1px 0 0 rgba(255, 255, 255, 0.06)",
-    transition: TRANSITION,
-    _hover: {
-      background: "var(--surface-hover)",
-      borderColor: "var(--card-border-hover-hex)",
-    },
-    _active: { transform: "scale(0.98)" },
-  },
-  ghost: {
-    background: "transparent",
-    color: "var(--text-secondary)",
-    border: "1px solid transparent",
-    transition: TRANSITION,
-    _hover: {
-      background: "var(--surface)",
-      color: "var(--text-primary)",
-    },
-    _active: { transform: "scale(0.98)" },
+    _active: { transform: "scale(0.95)" },
   },
   link: {
     background: "transparent",
-    color: "var(--accent-hex)",
+    color: "var(--md-primary)",
     border: "none",
+    borderRadius: PILL,
     textDecoration: "underline",
     textUnderlineOffset: "4px",
-    transition: TRANSITION,
-    _hover: { textDecoration: "none", color: "var(--accent-muted)" },
+    _hover: { textDecoration: "none" },
   },
 };
 
 const SIZE_PROPS: Record<ButtonSize, ChakraButtonProps> = {
-  default: { size: "sm", px: "4", borderRadius: "var(--radius-lg)" },
-  sm: { size: "sm", px: "3", fontSize: "xs", borderRadius: "var(--radius-lg)" },
-  lg: { size: "lg", px: "8", borderRadius: "var(--radius-lg)" },
-  icon: {
-    size: "sm",
-    px: "0",
-    w: "9",
-    minW: "9",
-    h: "9",
-    borderRadius: "var(--radius-lg)",
-  },
+  default: { height: "10", px: "6", fontSize: "sm" },
+  sm: { height: "9", px: "4", fontSize: "xs" },
+  lg: { height: "12", px: "8", fontSize: "md" },
+  icon: { height: "10", width: "10", minW: "10", px: "0" },
 };
 
 export function Button({

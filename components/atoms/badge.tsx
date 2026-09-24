@@ -15,15 +15,14 @@ export interface BadgeProps extends Omit<
 
 const VARIANT_CSS: Record<BadgeVariant, ChakraBadgeProps["css"]> = {
   default: {
-    background: "var(--accent-hex)",
-    color: "#ffffff",
+    background: "var(--md-primary)",
+    color: "var(--md-on-primary)",
     borderColor: "transparent",
-    boxShadow: "0 0 12px var(--accent-glow-soft)",
   },
   secondary: {
-    background: "var(--surface)",
-    color: "var(--text-secondary)",
-    borderColor: "var(--card-border-hex)",
+    background: "var(--md-secondary-container)",
+    color: "var(--md-on-secondary-container)",
+    borderColor: "transparent",
   },
   destructive: {
     background: "transparent",
@@ -31,9 +30,9 @@ const VARIANT_CSS: Record<BadgeVariant, ChakraBadgeProps["css"]> = {
     borderColor: "var(--error-hex)",
   },
   outline: {
-    background: "transparent",
-    color: "var(--text-primary)",
-    borderColor: "var(--card-border-accent)",
+    background: "var(--md-secondary-container)",
+    color: "var(--md-on-secondary-container)",
+    borderColor: "transparent",
   },
 };
 
@@ -41,13 +40,12 @@ export function Badge({ variant = "default", ...props }: BadgeProps) {
   return (
     <ChakraBadge
       variant="outline"
-      borderWidth="1px"
-      borderRadius="full"
+      borderWidth="0"
+      borderRadius="var(--radius-pill)"
       fontSize="xs"
-      fontWeight="medium"
-      letterSpacing="0.02em"
-      px="2.5"
-      py="0.5"
+      fontWeight="500"
+      px="3"
+      py="1"
       css={VARIANT_CSS[variant]}
       {...props}
     />

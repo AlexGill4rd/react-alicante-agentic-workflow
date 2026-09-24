@@ -32,11 +32,11 @@ export function SiteNav() {
       width="full"
       justify="center"
       borderBottomWidth="1px"
-      borderColor="var(--card-border-hex)"
+      borderColor="var(--md-outline)"
       background="var(--nav-bg)"
       css={{
-        backdropFilter: "blur(16px)",
-        WebkitBackdropFilter: "blur(16px)",
+        backdropFilter: "blur(12px)",
+        WebkitBackdropFilter: "blur(12px)",
       }}
     >
       <Box

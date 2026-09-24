@@ -2,14 +2,7 @@
 
 import { Box } from "@chakra-ui/react";
 
-const BLOB_BASE = {
-  position: "absolute",
-  borderRadius: "full",
-  pointerEvents: "none",
-  filter: "blur(120px)",
-} as const;
-
-/** Fixed ambient layers behind page content (blobs, grid, noise). */
+/** MD3 organic tonal shapes behind page content. */
 export function AmbientBackground() {
   return (
     <Box
@@ -21,56 +14,40 @@ export function AmbientBackground() {
       pointerEvents="none"
     >
       <Box
-        {...BLOB_BASE}
-        top="-20%"
-        left="50%"
-        width="900px"
-        height="1400px"
-        marginLeft="-450px"
-        background="var(--accent-glow)"
-        opacity="0.25"
-        animation="ambient-float 10s ease-in-out infinite"
-      />
-      <Box
-        {...BLOB_BASE}
-        top="30%"
-        left="-10%"
-        width="600px"
-        height="800px"
-        background="linear-gradient(135deg, rgba(94,106,210,0.2), rgba(168,85,247,0.12))"
-        opacity="0.15"
-        animation="ambient-float-slow 12s ease-in-out infinite"
-      />
-      <Box
-        {...BLOB_BASE}
-        top="20%"
-        right="-5%"
-        width="500px"
-        height="700px"
-        background="linear-gradient(225deg, rgba(94,106,210,0.18), rgba(59,130,246,0.1))"
-        opacity="0.12"
-        animation="ambient-float 9s ease-in-out infinite reverse"
-      />
-      <Box
-        {...BLOB_BASE}
-        bottom="0"
-        left="30%"
-        width="700px"
-        height="400px"
-        filter="blur(100px)"
-        background="var(--accent-hex)"
-        opacity="0.1"
-        animation="ambient-pulse 8s ease-in-out infinite"
+        position="absolute"
+        top="-10%"
+        right="-15%"
+        width="520px"
+        height="520px"
+        borderRadius="full"
+        background="var(--md-secondary-container)"
+        opacity="0.85"
+        filter="blur(80px)"
+        animation="md-float 10s ease-in-out infinite"
       />
       <Box
         position="absolute"
-        inset="0"
-        opacity="0.02"
-        backgroundImage="
-          linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)
-        "
-        backgroundSize="64px 64px"
+        top="35%"
+        left="-20%"
+        width="480px"
+        height="320px"
+        borderRadius="100px"
+        borderTopRightRadius="20px"
+        background="var(--md-primary)"
+        opacity="0.18"
+        filter="blur(72px)"
+        animation="md-float 12s ease-in-out infinite reverse"
+      />
+      <Box
+        position="absolute"
+        bottom="5%"
+        right="10%"
+        width="360px"
+        height="360px"
+        borderRadius="full"
+        background="var(--md-tertiary)"
+        opacity="0.15"
+        filter="blur(64px)"
       />
     </Box>
   );

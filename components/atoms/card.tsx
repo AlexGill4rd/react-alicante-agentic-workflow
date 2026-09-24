@@ -2,24 +2,21 @@ import { Card as ChakraCard } from "@chakra-ui/react";
 
 const CARD_SURFACE_CSS = {
   backgroundColor: "var(--card-fill)",
-  backgroundImage: "var(--card-bg)",
-  borderColor: "var(--card-border-hex)",
+  borderColor: "transparent",
   color: "var(--text-primary)",
-  borderRadius: "var(--radius-2xl)",
+  borderRadius: "var(--radius-xl)",
   boxShadow: "var(--shadow-card)",
   transition:
-    "border-color var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast)",
+    "box-shadow var(--transition-standard), transform var(--transition-standard)",
   _hover: {
-    borderColor: "var(--card-border-hover-hex)",
     boxShadow: "var(--shadow-card-hover)",
-    transform: "translateY(-4px)",
+    transform: "scale(1.02)",
   },
 };
 
 const CHART_CARD_CSS = {
   ...CARD_SURFACE_CSS,
   _hover: {
-    borderColor: "var(--card-border-hex)",
     boxShadow: "var(--shadow-card)",
     transform: "none",
   },
@@ -44,9 +41,9 @@ export function CardHeader(props: ChakraCard.HeaderProps) {
 export function CardTitle(props: ChakraCard.TitleProps) {
   return (
     <ChakraCard.Title
-      fontSize="lg"
-      fontWeight="semibold"
-      letterSpacing="tight"
+      fontSize="xl"
+      fontWeight="500"
+      letterSpacing="normal"
       {...props}
     />
   );

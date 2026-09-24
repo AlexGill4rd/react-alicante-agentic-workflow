@@ -58,6 +58,62 @@
       "hours": "Sessions per hour"
     }
   },
+  "Landing": {
+    "hero": {
+      "eyebrow": "React Alicante 2026",
+      "title": "Your conference companion, personalised for the day",
+      "subtitle": "Browse the full schedule, save your plan, explore speakers, and catch live announcements — all in one friendly place.",
+      "ctaPrimary": "Explore schedule",
+      "ctaSecondary": "Build my plan"
+    },
+    "features": {
+      "heading": "Everything you need at the event",
+      "schedule": {
+        "title": "Smart schedule",
+        "body": "Room-by-room timeline with search and filters by track and level."
+      },
+      "plan": {
+        "title": "My plan",
+        "body": "Bookmark talks on your device and see them in one list."
+      },
+      "speakers": {
+        "title": "Speakers",
+        "body": "Who is on stage and which sessions they lead."
+      },
+      "stats": {
+        "title": "Conference stats",
+        "body": "See how the day breaks down by track, level, and hour."
+      },
+      "news": {
+        "title": "Community news",
+        "body": "Stay in the loop with curated headlines from the React world."
+      },
+      "likes": {
+        "title": "Session feedback",
+        "body": "Like a talk to send instant feedback to organisers."
+      }
+    },
+    "how": {
+      "heading": "How it works",
+      "step1": {
+        "title": "Explore",
+        "body": "Open the schedule and filter by what matters to you."
+      },
+      "step2": {
+        "title": "Save",
+        "body": "Add sessions to My plan as you build your day."
+      },
+      "step3": {
+        "title": "Enjoy",
+        "body": "Show up on time, follow announcements, and like the talks that land."
+      }
+    },
+    "cta": {
+      "title": "Ready for the conference?",
+      "body": "Jump into the schedule and make the most of React Alicante.",
+      "button": "Open schedule"
+    }
+  },
   "Hero": {
     "heading": "React Alicante Conference Companion",
     "line1": "Your schedule, your sessions —",
