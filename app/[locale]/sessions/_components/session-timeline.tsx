@@ -6,17 +6,24 @@ import {
   getSessionsByRoom,
   getTimelineBounds,
 } from "@/utils/session-timeline";
+import type { SessionLevel } from "@/types/session";
 import { Box, Flex, Text } from "@chakra-ui/react";
 
 const PX_PER_MINUTE = 1.6;
 const TIME_COLUMN_WIDTH = 56;
 const ROOM_COLUMN_MIN_WIDTH = 180;
 
+export type SessionLevelLabels = Record<SessionLevel, string>;
+
 interface SessionTimelineProps {
   sessions: Session[];
+  levelLabels: SessionLevelLabels;
 }
 
-export function SessionTimeline({ sessions }: SessionTimelineProps) {
+export function SessionTimeline({
+  sessions,
+  levelLabels,
+}: SessionTimelineProps) {
   const { startMinutes, endMinutes } = getTimelineBounds(sessions);
   const sessionsByRoom = getSessionsByRoom(sessions);
   const timelineHeight = (endMinutes - startMinutes) * PX_PER_MINUTE;
@@ -98,6 +105,7 @@ export function SessionTimeline({ sessions }: SessionTimelineProps) {
                 <SessionBlock
                   key={session.id}
                   session={session}
+                  levelLabel={levelLabels[session.level]}
                   top={offsetOf(timeToMinutes(session.startTime))}
                   height={session.durationMinutes * PX_PER_MINUTE}
                 />

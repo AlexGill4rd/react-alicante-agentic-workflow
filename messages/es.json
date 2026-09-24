@@ -12,6 +12,13 @@
     "title": "Ponentes",
     "description": "Quién presenta y en qué sesiones participa."
   },
+  "Session": {
+    "level": {
+      "beginner": "Principiante",
+      "intermediate": "Intermedio",
+      "advanced": "Avanzado"
+    }
+  },
   "Hero": {
     "heading": "Guía de la conferencia React Alicante",
     "line1": "Tu agenda, tus sesiones —",
