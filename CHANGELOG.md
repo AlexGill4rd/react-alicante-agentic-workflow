@@ -1,5 +1,24 @@
 # Changelog
 
+## [0.8.0] — 2026-09-24
+
+### Features
+
+- **My plan:** copy saved sessions to the clipboard as plain text (time, title,
+  speaker, room), with disabled state when empty and success/error feedback
+  (#12)
+
+## Test Suite
+
+| Suite          | Status       |
+| -------------- | ------------ |
+| ESLint         | ⏳ pending   |
+| Type-check     | ⏳ pending   |
+| Unit tests     | ✅ 34 passed |
+| Build (Vercel) | ⏳ pending   |
+
+CI: pending — runs on the release PR
+
 ## [0.7.0] — 2026-09-24
 
 ### Features
