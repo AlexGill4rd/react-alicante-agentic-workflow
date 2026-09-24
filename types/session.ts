@@ -10,9 +10,11 @@ export type Track = Database["public"]["Enums"]["session_track"];
  * What the app works with. Every field's type comes from the database; the
  * only changes are the two columns renamed to camelCase.
  */
+export type SessionLevel = Database["public"]["Enums"]["session_level"];
+
 export type Session = Pick<
   SessionRow,
-  "id" | "title" | "speaker" | "track" | "room" | "description"
+  "id" | "title" | "speaker" | "track" | "level" | "room" | "description"
 > & {
   startTime: SessionRow["start_time"];
   durationMinutes: SessionRow["duration_minutes"];

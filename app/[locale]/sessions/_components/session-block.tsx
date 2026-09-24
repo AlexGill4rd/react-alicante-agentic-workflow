@@ -5,11 +5,17 @@ import { Box, Text } from "@chakra-ui/react";
 
 interface SessionBlockProps {
   session: Session;
+  levelLabel: string;
   top: number;
   height: number;
 }
 
-export function SessionBlock({ session, top, height }: SessionBlockProps) {
+export function SessionBlock({
+  session,
+  levelLabel,
+  top,
+  height,
+}: SessionBlockProps) {
   return (
     <Link href={`/sessions/${session.id}`}>
       <Box
@@ -23,7 +29,7 @@ export function SessionBlock({ session, top, height }: SessionBlockProps) {
             {session.title}
           </Text>
           <Text color="var(--text-muted)" truncate>
-            {session.startTime} · {session.speaker}
+            {session.startTime} · {session.speaker} · {levelLabel}
           </Text>
         </SurfaceCard>
       </Box>
