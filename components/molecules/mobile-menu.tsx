@@ -11,7 +11,13 @@ export function MobileMenu({ children }: MobileMenuProps) {
       display={{ base: "flex", md: "none" }}
       direction="column"
       gap="4"
-      paddingTop="4"
+      marginTop="4"
+      padding="4"
+      borderRadius="var(--radius-xl)"
+      borderWidth="1px"
+      borderColor="var(--card-border-hex)"
+      background="var(--surface)"
+      boxShadow="var(--shadow-card)"
     >
       {children}
     </Flex>

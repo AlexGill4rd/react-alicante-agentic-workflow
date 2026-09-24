@@ -11,6 +11,11 @@ export interface HourlySessionCount {
   count: number;
 }
 
+export interface LevelSessionCount {
+  level: string;
+  count: number;
+}
+
 /**
  * Counts sessions per track, preserving the order tracks first appear in
  * `sessions` so the chart order stays stable across renders.
@@ -45,4 +50,34 @@ export function getSessionCountByHour(
     hour: `${String(hour).padStart(2, "0")}:00`,
     count,
   })).sort((a, b) => a.hour.localeCompare(b.hour));
+}
+
+const LEVEL_ORDER = ["beginner", "intermediate", "advanced"] as const;
+
+export function getSessionCountByLevel(
+  sessions: Session[],
+): LevelSessionCount[] {
+  const counts = new Map<string, number>();
+
+  for (const session of sessions) {
+    counts.set(session.level, (counts.get(session.level) ?? 0) + 1);
+  }
+
+  return LEVEL_ORDER.filter((level) => counts.has(level)).map((level) => ({
+    level,
+    count: counts.get(level) ?? 0,
+  }));
+}
+
+export function getConferenceSummary(sessions: Session[]) {
+  const tracks = new Set(sessions.map((s) => s.track));
+  const speakers = new Set(sessions.map((s) => s.speaker));
+  const rooms = new Set(sessions.map((s) => s.room));
+
+  return {
+    sessionCount: sessions.length,
+    trackCount: tracks.size,
+    speakerCount: speakers.size,
+    roomCount: rooms.size,
+  };
 }

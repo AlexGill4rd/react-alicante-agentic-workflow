@@ -1,5 +1,30 @@
 # Changelog
 
+## [0.6.0] — 2026-09-24
+
+### Features
+
+- Platform expansion: schedule search and track/level filters, My Plan bookmarks,
+  stats KPIs and level chart, home announcements feed (requires
+  `20260924120000_announcements.sql` migration)
+- Material You design system, light default theme, and marketing landing page on
+  home
+
+### Maintenance
+
+- UI polish: themed charts/cards, design tokens and product roadmap docs
+
+## Test Suite
+
+| Suite          | Status       |
+| -------------- | ------------ |
+| ESLint         | ⏳ pending   |
+| Type-check     | ⏳ pending   |
+| Unit tests     | ✅ 28 passed |
+| Build (Vercel) | ⏳ pending   |
+
+CI: pending — runs on the release PR
+
 ## [0.5.0] — 2026-09-24
 
 ### Features

@@ -1,4 +1,4 @@
-import { Box } from "@chakra-ui/react";
+import { InteractiveSurface } from "@/components/atoms/interactive-surface";
 import type { ReactNode } from "react";
 
 export interface SurfaceCardProps {
@@ -6,21 +6,5 @@ export interface SurfaceCardProps {
 }
 
 export function SurfaceCard({ children }: SurfaceCardProps) {
-  return (
-    <Box
-      height="full"
-      overflow="hidden"
-      padding="1.5"
-      borderRadius="md"
-      borderWidth="1px"
-      borderColor="var(--card-border-hex)"
-      background="var(--card-bg)"
-      fontSize="xs"
-      lineHeight="tight"
-      transition="border-color 0.2s"
-      _hover={{ borderColor: "var(--card-border-hover-hex)" }}
-    >
-      {children}
-    </Box>
-  );
+  return <InteractiveSurface variant="compact">{children}</InteractiveSurface>;
 }

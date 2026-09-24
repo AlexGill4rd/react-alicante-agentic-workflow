@@ -2,6 +2,7 @@
   "Nav": {
     "home": "React Alicante Companion",
     "schedule": "Schedule",
+    "plan": "My plan",
     "speakers": "Speakers",
     "stats": "Stats",
     "news": "News",
@@ -22,11 +23,117 @@
       "button": "👍 Like",
       "thanks": "Thanks!",
       "error": "Something went wrong"
+    },
+    "bookmark": {
+      "save": "Save to my plan",
+      "saved": "Saved to my plan"
+    }
+  },
+  "Schedule": {
+    "filters": {
+      "searchPlaceholder": "Search sessions, speakers, rooms…",
+      "allTracks": "All tracks",
+      "allLevels": "All levels",
+      "results": "{count} of {total} sessions",
+      "empty": "No sessions match your filters. Try clearing search or filters."
+    }
+  },
+  "Plan": {
+    "title": "My plan",
+    "description": "Sessions you saved on this device. Bookmark talks from any session page.",
+    "empty": "Nothing saved yet. Open a session and tap “Save to my plan”."
+  },
+  "Stats": {
+    "title": "Conference stats",
+    "description": "How the day breaks down by track, level, and hour.",
+    "kpi": {
+      "sessions": "Sessions",
+      "tracks": "Tracks",
+      "speakers": "Speakers",
+      "rooms": "Rooms"
+    },
+    "charts": {
+      "tracks": "Sessions per track",
+      "levels": "Sessions per level",
+      "hours": "Sessions per hour"
+    }
+  },
+  "Landing": {
+    "hero": {
+      "eyebrow": "React Alicante 2026",
+      "title": "Your conference companion, personalised for the day",
+      "subtitle": "Browse the full schedule, save your plan, explore speakers, and catch live announcements — all in one friendly place.",
+      "ctaPrimary": "Explore schedule",
+      "ctaSecondary": "Build my plan"
+    },
+    "features": {
+      "heading": "Everything you need at the event",
+      "schedule": {
+        "title": "Smart schedule",
+        "body": "Room-by-room timeline with search and filters by track and level."
+      },
+      "plan": {
+        "title": "My plan",
+        "body": "Bookmark talks on your device and see them in one list."
+      },
+      "speakers": {
+        "title": "Speakers",
+        "body": "Who is on stage and which sessions they lead."
+      },
+      "stats": {
+        "title": "Conference stats",
+        "body": "See how the day breaks down by track, level, and hour."
+      },
+      "news": {
+        "title": "Community news",
+        "body": "Stay in the loop with curated headlines from the React world."
+      },
+      "likes": {
+        "title": "Session feedback",
+        "body": "Like a talk to send instant feedback to organisers."
+      }
+    },
+    "how": {
+      "heading": "How it works",
+      "step1": {
+        "title": "Explore",
+        "body": "Open the schedule and filter by what matters to you."
+      },
+      "step2": {
+        "title": "Save",
+        "body": "Add sessions to My plan as you build your day."
+      },
+      "step3": {
+        "title": "Enjoy",
+        "body": "Show up on time, follow announcements, and like the talks that land."
+      }
+    },
+    "cta": {
+      "title": "Ready for the conference?",
+      "body": "Jump into the schedule and make the most of React Alicante.",
+      "button": "Open schedule"
     }
   },
   "Hero": {
     "heading": "React Alicante Conference Companion",
     "line1": "Your schedule, your sessions —",
     "line2": "one place"
+  },
+  "Home": {
+    "featured": {
+      "eyebrow": "Schedule",
+      "title": "Featured sessions",
+      "viewAll": "View full schedule →"
+    },
+    "overview": {
+      "sessions": "Sessions",
+      "tracks": "Tracks",
+      "speakers": "Speakers",
+      "rooms": "Rooms"
+    },
+    "announcements": {
+      "eyebrow": "Live",
+      "title": "Announcements"
+    }
   }
 }

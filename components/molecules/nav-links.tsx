@@ -29,9 +29,10 @@ export function NavLinks({
   return (
     <Flex
       direction={direction}
-      gap={direction === "row" ? "5" : "3"}
+      gap={direction === "row" ? "2" : "2"}
       align={direction === "row" ? "center" : "stretch"}
-      fontWeight="semibold"
+      fontSize="sm"
+      fontWeight="medium"
     >
       {links.map(({ href, label }) => {
         const active = isActive(pathname, href);
@@ -45,12 +46,24 @@ export function NavLinks({
           >
             <Flex
               as="span"
-              paddingBottom="1"
-              borderBottomWidth="2px"
-              borderColor={active ? "var(--accent-hex)" : "transparent"}
-              color={active ? "var(--accent-hex)" : undefined}
-              transition="color 0.2s, border-color 0.2s"
-              _hover={{ color: "var(--accent-hex)" }}
+              paddingX="3"
+              paddingY="1.5"
+              borderRadius="var(--radius-lg)"
+              color={active ? "var(--text-primary)" : "var(--text-secondary)"}
+              background={active ? "var(--surface-hover)" : "transparent"}
+              borderWidth="1px"
+              borderColor={
+                active ? "var(--card-border-hover-hex)" : "transparent"
+              }
+              boxShadow={
+                active ? "inset 0 1px 0 0 rgba(255,255,255,0.06)" : "none"
+              }
+              transition="background var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast)"
+              _hover={{
+                color: "var(--text-primary)",
+                background: "var(--surface)",
+                borderColor: "var(--card-border-hex)",
+              }}
             >
               {label}
             </Flex>

@@ -9,7 +9,7 @@ export function Provider({ children, ...props }: ColorModeProviderProps) {
     <ChakraProvider value={system}>
       <ColorModeProvider
         attribute="data-theme"
-        defaultTheme="dark"
+        defaultTheme="light"
         enableSystem={false}
         {...props}
       >
