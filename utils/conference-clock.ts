@@ -15,6 +15,14 @@ export interface ConferenceNow {
   activeDay: ConferenceDayKey | null;
 }
 
+/** Safe initial value for client hooks during SSR/prerender (no `Date`). */
+export const CONFERENCE_NOW_SSR_PLACEHOLDER: ConferenceNow = {
+  dateIso: "",
+  minutes: 0,
+  timeLabel: "--:--",
+  activeDay: null,
+};
+
 function partsInTimeZone(date: Date, timeZone: string) {
   const formatter = new Intl.DateTimeFormat("en-GB", {
     timeZone,
@@ -42,7 +50,7 @@ function partsInTimeZone(date: Date, timeZone: string) {
   };
 }
 
-export function getConferenceNow(date = new Date()): ConferenceNow {
+export function getConferenceNow(date: Date): ConferenceNow {
   const { dateIso, minutes, timeLabel } = partsInTimeZone(
     date,
     CONFERENCE_TIMEZONE,
