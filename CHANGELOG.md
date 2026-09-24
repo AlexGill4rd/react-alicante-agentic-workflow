@@ -1,5 +1,27 @@
 # Changelog
 
+## [0.4.0] — 2026-09-24
+
+### Features
+
+- Speakers page at `/speakers` with nav link (EN/ES), speaker cards grouped from
+  the schedule, excluding the closing panel placeholder (#1)
+
+### Maintenance
+
+- chore: trigger CI on dev for release setup
+
+## Test Suite
+
+| Suite          | Status     |
+| -------------- | ---------- |
+| ESLint         | ⏳ pending |
+| Type-check     | ⏳ pending |
+| Unit tests     | ⏳ pending |
+| Build (Vercel) | ⏳ pending |
+
+CI: pending — runs when the release PR is opened
+
 ## [0.3.1] — 2026-09-24
 
 ### Bug Fixes
