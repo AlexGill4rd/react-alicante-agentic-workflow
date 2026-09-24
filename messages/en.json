@@ -12,6 +12,18 @@
     "title": "Speakers",
     "description": "Who is presenting, and which sessions they lead."
   },
+  "Session": {
+    "level": {
+      "beginner": "Beginner",
+      "intermediate": "Intermediate",
+      "advanced": "Advanced"
+    },
+    "like": {
+      "button": "👍 Like",
+      "thanks": "Thanks!",
+      "error": "Something went wrong"
+    }
+  },
   "Hero": {
     "heading": "React Alicante Conference Companion",
     "line1": "Your schedule, your sessions —",

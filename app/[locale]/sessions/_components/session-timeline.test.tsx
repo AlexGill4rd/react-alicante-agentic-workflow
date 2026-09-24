@@ -11,6 +11,7 @@ function session(overrides: Partial<Session> = {}): Session {
     title: "A session",
     speaker: "A speaker",
     track: "React",
+    level: "beginner",
     room: "Main Hall",
     startTime: "09:00",
     durationMinutes: 45,
@@ -19,9 +20,17 @@ function session(overrides: Partial<Session> = {}): Session {
   };
 }
 
+const levelLabels = {
+  beginner: "Beginner",
+  intermediate: "Intermediate",
+  advanced: "Advanced",
+};
+
 describe("SessionTimeline", () => {
   it("shows a column per room", () => {
-    render(<SessionTimeline sessions={[session()]} />);
+    render(
+      <SessionTimeline sessions={[session()]} levelLabels={levelLabels} />,
+    );
 
     expect(screen.getByText("Main Hall")).toBeInTheDocument();
     expect(screen.getByText("Workshop Room A")).toBeInTheDocument();
@@ -34,6 +43,7 @@ describe("SessionTimeline", () => {
         sessions={[
           session({ id: "opening-keynote", title: "Opening Keynote" }),
         ]}
+        levelLabels={levelLabels}
       />,
     );
 
@@ -50,6 +60,7 @@ describe("SessionTimeline", () => {
           session({ startTime: "09:30", durationMinutes: 30 }),
           session({ id: "later", startTime: "11:15", durationMinutes: 45 }),
         ]}
+        levelLabels={levelLabels}
       />,
     );
 
@@ -61,6 +72,7 @@ describe("SessionTimeline", () => {
     render(
       <SessionTimeline
         sessions={[session({ title: "Hallway chat", room: "Hallway" })]}
+        levelLabels={levelLabels}
       />,
     );
 
