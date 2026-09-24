@@ -17,6 +17,11 @@
       "beginner": "Beginner",
       "intermediate": "Intermediate",
       "advanced": "Advanced"
+    },
+    "like": {
+      "button": "👍 Like",
+      "thanks": "Thanks!",
+      "error": "Something went wrong"
     }
   },
   "Hero": {

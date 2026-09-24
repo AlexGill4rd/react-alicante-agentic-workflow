@@ -17,6 +17,11 @@
       "beginner": "Principiante",
       "intermediate": "Intermedio",
       "advanced": "Avanzado"
+    },
+    "like": {
+      "button": "👍 Me gusta",
+      "thanks": "¡Gracias!",
+      "error": "Algo salió mal"
     }
   },
   "Hero": {

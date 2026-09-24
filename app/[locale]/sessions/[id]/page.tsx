@@ -1,4 +1,5 @@
 import { Badge } from "@/components/atoms/badge";
+import { SessionLikeButton } from "@/components/molecules/session-like-button";
 import { Link } from "@/i18n/navigation";
 import { fetchSessionById, fetchSessions } from "@/services/sessions";
 import { Flex, Heading, Text } from "@chakra-ui/react";
@@ -62,6 +63,8 @@ export default async function SessionDetailPage({
       <Text fontSize="md" lineHeight="relaxed" maxWidth="2xl">
         {session.description}
       </Text>
+
+      <SessionLikeButton sessionId={session.id} />
     </Flex>
   );
 }
