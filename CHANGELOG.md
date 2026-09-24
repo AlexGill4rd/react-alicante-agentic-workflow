@@ -1,5 +1,29 @@
 # Changelog
 
+## [0.5.0] — 2026-09-24
+
+### Features
+
+- Session level (beginner / intermediate / advanced) on the schedule and session
+  detail pages, backed by a `session_level` enum migration
+- Session Like button: server action posts `{ sessionId, likedAt }` to
+  `FEEDBACK_WEBHOOK_URL`
+
+### Maintenance
+
+- Document `FEEDBACK_WEBHOOK_URL` in `.env.example`
+
+## Test Suite
+
+| Suite          | Status     |
+| -------------- | ---------- |
+| ESLint         | ⏳ pending |
+| Type-check     | ⏳ pending |
+| Unit tests     | ⏳ pending |
+| Build (Vercel) | ⏳ pending |
+
+CI: pending — will run once the release branch is pushed
+
 ## [0.3.1] — 2026-09-24
 
 ### Bug Fixes
