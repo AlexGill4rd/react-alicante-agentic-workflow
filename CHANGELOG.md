@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.3.1] — 2026-09-23
+## [0.3.1] — 2026-09-24
 
 ### Bug Fixes
 
@@ -13,6 +13,12 @@
 - Consistent qa-ref/prod-ref naming in the setup guide, fix the Vercel
   first-deploy steps, add the Repository access screenshot
 - Walkthrough: non-deterministic phase reports, changelog diff step
+- Add the licenses: MIT for the code, CC BY-NC-SA 4.0 for `docs/` and `.claude/`
+- Use the workshop title in the README
+- Release-manager walkthrough: every step from the start prompt to the finished
+  release, CI on a fork, the migrations list fallback
+- Remove the draft markers from both walkthroughs
+- Keep only the slides PDF in `docs/presentation`
 
 ## Test Suite
 
