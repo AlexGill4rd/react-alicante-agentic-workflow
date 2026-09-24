@@ -87,7 +87,13 @@
   "Plan": {
     "title": "Mi plan",
     "description": "Sesiones guardadas en este dispositivo. Márcalas desde la página de cada sesión.",
-    "empty": "Aún no has guardado nada. Abre una sesión y pulsa «Guardar en mi plan»."
+    "empty": "Aún no has guardado nada. Abre una sesión y pulsa «Guardar en mi plan».",
+    "copy": {
+      "button": "Copiar plan",
+      "copied": "¡Copiado!",
+      "error": "No se pudo copiar — inténtalo de nuevo o copia manualmente.",
+      "disabledHint": "Guarda al menos una sesión para copiar tu plan"
+    }
   },
   "Stats": {
     "title": "Estadísticas",

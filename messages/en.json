@@ -87,7 +87,13 @@
   "Plan": {
     "title": "My plan",
     "description": "Sessions you saved on this device. Bookmark talks from any session page.",
-    "empty": "Nothing saved yet. Open a session and tap “Save to my plan”."
+    "empty": "Nothing saved yet. Open a session and tap “Save to my plan”.",
+    "copy": {
+      "button": "Copy plan",
+      "copied": "Copied!",
+      "error": "Could not copy — try again or copy manually.",
+      "disabledHint": "Save at least one session to copy your plan"
+    }
   },
   "Stats": {
     "title": "Conference stats",
