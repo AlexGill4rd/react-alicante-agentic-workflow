@@ -1,7 +1,5 @@
 # Feature-builder walkthrough
 
-Draft. The steps are written after the rehearsal.
-
 Goal: build tickets 1 and 2 with the `feature-builder` agent. Ticket 3 is
 optional, if there is time.
 
